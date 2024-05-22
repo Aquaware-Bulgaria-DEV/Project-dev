@@ -5,16 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const StackLayout =()=> {
   return (
-    <SafeAreaProvider>
-      <Stack>
-        <Stack.Screen name="(tabs)" />
-      </Stack>
-    </SafeAreaProvider>
+    <Stack>
+      <Stack.Screen name="(tabs)" />
+    </Stack>
   );
 }
 
-// const styles = StyleSheet.create({
-//   safeArea: {
-//     flex: 1,
-//   },
-// });
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
+});

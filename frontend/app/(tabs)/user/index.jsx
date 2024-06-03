@@ -6,7 +6,7 @@ const User = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
-    const server = "http://192.168.1.3:8000";
+    const server = "http://ec2-18-234-44-48.compute-1.amazonaws.com";
 
     const handleRegister = async () => {
         console.log(name, email, password, repeatPassword);

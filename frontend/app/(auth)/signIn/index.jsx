@@ -25,6 +25,14 @@ const SignIn = () => {
     console.log('Logging in with:', formValues);
   };
 
+  const googleHandler = () => {
+    console.log('Google login')
+  }
+
+  const facebookHandler = () => {
+    console.log('Facebook login')
+  }
+
   // TODO: When Google & Facebook authentication is ready to implement, pass the handler trough props
   return (
    <SafeAreaView style={styles.safeArea}>
@@ -39,6 +47,8 @@ const SignIn = () => {
         onFormChange = {handleFormChange}
         // keyboardType="email-address"
         onLogin={handleLogin}
+        facebookAuth = {facebookHandler}
+        googleAuth = {googleHandler}
         />
       </View>
    </SafeAreaView>

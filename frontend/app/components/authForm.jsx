@@ -28,7 +28,7 @@ const FormField = ({title, value, placeholder, onFormChange, formValues, setForm
   )
 }
 
-const AuthForm = ({title, value, placeholder, onFormChange, onLogin, ...props}) => {
+const AuthForm = ({title, value, placeholder, onFormChange, onLogin, googleAuth, facebookAuth,  ...props}) => {
   let errorMsg = '';
   const [formValues, setFormValues] = React.useState({
     email: '',
@@ -48,6 +48,7 @@ const AuthForm = ({title, value, placeholder, onFormChange, onLogin, ...props}) 
       <View style={styles.thirdPartyAuthBox}>
         <CustomButton 
         title={'Влез с Google'} 
+        handlePress={googleAuth}
         additionalStyles={{ 
           width: '35%',
           padding: 5,
@@ -60,6 +61,7 @@ const AuthForm = ({title, value, placeholder, onFormChange, onLogin, ...props}) 
           />
         <CustomButton 
         title={'Влез с Facebook'} 
+        handlePress={facebookAuth}
         additionalStyles={{
           width: '35%',
           padding: 5,

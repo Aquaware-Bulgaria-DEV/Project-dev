@@ -8,7 +8,6 @@ import { Redirect, router } from 'expo-router';
 import globalStyles  from './globalStyles';
 
 import AquawareLogo from '../assets/AquawareLogo.svg'
-import WaterIcon from '../assets/authSvg/IconWater.svg'
 
 const AuthLayout = () => {
   return (
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 50,
-    // background:'linear-gradient(#e66465, #9198e5)',
     paddingTop: 40
   },
   logo: {
@@ -53,6 +51,5 @@ const styles = StyleSheet.create({
     width: 160,
     height: 150,
   }
-
   
 })

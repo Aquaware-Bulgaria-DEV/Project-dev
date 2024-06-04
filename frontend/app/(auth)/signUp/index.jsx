@@ -6,31 +6,31 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import AuthForm from '../../components/authForm'
 
-import {styles} from "./sign-inStyles"
+import {styles} from "./sign-upStyles"
 
 import AquawareLogo from "../../../assets/AquawareLogo.svg"
 
-const SignIn = () => {
-  const [formValues, setFormValues] = React.useState({ email: '', password: '' });
+const SignUp = () => {
+  const [formValues, setFormValues] = React.useState({ name: '', email: '', password: '', repeatPassword: ''});
 
   const handleFormChange = (newValues) => {
     setFormValues(newValues);
     console.log(newValues)
   };
 
-  const handleLogin = () => {
+  const handleRegister = () => {
 
-    // Here goes the logic by Mario
+    // Here goes the register by Mario
 
-    console.log('Logging in with:', formValues);
+    console.log('Register with:', formValues);
   };
 
   const googleHandler = () => {
-    console.log('Google login')
+    console.log('Google reg')
   }
 
   const facebookHandler = () => {
-    console.log('Facebook login')
+    console.log('Facebook reg')
   }
 
   // TODO: When Google & Facebook authentication is ready to implement, pass the handler trough props
@@ -46,13 +46,14 @@ const SignIn = () => {
         title="Login" //Possible to make its fields and functionality on submit depending on the title, whether is Login or Register 
         onFormChange = {handleFormChange}
         // keyboardType="email-address"
-        onLogin={handleLogin}
+        onRegister={handleRegister}
         facebookAuth = {facebookHandler}
         googleAuth = {googleHandler}
+        isReg={true}
         />
       </View>
    </SafeAreaView>
   );
 }
 
-export default SignIn
+export default SignUp

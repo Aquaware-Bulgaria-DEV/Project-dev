@@ -98,7 +98,7 @@ const AuthForm = ({
         <View>
         <TouchableOpacity >
           <Text style={styles.link}>
-            Забравихте си паролата? <Text onPress={() => console.log('click')} style={styles.linkBold}>Смени парола.</Text>
+            Забравихте си паролата? <Text onPress={() => console.log('Change Password')} style={styles.linkBold}>Смени парола.</Text>
           </Text>
         </TouchableOpacity>
         </View>

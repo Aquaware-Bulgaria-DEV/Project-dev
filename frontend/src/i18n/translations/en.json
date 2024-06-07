@@ -1,5 +1,15 @@
 {
     "welcomeMessage": "Welcome to Aquaware, your indispensable partner in monitoring and saving water!",
-    "changeLanguage": "Change the language",
-    "loginButton": "Log in to your account"
+    "changeLanguage": "Български",
+    "loginButton": "Log in to your account",  
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "or": "or",
+    "loginWithGoogle": "Login with Google",
+    "loginWithFacebook": "Login with Facebook",
+    "forgotPassword": "Forgot your password?",
+    "resetPassword": "Reset Password",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create Account"
 }

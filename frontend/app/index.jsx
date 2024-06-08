@@ -24,6 +24,8 @@ const AuthLayout = () => {
       {/* <Link href="/sign-up">Влез</Link> */}
       <CustomButton title={'Влезте в профила си'} handlePress={() =>  router.push('signIn')
       }/>
+      <CustomButton title={'Начало'} handlePress={() =>  router.push('home')
+      }/>
       {/* <CustomButton title={'Създай профил'} handlePress={() => console.log('click') }/> */}
     </SafeAreaView>
   )

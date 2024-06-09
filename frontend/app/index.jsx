@@ -7,31 +7,37 @@ import { Redirect, router } from 'expo-router';
 
 import globalStyles  from './globalStyles';
 
-import AquawareLogo from '../assets/AquawareLogo.svg'
-import WaterIcon from '../assets/authSvg/IconWater.svg'
+import AuthContext from './Context/AuthContext';
+
+import AquawareLogo from '../assets/AquawareLogo.svg';
+
+// TODO add spinner maybe ASYNC function so at the initial rendering don't show first the boarding screen
 
 const AuthLayout = () => {
+  const {
+    token,
+  } = React.useContext(AuthContext);
+  console.log(token);
+  const isAuthenticated = token !== null;
   return (
-    <SafeAreaView style = {styles.container}>
-      <Image
-        source={AquawareLogo}
-        style={styles.image}
-        contentFit="cover"
-      />
-      <Text style={styles.logo}>Aquaware</Text>
-      <Text style={styles.welcomeMessage}>Добре дошли в Aquaware, вашият незаменим партнъор в следенето и пестенето на вода!  {/* на потреблението на вода, където може да се научите и да пестите вода с нашите безценни съвети! */}</Text>
-      {/* <Text>Sign-up</Text> */}
-      {/* <Link href="/sign-up">Влез</Link> */}
-      <CustomButton title={'Влезте в профила си'} handlePress={() =>  router.push('signIn')
-      }/>
-      <CustomButton title={'Начало'} handlePress={() =>  router.push('home')
-      }/>
-      {/* <CustomButton title={'Създай профил'} handlePress={() => console.log('click') }/> */}
-    </SafeAreaView>
+    isAuthenticated
+      ? 
+      <Redirect href="/home" />
+      : 
+      <SafeAreaView style = {styles.container}>
+          <Image
+          source={AquawareLogo}
+          style={styles.image}
+          contentFit="cover"
+          />
+          <Text style={styles.logo}>Aquaware</Text>
+          <Text style={styles.welcomeMessage}>Добре дошли в Aquaware, вашият незаменим партнъор в следенето и пестенето на вода!</Text>
+          <CustomButton title={'Влезте в профила си'} handlePress={() =>  router.push('signIn')}/>
+      </SafeAreaView>
   )
 }
 
-export default AuthLayout
+export default AuthLayout;
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +45,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 50,
-    // background:'linear-gradient(#e66465, #9198e5)',
     paddingTop: 40
   },
   logo: {
@@ -55,6 +60,4 @@ const styles = StyleSheet.create({
     width: 160,
     height: 150,
   }
-
-  
 })

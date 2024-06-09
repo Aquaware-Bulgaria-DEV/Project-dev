@@ -1,20 +1,27 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import { Header } from "../../components/header.jsx";
+import { styles } from "./tipsStyles.js";
+
+import HANDS_PIC from "../../../assets/hands.jpeg";
+import { List } from "./subcomponents/list.jsx";
 
 const Tips = () => {
   return (
-    <View style={styles.container}>
-      <Text>Welcome to the Tips Screen!</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <Header showProfilePic={false} />
+        <Text style={styles.title}>Съвети за пестене на вода за теб</Text>
+
+        <Image style={styles.headerPic} source={HANDS_PIC}></Image>
+
+        <List />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default Tips;

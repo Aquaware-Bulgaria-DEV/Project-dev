@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, StyleSheet } from 'react-native';
@@ -27,7 +28,6 @@ const RootLayout = () => {
 };
 
 export default RootLayout;
-
 // const styles = StyleSheet.create({
 //   safeArea: {
 //     flex: 1,

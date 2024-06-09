@@ -4,6 +4,8 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginHorizontal: 24,
+    // marginVertical: 35,
   },
   pics: {
     width: 55,

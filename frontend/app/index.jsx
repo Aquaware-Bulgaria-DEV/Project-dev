@@ -20,30 +20,33 @@ const AuthLayout = () => {
   React.useEffect(() => {
     if (token !== null) { 
       setLoading(false);
+    }else{
+      setTimeout(() => {
+        setLoading(false)
+      }, 500)
     }
   }, [token]);
 
-  if (loading) {
-    console.log(token);
-    return null; // Maybe return some spinner here
-  }
-
   const isAuthenticated = token !== null;
+  // console.log(loading)
   return (
-    isAuthenticated
-      ? 
-      <Redirect href="/home" />
+    loading 
+      ? null 
       : 
-      <SafeAreaView style = {styles.container}>
-          <Image
-          source={AquawareLogo}
-          style={styles.image}
-          contentFit="cover"
-          />
-          <Text style={styles.logo}>Aquaware</Text>
-          <Text style={styles.welcomeMessage}>Добре дошли в Aquaware, вашият незаменим партнъор в следенето и пестенето на вода!</Text>
-          <CustomButton title={'Влезте в профила си'} handlePress={() =>  router.push('signIn')}/>
-      </SafeAreaView>
+      isAuthenticated
+        ? 
+        <Redirect href="/home" />
+        : 
+        <SafeAreaView style = {styles.container}>
+            <Image
+            source={AquawareLogo}
+            style={styles.image}
+            contentFit="cover"
+            />
+            <Text style={styles.logo}>Aquaware</Text>
+            <Text style={styles.welcomeMessage}>Добре дошли в Aquaware, вашият незаменим партнъор в следенето и пестенето на вода!</Text>
+            <CustomButton title={'Влезте в профила си'} handlePress={() =>  router.push('signIn')}/>
+        </SafeAreaView>
   )
 }
 

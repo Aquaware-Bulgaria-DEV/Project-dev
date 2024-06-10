@@ -11,13 +11,23 @@ import AuthContext from './Context/AuthContext';
 
 import AquawareLogo from '../assets/AquawareLogo.svg';
 
-// TODO add spinner maybe ASYNC function so at the initial rendering don't show first the boarding screen
-
 const AuthLayout = () => {
   const {
     token,
   } = React.useContext(AuthContext);
-  console.log(token);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    if (token !== null) { 
+      setLoading(false);
+    }
+  }, [token]);
+
+  if (loading) {
+    console.log(token);
+    return null; // Maybe return some spinner here
+  }
+
   const isAuthenticated = token !== null;
   return (
     isAuthenticated

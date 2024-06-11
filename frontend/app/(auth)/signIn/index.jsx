@@ -9,6 +9,7 @@ import AuthForm from '../../components/authForm'
 import {styles} from "./sign-inStyles"
 
 import AquawareLogo from "../../../assets/AquawareLogo.svg"
+import { login } from "../../services/fetch";
 
 const SignIn = () => {
   const [formValues, setFormValues] = React.useState({ email: '', password: '' });
@@ -18,11 +19,16 @@ const SignIn = () => {
     console.log(newValues)
   };
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
+    if(formValues.email ==='' || formValues.password ==='' ){
+      throw new Error('Всички полета са задължителни')
+    }if (formValues.password.length<5) {
+      throw new Error('Паролата трябва да съдържа минимум 6 символа')
+    } 
+    const user = await login(formValues);
+    console.log(`user is : ${user}`)
+   
 
-    // Here goes the logic by Mario
-
-    console.log('Logging in with:', formValues);
   };
 
   const googleHandler = () => {

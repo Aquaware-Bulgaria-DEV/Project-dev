@@ -3,7 +3,7 @@ import React from 'react';
 
 import { styles } from "./customButtonStyles"
 
-const CustomButton = ({title, handlePress, isLoading, additionalStyles, imagePath}) => {
+const CustomButton = ({title, handlePress, isLoading, additionalStyles, imagePath, additionalTextStyle}) => {
   return (
     <TouchableOpacity
     onPress={handlePress}
@@ -12,7 +12,7 @@ const CustomButton = ({title, handlePress, isLoading, additionalStyles, imagePat
     disabled={isLoading}
     >
       
-      { imagePath ? <Image source={imagePath} /> :<Text style={styles.btn}>{title}</Text>}
+      { imagePath ? <Image source={imagePath} /> :<Text style={[styles.btn, additionalTextStyle]}>{title}</Text>}
     </TouchableOpacity>
   )
 }

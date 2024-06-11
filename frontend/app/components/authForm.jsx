@@ -39,9 +39,10 @@ const AuthForm = ({
     facebookAuth, 
     isReg, 
     onRegister,  
+    errorMessage,
     ...props
   }) => {
-    let errorMsg = 'Error Message Example';
+    // let errorMsg = 'Error Message Example';
     const [formValues, setFormValues] = React.useState({
       // name: '',
       email: '',
@@ -58,7 +59,7 @@ const AuthForm = ({
         <FormField title={"Е-Поща"} type={'email'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
         <FormField title={"Парола"} type={'password'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
         {isReg && <FormField title={"Повтори парола"} type={'repeatPassword'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />}
-        <Text style={styles.errorMsg}>{errorMsg}</Text>
+        <Text style={styles.errorMsg}>{errorMessage}</Text>
         {
         isReg 
         ? <CustomButton title={'Създай'} additionalStyles={{marginTop: 15,}} handlePress={onRegister}/> 

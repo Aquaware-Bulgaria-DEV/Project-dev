@@ -46,6 +46,7 @@ const AuthLayout = () => {
             <Text style={styles.logo}>Aquaware</Text>
             <Text style={styles.welcomeMessage}>Добре дошли в Aquaware, вашият незаменим партнъор в следенето и пестенето на вода!</Text>
             <CustomButton title={'Влезте в профила си'} handlePress={() =>  router.push('signIn')}/>
+            <CustomButton title={'Начало'} handlePress={() =>  router.push('/home')}/>
         </SafeAreaView>
   )
 }

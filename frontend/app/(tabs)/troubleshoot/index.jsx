@@ -26,7 +26,8 @@ const FormField = ({
   return (
     <View style={[{flex: 1, gap:10,}, additionalStyles]}>
       <Text style={{fontSize: 14, paddingLeft:20, opacity: 0.3}}>{inputName}</Text>
-      <TextInput onChangeText={(text) => handleChange(type, text)} placeholder='...' style={{justifyContent: 'center', height: 50, fontSize: 14, paddingLeft:20, paddingRight:20, opacity: 0.75, backgroundColor: '#F9F9F9',  borderBottomWidth: 1, borderBottomColor: '#DADADA', borderRadius: 5}}></TextInput>
+      <TextInput onChangeText={(text) => handleChange(type, text)} placeholder='...' 
+      style={{justifyContent: 'center', height: 50, fontSize: 14, paddingLeft:20, paddingRight:20, opacity: 0.75, backgroundColor: '#F9F9F9',  borderBottomWidth: 1, borderBottomColor: '#DADADA', borderRadius: 5}}></TextInput>
     </View>
   );
 }

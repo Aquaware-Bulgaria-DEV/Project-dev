@@ -32,11 +32,11 @@ const SignUp = () => {
     
     // Here goes the register by Mario
     // let newToken = {email: 'notebook', password: 'b', repeatPassword: 'b'};
-    saveToken(token)
+    // saveToken(token)
     console.log('Register with:', formValues);
     console.log(`Authorization token is ${JSON.stringify(token)}`)
     console.log(`Preferences token is ${preferences}`)
-    removeToken()
+    // removeToken()
   };
 
   const googleHandler = () => {

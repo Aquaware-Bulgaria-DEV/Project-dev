@@ -11,5 +11,6 @@
     "forgotPassword": "Forgot your password?",
     "resetPassword": "Reset Password",
     "noAccount": "Don't have an account?",
-    "createAccount": "Create Account"
+    "createAccount": "Create Account",
+    "home": "Home"
 }

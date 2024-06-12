@@ -55,9 +55,9 @@ const AuthLayout = () => {
             contentFit="cover"
             />
             <Text style={styles.logo}>Aquaware</Text>
-            <Text style={styles.welcomeMessage}>Добре дошли в Aquaware, вашият незаменим партнъор в следенето и пестенето на вода!</Text>
-            <CustomButton title={'Влезте в профила си'} handlePress={() =>  router.push('signIn')}/>
-            <CustomButton title={'Начало'} handlePress={() =>  router.push('/home')}/>
+            <Text style={styles.welcomeMessage}>{t("welcomeMessage")}{" "}</Text>
+            <CustomButton title={t("loginButton")} handlePress={() =>  router.push('signIn')}/>
+            <CustomButton title={t("home")} handlePress={() =>  router.push('/home')}/>
       <TouchableOpacity onPress={changeLanguage}>
         <Text>{t("changeLanguage")}</Text>
       </TouchableOpacity>

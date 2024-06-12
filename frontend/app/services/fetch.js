@@ -78,7 +78,8 @@ export const register = async (email, password) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error:", error);
-    Alert.alert("Грешка", "Проблем при връзката със сървъра");
+    return error;
+    // console.error("Error:", error);
+    // Alert.alert("Грешка", "Проблем при връзката със сървъра");
   }
 };

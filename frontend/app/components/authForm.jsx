@@ -4,6 +4,8 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { router } from 'expo-router'
 
+import { useTranslation } from "react-i18next";
+
 import  globalStyles  from '../globalStyles';
 import CustomButton from './customButton';
 
@@ -43,6 +45,8 @@ const AuthForm = ({
     ...props
   }) => {
     // let errorMsg = 'Error Message Example';
+    const { t } = useTranslation();
+  
     const [formValues, setFormValues] = React.useState({
       // name: '',
       email: '',

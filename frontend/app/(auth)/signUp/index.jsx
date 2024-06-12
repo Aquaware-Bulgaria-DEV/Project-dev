@@ -24,6 +24,8 @@ const SignUp = () => {
     removePreferences,
   } = React.useContext(AuthContext);
   
+  const [error, setError] = React.useState('');
+
   const handleFormChange = (newValues) => {
     setFormValues(newValues);
     console.log(newValues)
@@ -32,25 +34,27 @@ const SignUp = () => {
   const handleRegister = async() => {
     console.log(`in handle register: ${formValues}`)
     if (!formValues.email || !formValues.password || !formValues.repeatPassword) {
-      throw new Error( 'Моля, попълнете всички полета');
-      return;
+      setError( 'Моля, попълнете всички полета');
   }
 
   if (formValues.password !== formValues.repeatPassword) {
-      throw new Error('Паролите не съвпадат');
-      return;
+    setError('Паролите не съвпадат');
   }
-  const user = await register(formValues.email,formValues.password);
-  console.log(`user is : ${JSON.stringify(user)}`)
-  const userInfo =await login(formValues)
-  console.log(userInfo)
-  const token =userInfo.token;
-  console.log(`Token is ${token}`)
-    //let newToken = {email: 'notebook', password: 'b', repeatPassword: 'b'};
+  
+  try {
+    const user = await register(formValues.email,formValues.password);
+    console.log(`user is : ${JSON.stringify(user)}`)
+    const userInfo =await login(formValues)
+    console.log(userInfo)
+    const token = userInfo.token;
+    console.log(`Token is ${token}`)
     saveToken(token)
     console.log(`Authorization token is ${JSON.stringify(token)}`)
     console.log(`Preferences token is ${preferences}`)
-    // removeToken()
+  } catch (error) {
+    setError(error.message)
+  }
+  
   };
 
   const googleHandler = () => {
@@ -78,6 +82,7 @@ const SignUp = () => {
         facebookAuth = {facebookHandler}
         googleAuth = {googleHandler}
         isReg={true}
+        errorMessage={error}
         />
       </View>
    </SafeAreaView>

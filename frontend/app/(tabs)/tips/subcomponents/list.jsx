@@ -1,12 +1,12 @@
-import React from "react";
-import { useState } from "react";
-import { View, ScrollView, Pressable } from "react-native";
-import AntDesignI from "react-native-vector-icons/AntDesign";
-import { styles } from "./subcompStyles.js";
-import { CustomText } from "../../../components/CustomText/customText.jsx";
-import { TipsByCategory } from "./tips.jsx";
+import React from 'react';
+import { useState } from 'react';
+import { View, ScrollView, Pressable } from 'react-native';
+import AntDesignI from 'react-native-vector-icons/AntDesign';
+import { styles } from './subcompStyles.js';
+import { CustomText } from '../../../components/CustomText/customText.jsx';
+import { TipsByCategory } from './tips.jsx';
 
-const categories = ["МИВКА КУХНЯ", "ПЕРАЛНЯ", "ДУШ БАНЯ", "ТОАЛЕТНА"];
+const categories = ['МИВКА КУХНЯ', 'ПЕРАЛНЯ', 'ДУШ БАНЯ', 'ТОАЛЕТНА'];
 
 export const List = () => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
@@ -14,13 +14,13 @@ export const List = () => {
   const pressHandler = (category) => {
     setSelectedCategory(category);
     //TODO: onPress to scroll to the selected section
-    console.log("Selected category:", category);
+    console.log('Selected category:', category);
   };
 
   return (
     <ScrollView>
       <View style={styles.titleContainer}>
-        <CustomText fontType="bold" style={styles.title}>
+        <CustomText fontType='bold' style={styles.title}>
           НАЙ-ВИСОКО ПОТРЕБЛЕНИЕ
         </CustomText>
       </View>
@@ -32,7 +32,7 @@ export const List = () => {
             style={styles.item}
           >
             <CustomText
-              fontType="bold"
+              fontType='bold'
               style={[
                 styles.itemText,
                 selectedCategory === category && styles.selectedItemText,
@@ -46,12 +46,12 @@ export const List = () => {
 
       <Pressable
         style={styles.accountContainer}
-        onPress={() => console.log("pressed")}
+        onPress={() => console.log('pressed')}
       >
         <View style={styles.account}>
-          <AntDesignI name={"user"} size={25} style={styles.userIcon} />
+          <AntDesignI name={'user'} size={25} style={styles.userIcon} />
           <View>
-            <CustomText fontType="bold" style={styles.accountTitle}>
+            <CustomText fontType='bold' style={styles.accountTitle}>
               Моят акаунт
             </CustomText>
             <CustomText style={styles.accountSubtitle}>
@@ -59,7 +59,7 @@ export const List = () => {
             </CustomText>
           </View>
         </View>
-        <AntDesignI name={"arrowright"} size={35} style={styles.arrow} />
+        <AntDesignI name={'arrowright'} size={35} style={styles.arrow} />
       </Pressable>
 
       <TipsByCategory></TipsByCategory>

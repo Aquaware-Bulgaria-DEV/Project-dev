@@ -1,5 +1,5 @@
 import { View, Pressable } from "react-native";
-import { Image } from "expo-image";
+import { Image } from 'expo-image';
 
 import AntDesignI from "react-native-vector-icons/AntDesign";
 

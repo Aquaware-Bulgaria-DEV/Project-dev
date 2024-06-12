@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TextInput, Button, Alert } from "react-native";
-import { CustomText } from "../../components/CustomText/customText.jsx";
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
+import { CustomText } from '../../components/CustomText/customText.jsx';
 
 const User = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-  const server = "http://ec2-18-234-44-48.compute-1.amazonaws.com";
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const server = 'http://ec2-18-234-44-48.compute-1.amazonaws.com';
 
   const handleRegister = async () => {
     console.log(name, email, password, repeatPassword);
 
     if (!name || !email || !password || !repeatPassword) {
-      Alert.alert("Грешка", "Моля, попълнете всички полета");
+      Alert.alert('Грешка', 'Моля, попълнете всички полета');
       return;
     }
 
     if (password !== repeatPassword) {
-      Alert.alert("Грешка", "Паролите не съвпадат");
+      Alert.alert('Грешка', 'Паролите не съвпадат');
       return;
     }
 
@@ -31,33 +31,33 @@ const User = () => {
       <CustomText style={styles.title}>Регистрация</CustomText>
       <TextInput
         style={styles.input}
-        placeholder="Име"
+        placeholder='Име'
         value={name}
         onChangeText={setName}
       />
       <TextInput
         style={styles.input}
-        placeholder="Имейл"
+        placeholder='Имейл'
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
+        keyboardType='email-address'
+        autoCapitalize='none'
       />
       <TextInput
         style={styles.input}
-        placeholder="Парола"
+        placeholder='Парола'
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
       <TextInput
         style={styles.input}
-        placeholder="Потвърди парола"
+        placeholder='Потвърди парола'
         value={repeatPassword}
         onChangeText={setRepeatPassword}
         secureTextEntry
       />
-      <Button title="Регистрация" onPress={handleRegister} />
+      <Button title='Регистрация' onPress={handleRegister} />
     </View>
   );
 };
@@ -65,18 +65,18 @@ const User = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
     marginBottom: 16,
-    textAlign: "center",
+    textAlign: 'center',
   },
   input: {
     height: 40,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderWidth: 1,
     marginBottom: 12,
     paddingLeft: 8,

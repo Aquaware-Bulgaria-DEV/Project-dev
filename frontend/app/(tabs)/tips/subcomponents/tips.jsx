@@ -4,12 +4,12 @@ import {
   ImageBackground,
   View,
   ActivityIndicator,
-} from "react-native";
-import { styles } from "./subcompStyles.js";
-import { useState, useEffect } from "react";
-import * as tipsServices from "../../../services/fetch.js";
-import { useRouter } from "expo-router";
-import { CustomText } from "../../../components/CustomText/customText.jsx";
+} from 'react-native';
+import { styles } from './subcompStyles.js';
+import { useState, useEffect } from 'react';
+import * as tipsServices from '../../../services/fetch.js';
+import { useRouter } from 'expo-router';
+import { CustomText } from '../../../components/CustomText/customText.jsx';
 export const TipsByCategory = () => {
   const router = useRouter();
   const [tips, setTips] = useState([]);
@@ -22,7 +22,7 @@ export const TipsByCategory = () => {
       setTips(response);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching tips:", error);
+      console.error('Error fetching tips:', error);
       setLoading(false);
     }
   };
@@ -34,14 +34,14 @@ export const TipsByCategory = () => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size='large' color='black' />
       </View>
     );
   }
 
   return (
     <ScrollView>
-      <CustomText fontType="bold" style={styles.categories}>
+      <CustomText fontType='bold' style={styles.categories}>
         Категории
       </CustomText>
 
@@ -49,14 +49,14 @@ export const TipsByCategory = () => {
         <View key={tip.id}>
           <Pressable
             onPress={() =>
-              router.push({ pathname: "tip", params: { tipId: tip.id } })
+              router.push({ pathname: 'tip', params: { tipId: tip.id } })
             }
           >
             <ImageBackground
               style={styles.background}
               source={{ uri: tip.background_image }}
             >
-              <CustomText fontType="bold" style={styles.tipText}>
+              <CustomText fontType='bold' style={styles.tipText}>
                 {tip.title}
               </CustomText>
             </ImageBackground>

@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { Image } from "expo-image";
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 
-import { Header } from "../../components/header";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import globalStyles from "../../globalStyles";
-import { CustomText } from "../../components/CustomText/customText.jsx";
-import Avatar from "../../../assets/CatyProfile.png";
-import CustomButton from "../../components/customButton";
+import { Header } from '../../components/header';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { CustomText } from '../../components/CustomText/customText.jsx';
+import Avatar from '../../../assets/CatyProfile.png';
+import CustomButton from '../../components/customButton';
 
 const FormField = ({
   inputName,
@@ -33,17 +32,17 @@ const FormField = ({
       <TextInput
         onChangeText={(text) => handleChange(type, text)}
         value={formValue[type]}
-        placeholder="..."
+        placeholder='...'
         style={{
-          justifyContent: "center",
+          justifyContent: 'center',
           height: 50,
           fontSize: 14,
           paddingLeft: 20,
           paddingRight: 20,
           opacity: 0.75,
-          backgroundColor: "#F9F9F9",
+          backgroundColor: '#F9F9F9',
           borderBottomWidth: 1,
-          borderBottomColor: "#DADADA",
+          borderBottomColor: '#DADADA',
           borderRadius: 5,
         }}
       ></TextInput>
@@ -56,7 +55,7 @@ const Troubleshoot = () => {
   const navigation = useNavigation();
 
   React.useEffect(() => {
-    const tabBarVisible = isFocused ? "none" : "flex";
+    const tabBarVisible = isFocused ? 'none' : 'flex';
     navigation.setOptions({
       tabBarStyle: { display: tabBarVisible },
     });
@@ -65,12 +64,12 @@ const Troubleshoot = () => {
   /// TODO: ADD ERROR TEXT TO THE COMPONENT
 
   const [formValue, setFormValue] = useState({
-    leakage: "",
-    breakdown: "",
-    theft: "",
+    leakage: '',
+    breakdown: '',
+    theft: '',
   });
   const [opacity, setOpacity] = useState(1);
-  const [error, setError] = useState("asd");
+  const [error, setError] = useState('asd');
 
   const handleFormChange = (newValues) => {
     setFormValue(newValues);
@@ -78,7 +77,7 @@ const Troubleshoot = () => {
   };
 
   const handleRemove = () => {
-    console.log("Remove Pressed");
+    console.log('Remove Pressed');
   };
 
   return (
@@ -106,24 +105,24 @@ const Troubleshoot = () => {
             </View>
           </View>
           <FormField
-            inputName={"Докладвай теч"}
-            type={"leakage"}
+            inputName={'Докладвай теч'}
+            type={'leakage'}
             additionalStyles={{ marginTop: 10 }}
             onFormChange={handleFormChange}
             formValue={formValue}
             setFormValue={setFormValue}
           />
           <FormField
-            inputName={"Докладвай авария"}
-            type={"breakdown"}
+            inputName={'Докладвай авария'}
+            type={'breakdown'}
             additionalStyles={{ marginTop: 10 }}
             onFormChange={handleFormChange}
             formValue={formValue}
             setFormValue={setFormValue}
           />
           <FormField
-            inputName={"Докладвай кражба на вода"}
-            type={"theft"}
+            inputName={'Докладвай кражба на вода'}
+            type={'theft'}
             additionalStyles={{ marginTop: 10 }}
             onFormChange={handleFormChange}
             formValue={formValue}
@@ -131,13 +130,13 @@ const Troubleshoot = () => {
           />
           <CustomText>{error}</CustomText>
           <CustomButton
-            title={"Изпрати"}
+            title={'Изпрати'}
             additionalStyles={{
-              width: "90%",
-              alignSelf: "center",
+              width: '90%',
+              alignSelf: 'center',
               height: 64,
               borderRadius: 10,
-              shadowColor: "#000",
+              shadowColor: '#000',
               shadowOffset: { width: 0, height: 6 },
               shadowOpacity: 0.5,
               shadowRadius: 7.3,
@@ -164,8 +163,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   innerContainer: {
-    backgroundColor: "#FFFFFF",
-    height: "87%",
+    backgroundColor: '#FFFFFF',
+    height: '87%',
     // alignItems: 'center',
     marginTop: 30,
     paddingTop: 30,
@@ -176,10 +175,10 @@ const styles = StyleSheet.create({
     // gap: 30,
   },
   credentials: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 20,
     borderBottomWidth: 1,
-    borderBlockColor: "#E8E8E8",
+    borderBlockColor: '#E8E8E8',
     paddingBottom: 25,
   },
   avatar: {
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
   clientName: {
     // fontFamily: globalStyles.primaryFont,
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   clientNumber: {
     fontSize: 12,
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
   },
   removeBtn: {
     fontSize: 12,
-    color: "#F67280",
+    color: '#F67280',
   },
 });
 

@@ -1,6 +1,6 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import { CustomText } from "../../components/CustomText/customText.jsx";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { CustomText } from '../../components/CustomText/customText.jsx';
 const Statistic = () => {
   return (
     <View style={styles.container}>
@@ -12,8 +12,8 @@ const Statistic = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

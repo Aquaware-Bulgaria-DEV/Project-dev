@@ -1,8 +1,8 @@
-import { TouchableOpacity, StyleSheet, Image } from "react-native";
-import React from "react";
+import { TouchableOpacity, Image } from 'react-native';
+import React from 'react';
 
-import { styles } from "./customButtonStyles";
-import { CustomText } from "./CustomText/customText.jsx";
+import { styles } from './customButtonStyles';
+import { CustomText } from './CustomText/customText.jsx';
 
 const CustomButton = ({
   title,

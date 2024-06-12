@@ -1,18 +1,18 @@
-import { Text } from "react-native";
+import { Text } from 'react-native';
 
-import { styles } from "./customTextStyles.js";
+import { styles } from './customTextStyles.js';
 
 export const CustomText = ({
   style,
-  fontType = "regular",
+  fontType = 'regular',
   children,
   ...props
 }) => {
   const getFontStyle = () => {
     switch (fontType) {
-      case "regular":
+      case 'regular':
         return styles.defaultFont;
-      case "bold":
+      case 'bold':
         return styles.boldFont;
       /**
        * Example: How to add more font styles

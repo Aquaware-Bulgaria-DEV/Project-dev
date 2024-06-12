@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, ScrollView, Pressable } from "react-native";
 import AntDesignI from "react-native-vector-icons/AntDesign";
 import { styles } from "./subcompStyles.js";
-
+import { CustomText } from "../../../components/CustomText/customText.jsx";
 import { TipsByCategory } from "./tips.jsx";
 
 const categories = ["МИВКА КУХНЯ", "ПЕРАЛНЯ", "ДУШ БАНЯ", "ТОАЛЕТНА"];
@@ -20,7 +20,9 @@ export const List = () => {
   return (
     <ScrollView>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>НАЙ-ВИСОКО ПОТРЕБЛЕНИЕ</Text>
+        <CustomText fontType="bold" style={styles.title}>
+          НАЙ-ВИСОКО ПОТРЕБЛЕНИЕ
+        </CustomText>
       </View>
       <View style={styles.listContainer}>
         {categories.map((category, index) => (
@@ -29,14 +31,15 @@ export const List = () => {
             onPress={() => pressHandler(category)}
             style={styles.item}
           >
-            <Text
+            <CustomText
+              fontType="bold"
               style={[
                 styles.itemText,
                 selectedCategory === category && styles.selectedItemText,
               ]}
             >
               {category}
-            </Text>
+            </CustomText>
           </Pressable>
         ))}
       </View>
@@ -48,8 +51,12 @@ export const List = () => {
         <View style={styles.account}>
           <AntDesignI name={"user"} size={25} style={styles.userIcon} />
           <View>
-            <Text style={styles.accountTitle}>Моят акаунт</Text>
-            <Text style={styles.accountSubtitle}>сравни с минали месеци</Text>
+            <CustomText fontType="bold" style={styles.accountTitle}>
+              Моят акаунт
+            </CustomText>
+            <CustomText style={styles.accountSubtitle}>
+              сравни с минали месеци
+            </CustomText>
           </View>
         </View>
         <AntDesignI name={"arrowright"} size={35} style={styles.arrow} />

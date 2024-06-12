@@ -1,31 +1,31 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import React from "react";
 import { Tabs, Redirect } from "expo-router";
-import getIcon from '../../utils/icons';
+import getIcon from "../../utils/icons";
+import { CustomText } from "../components/CustomText/customText.jsx";
 
-
-
-
-
-const TabIcon = ({localIcon, color, name, focused, iconName }) => {
+const TabIcon = ({ localIcon, color, name, focused, iconName }) => {
   return (
     <View
-      style={[{
-        flexDirection: "row",
-        alignItems: "center",
-        // justifyContent: "center",
-        // width: 100,
-        gap: 10 
-      }, focused ? {} : {}]}  // Here must find solution about the expanding on focus tab
+      style={[
+        {
+          flexDirection: "row",
+          alignItems: "center",
+          // justifyContent: "center",
+          // width: 100,
+          gap: 10,
+        },
+        focused ? {} : {},
+      ]} // Here must find solution about the expanding on focus tab
     >
       {getIcon(iconName, color)}
       {/* <Image
         source={localIcon}
         style={{ resizeMode: "contain", height: 35, tintColor: color }}
       /> */}
-      <Text style={[styles.tabIconText, {color: color}]}>
+      <CustomText style={[styles.tabIconText, { color: color }]}>
         {focused ? name : null}
-      </Text>
+      </CustomText>
     </View>
   );
 };
@@ -45,83 +45,89 @@ const TabsLayout = () => {
         name="home/index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, focused }) =>
+          tabBarIcon: ({ color, focused }) => (
             <TabIcon
               color={color}
               name="Home"
-              iconName={'home'}
+              iconName={"home"}
               focused={focused}
             />
+          ),
         }}
       />
       <Tabs.Screen
         name="tips/index"
         options={{
           title: "Tips",
-          tabBarIcon: ({ color, focused }) =>
+          tabBarIcon: ({ color, focused }) => (
             <TabIcon
               // localIcon={require('../../assets/tabIcons/home.png')}
               color={color}
               name="Tips"
-              iconName={'droplet'}
+              iconName={"droplet"}
               focused={focused}
             />
+          ),
         }}
       />
       <Tabs.Screen
         name="user/index"
         options={{
           title: "User",
-          tabBarIcon: ({ color, focused }) =>
+          tabBarIcon: ({ color, focused }) => (
             <TabIcon
               // localIcon={require('../../assets/tabIcons/home.png')}
               color={color}
-              iconName={'user'}
+              iconName={"user"}
               name="Users"
               focused={focused}
             />
+          ),
         }}
       />
       <Tabs.Screen
         name="settings/index"
         options={{
           title: "Settings",
-          tabBarIcon: ({ color, focused }) =>
+          tabBarIcon: ({ color, focused }) => (
             <TabIcon
               // localIcon={require('../../assets/tabIcons/home.png')}
-              iconName={'settings'}
+              iconName={"settings"}
               color={color}
               name="Settings"
               focused={focused}
             />
+          ),
         }}
       />
       <Tabs.Screen
         name="statistic/index"
         options={{
           title: "Statistics",
-          tabBarIcon: ({ color, focused }) =>
+          tabBarIcon: ({ color, focused }) => (
             <TabIcon
               // localIcon={require('../../assets/tabIcons/home.png')}
-              iconName={'bar-chart'}
+              iconName={"bar-chart"}
               color={color}
               name="Statistics"
               focused={focused}
             />
+          ),
         }}
       />
       <Tabs.Screen
         name="troubleshoot/index"
         options={{
           title: "Trouble",
-          tabBarIcon: ({ color, focused }) =>
+          tabBarIcon: ({ color, focused }) => (
             <TabIcon
               // localIcon={require('../../assets/tabIcons/home.png')}
-              iconName={'emergency-share'}
+              iconName={"emergency-share"}
               color={color}
               name="Trouble"
               focused={focused}
             />
+          ),
         }}
       />
     </Tabs>
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
   tabBar: {
     display: "flex",
     // flexDirection: 'row',
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
@@ -144,16 +150,16 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     borderTopWidth: 0,
     borderTopLeftRadius: 25,
-    borderTopRightRadius: 25
+    borderTopRightRadius: 25,
   },
   tabBarItem: {
     flex: 1,
     display: "flex",
     // flexDirection: 'row',
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   tabIconText: {
-     fontSize: 15,
-  }
+    fontSize: 15,
+  },
 });

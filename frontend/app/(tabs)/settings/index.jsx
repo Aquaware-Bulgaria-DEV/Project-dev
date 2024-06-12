@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { CustomText } from "../../components/CustomText/customText.jsx";
 const Settings = () => {
   return (
     <View style={styles.container}>
-      <Text>Welcome to the Settings Screen!</Text>
+      <CustomText>Welcome to the Settings Screen!</CustomText>
     </View>
   );
 };
@@ -12,8 +12,8 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

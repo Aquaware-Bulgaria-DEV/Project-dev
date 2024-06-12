@@ -1,6 +1,5 @@
 import {
   ScrollView,
-  Text,
   Pressable,
   ImageBackground,
   View,
@@ -10,7 +9,7 @@ import { styles } from "./subcompStyles.js";
 import { useState, useEffect } from "react";
 import * as tipsServices from "../../../services/tipsServices.js";
 import { useRouter } from "expo-router";
-
+import { CustomText } from "../../../components/CustomText/customText.jsx";
 export const TipsByCategory = () => {
   const router = useRouter();
   const [tips, setTips] = useState([]);
@@ -42,7 +41,9 @@ export const TipsByCategory = () => {
 
   return (
     <ScrollView>
-      <Text style={styles.categories}>Категории</Text>
+      <CustomText fontType="bold" style={styles.categories}>
+        Категории
+      </CustomText>
 
       {tips.map((tip) => (
         <View key={tip.id}>
@@ -55,7 +56,9 @@ export const TipsByCategory = () => {
               style={styles.background}
               source={{ uri: tip.background_image }}
             >
-              <Text style={styles.tipText}>{tip.title}</Text>
+              <CustomText fontType="bold" style={styles.tipText}>
+                {tip.title}
+              </CustomText>
             </ImageBackground>
           </Pressable>
         </View>

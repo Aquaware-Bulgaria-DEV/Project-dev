@@ -8,8 +8,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9",
   },
   scrollViewContent: {
-    paddingBottom: 125,
-    // marginHorizontal: 24,
+    paddingBottom: 100,
     marginTop: 35,
   },
   headerTitle: {

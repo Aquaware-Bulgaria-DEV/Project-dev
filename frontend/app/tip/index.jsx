@@ -1,10 +1,11 @@
-import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import { View, SafeAreaView, ScrollView, Image } from "react-native";
 import { Header } from "../components/header.jsx";
 import { styles } from "./tipStyle.js";
 import * as tipsServices from "../services/tipsServices.js";
 
+import { CustomText } from "../components/CustomText/customText.jsx";
 import { useEffect, useState } from "react";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
 const Tip = () => {
   const [tip, setTip] = useState([]);
@@ -33,9 +34,11 @@ const Tip = () => {
         <Header showProfilePic={false} />
         <View style={styles.content}>
           <Image source={{ uri: tip["background_image"] }} style={styles.pic} />
-          <Text style={styles.title}>{tip.title}</Text>
+          <CustomText fontType="bold" style={styles.title}>
+            {tip.title}
+          </CustomText>
 
-          <Text style={styles.text}>{tip.content}</Text>
+          <CustomText style={styles.text}>{tip.content}</CustomText>
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -8,10 +8,9 @@ import { Redirect, router } from "expo-router";
 import "../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 
-import globalStyles from "./globalStyles";
+import AuthContext from './Context/AuthContext';
 
-import AquawareLogo from "../assets/AquawareLogo.svg";
-import WaterIcon from "../assets/authSvg/IconWater.svg";
+import AquawareLogo from '../assets/AquawareLogo.svg';
 
 const AuthLayout = () => {
   const { t, i18n } = useTranslation();
@@ -23,28 +22,49 @@ const AuthLayout = () => {
       i18n.changeLanguage("bg");
     }
   };
+  
+  const {
+    token,
+  } = React.useContext(AuthContext);
+  const [loading, setLoading] = React.useState(true);
 
+  React.useEffect(() => {
+    if (token !== null) { 
+      setLoading(false);
+    }else{
+      setTimeout(() => {
+        setLoading(false)
+      }, 500)
+    }
+  }, [token]);
+
+  const isAuthenticated = token !== null;
+  // console.log(loading)
   return (
-    <SafeAreaView style={styles.container}>
-      <Image source={AquawareLogo} style={styles.image} contentFit="cover" />
-      <Text style={styles.logo}>Aquaware</Text>
-      <Text style={styles.welcomeMessage}>
-        {t("welcomeMessage")}{" "}
-        {/* на потреблението на вода, където може да се научите и да пестите вода с нашите безценни съвети! */}
-      </Text>
-      {/* <Text>Sign-up</Text> */}
-      {/* <Link href="/sign-up">Влез</Link> */}
+    loading 
+      ? null 
+      : 
+      isAuthenticated
+        ? 
+        <Redirect href="/home" />
+        : 
+        <SafeAreaView style = {styles.container}>
+            <Image
+            source={AquawareLogo}
+            style={styles.image}
+            contentFit="cover"
+            />
+            <Text style={styles.logo}>Aquaware</Text>
+            <Text style={styles.welcomeMessage}>Добре дошли в Aquaware, вашият незаменим партнъор в следенето и пестенето на вода!</Text>
+            <CustomButton title={'Влезте в профила си'} handlePress={() =>  router.push('signIn')}/>
+            <CustomButton title={'Начало'} handlePress={() =>  router.push('/home')}/>
       <TouchableOpacity onPress={changeLanguage}>
         <Text>{t("changeLanguage")}</Text>
       </TouchableOpacity>
-      <CustomButton
-        title={t("loginButton")}
-        handlePress={() => router.push("signIn")}
-      />
-      {/* <CustomButton title={'Създай профил'} handlePress={() => console.log('click') }/> */}
-    </SafeAreaView>
-  );
-};
+            {/* <CustomButton title={'Начало'} handlePress={() => console.log("Mario Auth") }/> */}
+        </SafeAreaView>
+  )
+}
 
 export default AuthLayout;
 
@@ -54,8 +74,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 50,
-    // background:'linear-gradient(#e66465, #9198e5)',
-    paddingTop: 40,
+    paddingTop: 40
   },
   logo: {
     fontSize: 25,
@@ -69,5 +88,6 @@ const styles = StyleSheet.create({
   image: {
     width: 160,
     height: 150,
-  },
-});
+  }
+})
+

@@ -5,24 +5,24 @@ const CARD_HEIGHT = 170;
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    gap: 3,
-    marginHorizontal: 24,
-    marginVertical: 35,
+    backgroundColor: "#F9F9F9",
   },
   scrollViewContent: {
-    flexGrow: 1,
-    paddingBottom: 78,
+    paddingBottom: 125,
+    // marginHorizontal: 24,
+    marginTop: 35,
   },
   headerTitle: {
     fontSize: 25,
     paddingBottom: 15,
+    marginHorizontal: 24,
   },
   description: {
     fontSize: 15,
     color: "grey",
     letterSpacing: 0.1,
     lineHeight: 25,
+    marginHorizontal: 24,
   },
   paddingZero: {
     padding: 0,
@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
     borderRadius: 20,
     overflow: "hidden",
+    marginHorizontal: 24,
     marginVertical: 10,
     paddingLeft: 24,
     paddingRight: 24,
@@ -49,10 +50,10 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
     fontStyle: "bolder",
   },
-  devices: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
-    fontStyle: "bolder",
-  },
+  // devices: {
+  //   color: "white",
+  //   fontSize: 18,
+  //   fontWeight: "bold",
+  //   fontStyle: "bolder",
+  // },
 });

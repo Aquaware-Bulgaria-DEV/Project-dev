@@ -35,7 +35,7 @@ const Home = () => {
         >
           <ImageBackground style={styles.rooms} source={KITCHEN_SOURCE}>
             <Text style={styles.roomText}>Кухня</Text>
-            <Text style={styles.devices}>5 уреда</Text>
+            {/* <Text style={styles.devices}>5 уреда</Text> */}
           </ImageBackground>
         </Pressable>
         <Pressable
@@ -44,7 +44,7 @@ const Home = () => {
         >
           <ImageBackground style={styles.rooms} source={BATHROOM_SOURCE}>
             <Text style={styles.roomText}>Баня</Text>
-            <Text style={styles.devices}>4 уреда</Text>
+            {/* <Text style={styles.devices}>4 уреда</Text> */}
           </ImageBackground>
         </Pressable>
         <Pressable
@@ -53,7 +53,7 @@ const Home = () => {
         >
           <ImageBackground style={styles.rooms} source={TOILET_SOURCE}>
             <Text style={styles.roomText}>Тоалетна</Text>
-            <Text style={styles.devices}>2 уреда</Text>
+            {/* <Text style={styles.devices}>2 уреда</Text> */}
           </ImageBackground>
         </Pressable>
       </ScrollView>

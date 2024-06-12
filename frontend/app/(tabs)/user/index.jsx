@@ -11,6 +11,7 @@ const User = () => {
 
   const handleRegister = async () => {
     console.log(name, email, password, repeatPassword);
+
     if (!name || !email || !password || !repeatPassword) {
       Alert.alert("Грешка", "Моля, попълнете всички полета");
       return;
@@ -20,29 +21,9 @@ const User = () => {
       Alert.alert("Грешка", "Паролите не съвпадат");
       return;
     }
-    try {
-      const response = await fetch(`${server}/profile/create/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: email,
-          password: password,
-        }),
-      });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log(`DATA is ${data.username}`);
-      Alert.alert("Успех", `Регистрирани сте като ${data.username}`);
-    } catch (error) {
-      console.error("Error:", error);
-      Alert.alert("Грешка", "Проблем при връзката със сървъра");
-    }
+    const user = await register(email, password);
+    console.log(`in REGISTER COMPOONNENT USER IS ${user}`);
   };
 
   return (

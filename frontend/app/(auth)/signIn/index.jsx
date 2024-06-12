@@ -4,25 +4,36 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import AuthForm from '../../components/authForm'
+import AuthForm from '../../components/authForm';
+import AuthContext from "../../Context/AuthContext";
 
 import {styles} from "./sign-inStyles"
 
 import AquawareLogo from "../../../assets/AquawareLogo.svg"
+import { login } from "../../services/fetch";
 
 const SignIn = () => {
+  const {saveToken} = React.useContext(AuthContext)
+
   const [formValues, setFormValues] = React.useState({ email: '', password: '' });
+  const [error, setError] = React.useState('');
 
   const handleFormChange = (newValues) => {
     setFormValues(newValues);
     console.log(newValues)
   };
+  
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
+    if(formValues.email ==='' || formValues.password ==='' ){
+      setError('Всички полета са задължителни');
+    }if (formValues.password.length<5) {
+      setError('Паролата трябва да съдържа минимум 6 символа');
+    } 
 
-    // Here goes the logic by Mario
-
-    console.log('Logging in with:', formValues);
+    login(formValues)
+    .then((token) => saveToken(token))
+    .catch(e => setError(e.message))
   };
 
   const googleHandler = () => {
@@ -49,6 +60,7 @@ const SignIn = () => {
         onLogin={handleLogin}
         facebookAuth = {facebookHandler}
         googleAuth = {googleHandler}
+        errorMessage={error}
         />
       </View>
    </SafeAreaView>

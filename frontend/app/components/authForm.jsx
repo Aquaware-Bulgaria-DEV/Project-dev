@@ -34,7 +34,7 @@ const FormField = ({
           style={styles.inputField}
           value={formValues[type]}
           onChangeText={(text) => handleChange(type, text)}
-          secureTextEntry={title === "Парола" ? true : false}
+          secureTextEntry={title === "Парола" || "Password" ? true : false}
         ></TextInput>
       </View>
     </View>
@@ -51,9 +51,10 @@ const AuthForm = ({
   facebookAuth,
   isReg,
   onRegister,
+  errorMessage,
   ...props
 }) => {
-  let errorMsg = "Error Message Example";
+  // let errorMsg = 'Error Message Example';
   const [formValues, setFormValues] = React.useState({
     // name: '',
     email: "",
@@ -92,7 +93,7 @@ const AuthForm = ({
           setFormValues={setFormValues}
         />
       )}
-      <CustomText style={styles.errorMsg}>{errorMsg}</CustomText>
+      <CustomText style={styles.errorMsg}>{errorMessage}</CustomText>
       {isReg ? (
         <CustomButton
           title={"Създай"}

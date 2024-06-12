@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { styles } from "./subcompStyles.js";
 import { useState, useEffect } from "react";
-import * as tipsServices from "../../../services/tipsServices.js";
+import * as tipsServices from "../../../services/fetch.js";
 import { useRouter } from "expo-router";
 import { CustomText } from "../../../components/CustomText/customText.jsx";
 export const TipsByCategory = () => {

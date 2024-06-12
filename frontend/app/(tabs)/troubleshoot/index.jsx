@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 
 import { Header } from "../../components/header";
@@ -10,14 +10,20 @@ import { CustomText } from "../../components/CustomText/customText.jsx";
 import Avatar from "../../../assets/CatyProfile.png";
 import CustomButton from "../../components/customButton";
 
-const FormField = ({ inputName, additionalStyles }) => {
-  // const [formValue, setFormValue] = useState('');
-
-  // const handleChange = (name, value) => {
-  //   const updatedValues = { ...formValue, [name]: value };
-  //   setFormValue(updatedValues);
-  //   onFormChange(updatedValues);
-  // };
+const FormField = ({
+  inputName,
+  additionalStyles,
+  value,
+  type,
+  onFormChange,
+  formValue,
+  setFormValue,
+}) => {
+  const handleChange = (name, value) => {
+    const updatedValues = { ...formValue, [name]: value };
+    setFormValue(updatedValues);
+    onFormChange(updatedValues);
+  };
 
   return (
     <View style={[{ flex: 1, gap: 10 }, additionalStyles]}>
@@ -26,6 +32,7 @@ const FormField = ({ inputName, additionalStyles }) => {
       </CustomText>
       <TextInput
         onChangeText={(text) => handleChange(type, text)}
+        value={formValue[type]}
         placeholder="..."
         style={{
           justifyContent: "center",
@@ -55,6 +62,25 @@ const Troubleshoot = () => {
     });
   }, [isFocused, navigation]);
 
+  /// TODO: ADD ERROR TEXT TO THE COMPONENT
+
+  const [formValue, setFormValue] = useState({
+    leakage: "",
+    breakdown: "",
+    theft: "",
+  });
+  const [opacity, setOpacity] = useState(1);
+  const [error, setError] = useState("asd");
+
+  const handleFormChange = (newValues) => {
+    setFormValue(newValues);
+    console.log(newValues);
+  };
+
+  const handleRemove = () => {
+    console.log("Remove Pressed");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -68,21 +94,42 @@ const Troubleshoot = () => {
               <CustomText style={styles.clientNumber}>
                 Клиентски номер: 119862
               </CustomText>
-              <CustomText style={styles.removeBtn}>Remove</CustomText>
+              <TouchableOpacity
+                onPressIn={() => setOpacity(0.7)}
+                onPressOut={() => setOpacity(1)}
+                onPress={handleRemove}
+              >
+                <CustomText style={[styles.removeBtn, { opacity }]}>
+                  Remove
+                </CustomText>
+              </TouchableOpacity>
             </View>
           </View>
           <FormField
             inputName={"Докладвай теч"}
+            type={"leakage"}
             additionalStyles={{ marginTop: 10 }}
+            onFormChange={handleFormChange}
+            formValue={formValue}
+            setFormValue={setFormValue}
           />
           <FormField
             inputName={"Докладвай авария"}
+            type={"breakdown"}
             additionalStyles={{ marginTop: 10 }}
+            onFormChange={handleFormChange}
+            formValue={formValue}
+            setFormValue={setFormValue}
           />
           <FormField
             inputName={"Докладвай кражба на вода"}
+            type={"theft"}
             additionalStyles={{ marginTop: 10 }}
+            onFormChange={handleFormChange}
+            formValue={formValue}
+            setFormValue={setFormValue}
           />
+          <CustomText>{error}</CustomText>
           <CustomButton
             title={"Изпрати"}
             additionalStyles={{
@@ -90,6 +137,11 @@ const Troubleshoot = () => {
               alignSelf: "center",
               height: 64,
               borderRadius: 10,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 6 },
+              shadowOpacity: 0.5,
+              shadowRadius: 7.3,
+              elevation: 4,
             }}
             additionalTextStyle={{ fontSize: 18 }}
           />
@@ -121,7 +173,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 20,
-    gap: 30,
+    // gap: 30,
   },
   credentials: {
     flexDirection: "row",

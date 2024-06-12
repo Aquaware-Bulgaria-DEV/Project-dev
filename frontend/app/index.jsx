@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import CustomButton from "./components/customButton";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,6 +11,8 @@ import {
   Muli_600SemiBold,
   Muli_700Bold,
 } from "@expo-google-fonts/muli";
+import "../src/i18n/i18n.config";
+import { useTranslation } from "react-i18next";
 
 import globalStyles from "./globalStyles";
 
@@ -20,13 +22,23 @@ import AquawareLogo from "../assets/AquawareLogo.svg";
 import { CustomText } from "./components/CustomText/customText.jsx";
 
 const AuthLayout = () => {
-  //Load custon font on app start
+  const { token } = React.useContext(AuthContext);
+
   const [fontsLoaded] = useFonts({
     Muli_400Regular,
     Muli_700Bold,
   });
+  //Load custon font on app start
+  const { t, i18n } = useTranslation();
 
-  const { token } = React.useContext(AuthContext);
+  const changeLanguage = () => {
+    if (i18n.language === "bg") {
+      i18n.changeLanguage("en");
+    } else {
+      i18n.changeLanguage("bg");
+    }
+  };
+
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -41,21 +53,26 @@ const AuthLayout = () => {
 
   const isAuthenticated = token !== null;
   // console.log(loading)
-  return loading || !fontsLoaded ? null : isAuthenticated ? (
+  return loading || fontsLoaded ? null : isAuthenticated ? (
     <Redirect href="/home" />
   ) : (
     <SafeAreaView style={styles.container}>
       <Image source={AquawareLogo} style={styles.image} contentFit="cover" />
       <CustomText style={styles.logo}>Aquaware</CustomText>
       <CustomText style={styles.welcomeMessage}>
-        Добре дошли в Aquaware, вашият незаменим партнъор в следенето и
-        пестенето на вода!
+        {t("welcomeMessage")}{" "}
       </CustomText>
       <CustomButton
-        title={"Влезте в профила си"}
+        title={t("loginButton")}
         handlePress={() => router.push("signIn")}
       />
-      <CustomButton title={"Начало"} handlePress={() => router.push("/home")} />
+      <CustomButton
+        title={t("home")}
+        handlePress={() => router.push("/home")}
+      />
+      <TouchableOpacity onPress={changeLanguage}>
+        <CustomText>{t("changeLanguage")}</CustomText>
+      </TouchableOpacity>
       {/* <CustomButton title={'Начало'} handlePress={() => console.log("Mario Auth") }/> */}
     </SafeAreaView>
   );

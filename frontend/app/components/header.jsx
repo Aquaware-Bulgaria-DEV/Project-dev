@@ -28,7 +28,7 @@ export const Header = ({ showProfilePic }) => {
           <AntDesignI name={"arrowleft"} size={30} style={styles.icon} />
         )}
       </Pressable>
-      <Image style={styles.pics} source={LOGO_COVER} />
+      <Image style={styles.logo} source={LOGO_COVER} />
     </View>
   );
 };

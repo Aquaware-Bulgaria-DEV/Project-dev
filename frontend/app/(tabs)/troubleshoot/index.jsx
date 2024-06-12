@@ -10,23 +10,18 @@ import globalStyles from '../../globalStyles'
 import Avatar from '../../../assets/CatyProfile.png';
 import CustomButton from '../../components/customButton';
 
-const FormField = ({
-  inputName,
-  additionalStyles
-}) => {
+const FormField = ({ inputName, additionalStyles, value, type, onFormChange, formValue, setFormValue }) =>{
 
-  // const [formValue, setFormValue] = useState('');
-
-  // const handleChange = (name, value) => {
-  //   const updatedValues = { ...formValue, [name]: value };
-  //   setFormValue(updatedValues);
-  //   onFormChange(updatedValues);
-  // };
+  const handleChange = (name, value) => {
+    const updatedValues = { ...formValue, [name]: value };
+    setFormValue(updatedValues);
+    onFormChange(updatedValues);
+  };
 
   return (
     <View style={[{flex: 1, gap:10,}, additionalStyles]}>
       <Text style={{fontSize: 14, paddingLeft:20, opacity: 0.3}}>{inputName}</Text>
-      <TextInput onChangeText={(text) => handleChange(type, text)} placeholder='...' 
+      <TextInput onChangeText={(text) => handleChange(type, text)} value={formValue[type]} placeholder='...' 
       style={{justifyContent: 'center', height: 50, fontSize: 14, paddingLeft:20, paddingRight:20, opacity: 0.75, backgroundColor: '#F9F9F9',  borderBottomWidth: 1, borderBottomColor: '#DADADA', borderRadius: 5}}></TextInput>
     </View>
   );
@@ -43,6 +38,15 @@ const Troubleshoot = () => {
     });
   }, [isFocused, navigation]);
 
+                          /// TODO: ADD ERROR TEXT TO THE COMPONENT
+
+  const [formValue, setFormValue] = useState({leakage: '', breakdown: '', theft: ''});
+  const [error, setError] = useState('');
+
+  const handleFormChange = (newValues) => {
+    setFormValue(newValues);
+    console.log(newValues)
+  };
   
   return (
     <SafeAreaView style={styles.container}>
@@ -58,10 +62,10 @@ const Troubleshoot = () => {
                 <Text style={styles.removeBtn}>Remove</Text>
               </View>
           </View>
-          <FormField inputName={'Докладвай теч'} additionalStyles={{marginTop: 10,}} />
-          <FormField inputName={'Докладвай авария'} additionalStyles={{marginTop: 10,}} />
-          <FormField inputName={'Докладвай кражба на вода'} additionalStyles={{marginTop: 10,}} />
-          <CustomButton title={'Изпрати'} additionalStyles={{width: '90%', alignSelf: 'center', height: 64, borderRadius: 10,}} additionalTextStyle={{fontSize: 18,}}/>
+          <FormField inputName={'Докладвай теч'} type={'leakage'} additionalStyles={{marginTop: 10,}} onFormChange={handleFormChange} formValue={formValue} setFormValue={setFormValue} />
+          <FormField inputName={'Докладвай авария'} type={'breakdown'} additionalStyles={{marginTop: 10,}} onFormChange={handleFormChange} formValue={formValue} setFormValue={setFormValue} />
+          <FormField inputName={'Докладвай кражба на вода'} type={'theft'} additionalStyles={{marginTop: 10,}} onFormChange={handleFormChange} formValue={formValue} setFormValue={setFormValue} />
+          <CustomButton title={'Изпрати'} additionalStyles={{width: '90%', alignSelf: 'center', height: 64, borderRadius: 10, shadowColor: "#000", shadowOffset: {width: 0,height: 6}, shadowOpacity: 0.5, shadowRadius: 7.3, elevation: 4,}} additionalTextStyle={{fontSize: 18, }}/>
         </View>
       </View>
     </SafeAreaView>
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 20,
-    gap: 30,
+    // gap: 30,
   },
   credentials: {
     flexDirection: 'row',

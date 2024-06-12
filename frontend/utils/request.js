@@ -14,7 +14,7 @@ const buildOptions = (data) => {
 
     if (token){
         options.headers = {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': token,
             ...options.headers,
         }
     }

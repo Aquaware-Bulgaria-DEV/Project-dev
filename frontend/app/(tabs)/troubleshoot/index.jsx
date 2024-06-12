@@ -77,7 +77,9 @@ const Troubleshoot = () => {
           <FormField inputName={'Докладвай авария'} type={'breakdown'} additionalStyles={{marginTop: 10,}} onFormChange={handleFormChange} formValue={formValue} setFormValue={setFormValue} />
           <FormField inputName={'Докладвай кражба на вода'} type={'theft'} additionalStyles={{marginTop: 10,}} onFormChange={handleFormChange} formValue={formValue} setFormValue={setFormValue} />
           <Text>{error}</Text>
-          <CustomButton title={'Изпрати'} additionalStyles={{width: '90%', alignSelf: 'center', height: 64, borderRadius: 10, shadowColor: "#000", shadowOffset: {width: 0,height: 6}, shadowOpacity: 0.5, shadowRadius: 7.3, elevation: 4,}} additionalTextStyle={{fontSize: 18, }}/>
+          <CustomButton title={'Изпрати'} 
+          additionalStyles={{width: '90%', alignSelf: 'center', height: 64, borderRadius: 10, shadowColor: "#000", shadowOffset: {width: 0,height: 6}, shadowOpacity: 0.5, shadowRadius: 7.3, elevation: 4,}} 
+          additionalTextStyle={{fontSize: 18 }}/>
         </View>
       </View>
     </SafeAreaView>

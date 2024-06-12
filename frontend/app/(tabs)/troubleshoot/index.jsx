@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import {Image} from 'expo-image';
 
 import {Header} from '../../components/header';
@@ -41,13 +41,18 @@ const Troubleshoot = () => {
                           /// TODO: ADD ERROR TEXT TO THE COMPONENT
 
   const [formValue, setFormValue] = useState({leakage: '', breakdown: '', theft: ''});
-  const [error, setError] = useState('');
+  const [opacity, setOpacity] = useState(1);
+  const [error, setError] = useState('asd');
 
   const handleFormChange = (newValues) => {
     setFormValue(newValues);
     console.log(newValues)
   };
-  
+
+  const handleRemove = () => {
+    console.log('Remove Pressed')
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -59,12 +64,19 @@ const Troubleshoot = () => {
               <View style={styles.clientInfo}>
                 <Text style={styles.clientName}>Кети Петрова</Text>
                 <Text style={styles.clientNumber}>Клиентски номер: 119862</Text>
-                <Text style={styles.removeBtn}>Remove</Text>
+                <TouchableOpacity
+                  onPressIn={() => setOpacity(0.7)}
+                  onPressOut={() => setOpacity(1)}
+                  onPress={handleRemove}
+                >
+                  <Text style={[styles.removeBtn, { opacity }]}>Remove</Text>
+              </TouchableOpacity>
               </View>
           </View>
           <FormField inputName={'Докладвай теч'} type={'leakage'} additionalStyles={{marginTop: 10,}} onFormChange={handleFormChange} formValue={formValue} setFormValue={setFormValue} />
           <FormField inputName={'Докладвай авария'} type={'breakdown'} additionalStyles={{marginTop: 10,}} onFormChange={handleFormChange} formValue={formValue} setFormValue={setFormValue} />
           <FormField inputName={'Докладвай кражба на вода'} type={'theft'} additionalStyles={{marginTop: 10,}} onFormChange={handleFormChange} formValue={formValue} setFormValue={setFormValue} />
+          <Text>{error}</Text>
           <CustomButton title={'Изпрати'} additionalStyles={{width: '90%', alignSelf: 'center', height: 64, borderRadius: 10, shadowColor: "#000", shadowOffset: {width: 0,height: 6}, shadowOpacity: 0.5, shadowRadius: 7.3, elevation: 4,}} additionalTextStyle={{fontSize: 18, }}/>
         </View>
       </View>

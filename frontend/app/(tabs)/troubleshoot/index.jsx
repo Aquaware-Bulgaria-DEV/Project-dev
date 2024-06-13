@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHeaderHeight } from '@react-navigation/elements';
 import {
   View,
@@ -11,12 +11,12 @@ import {
   Platform,
   Dimensions
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 
 import { Header } from '../../components/header';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import globalStyles from '../../globalStyles';
+// import globalStyles from '../../globalStyles';
 
 import Avatar from '../../../assets/CatyProfile.png';
 import CustomButton from '../../components/customButton';
@@ -65,9 +65,19 @@ const FormField = ({
 const Troubleshoot = () => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
+  const timeoutRef = useRef(null);
   const { width, height } = Dimensions.get("window"); 
+  const [opacity, setOpacity] = useState(1);
+  const [error, setError] = useState('');
+  const [formValue, setFormValue] = useState({
+    leakage: '',
+    breakdown: '',
+    theft: '',
+  });
+
   // const headerHeight = useHeaderHeight();
-  console.log(height)
+  // console.log(height)
+
   React.useEffect(() => {
     const tabBarVisible = isFocused ? 'none' : 'flex';
     navigation.setOptions({
@@ -76,14 +86,27 @@ const Troubleshoot = () => {
   }, [isFocused, navigation]);
 
   /// TODO: ADD ERROR TEXT TO THE COMPONENT
+  useEffect(() => {
+    if (error) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        setError('');
+      }, 3000);
+    }
 
-  const [formValue, setFormValue] = useState({
-    leakage: '',
-    breakdown: '',
-    theft: '',
-  });
-  const [opacity, setOpacity] = useState(1);
-  const [error, setError] = useState('asd');
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [error]);
+
+
+  
+  // const [opacity, setOpacity] = useState(1);
+  // const [error, setError] = useState('asd');
 
   const handleFormChange = (newValues) => {
     setFormValue(newValues);
@@ -92,6 +115,20 @@ const Troubleshoot = () => {
 
   const handleRemove = () => {
     console.log('Remove Pressed');
+  };
+
+  const onPressHandler = () => {
+    if (formValue.leakage === '' && formValue.breakdown === '' && formValue.theft === '') {
+      setError('Няма попълнено поле');
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        setError('');
+      }, 3000);
+    } else {
+      setError('');
+    }
   };
 
   return (
@@ -104,7 +141,7 @@ const Troubleshoot = () => {
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           keyboardVerticalOffset={height}
-          // behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           andr
         >
           <Header />
@@ -123,14 +160,20 @@ const Troubleshoot = () => {
                     onPressOut={() => setOpacity(1)}
                     onPress={handleRemove}
                   >
-                    <Text style={[styles.removeBtn, { opacity }]}>Remove</Text>
+                    <TouchableOpacity
+                      onPressIn={() => setOpacity(0.7)}
+                      onPressOut={() => setOpacity(1)}
+                      onPress={handleRemove}
+                    >
+                      <Text style={[styles.removeBtn, { opacity }]}>Remove</Text>
+                    </TouchableOpacity>
                   </TouchableOpacity>
                 </View>
               </View>
               <FormField
                 inputName={'Докладвай теч'}
                 type={'leakage'}
-                additionalStyles={{ marginTop: 10 }}
+                additionalStyles={{ marginTop: 50 }}
                 onFormChange={handleFormChange}
                 formValue={formValue}
                 setFormValue={setFormValue}
@@ -151,9 +194,10 @@ const Troubleshoot = () => {
                 formValue={formValue}
                 setFormValue={setFormValue}
               />
-              <Text>{error}</Text>
+              <Text style={styles.errorMessage}>{error}</Text>
               <CustomButton
                 title={'Изпрати'}
+                handlePress={onPressHandler}
                 additionalStyles={{
                   width: '90%',
                   alignSelf: 'center',
@@ -231,6 +275,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#F67280',
   },
+  errorMessage: {
+    color: 'red',
+    alignSelf: 'center',
+    paddingBottom: 30,
+  }
 });
 
 export default Troubleshoot;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHeaderHeight } from '@react-navigation/elements';
 import {
   View,
   Text,
@@ -7,6 +8,8 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
+  Platform,
+  Dimensions
 } from 'react-native';
 import { Image } from 'expo-image';
 
@@ -62,7 +65,9 @@ const FormField = ({
 const Troubleshoot = () => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-
+  const { width, height } = Dimensions.get("window"); 
+  // const headerHeight = useHeaderHeight();
+  console.log(height)
   React.useEffect(() => {
     const tabBarVisible = isFocused ? 'none' : 'flex';
     navigation.setOptions({
@@ -91,11 +96,16 @@ const Troubleshoot = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView 
+      style={{ flex: 1}}
+      contentContainerStyle={{ minHeight: height }}
+      alwaysBounceVertical={false}
+      >
         <KeyboardAvoidingView
           style={{ flex: 1 }}
-          keyboardVerticalOffset={100}
-          behavior={'position'}
+          keyboardVerticalOffset={height}
+          // behavior={Platform.OS === "ios" ? "padding" : "height"}
+          andr
         >
           <Header />
           <View style={styles.reqContainer}>
@@ -168,6 +178,7 @@ const Troubleshoot = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#F9F9F9",
   },
   reqContainer: {
     paddingTop: 10,
@@ -178,8 +189,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   innerContainer: {
+    // flex: 1,
     backgroundColor: '#FFFFFF',
     height: '87%',
+    // height: 740,
     // alignItems: 'center',
     marginTop: 30,
     paddingTop: 30,

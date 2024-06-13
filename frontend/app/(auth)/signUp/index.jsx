@@ -43,14 +43,14 @@ const SignUp = () => {
   
   try {
     const user = await register(formValues.email,formValues.password);
-    console.log(`user is : ${JSON.stringify(user)}`)
+    // console.log(`user is : ${JSON.stringify(user)}`)
     const userInfo =await login(formValues)
-    console.log(userInfo)
+    // console.log(userInfo)
     const token = userInfo.token;
-    console.log(`Token is ${token}`)
+    // console.log(`Token is ${token}`)
     saveToken(token)
-    console.log(`Authorization token is ${JSON.stringify(token)}`)
-    console.log(`Preferences token is ${preferences}`)
+    // console.log(`Authorization token is ${JSON.stringify(token)}`)
+    // console.log(`Preferences token is ${preferences}`)
   } catch (error) {
     setError(error.message)
   }

@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useHeaderHeight } from '@react-navigation/elements';
+import React, { useState, useRef, useEffect } from "react";
+import { useHeaderHeight } from "@react-navigation/elements";
 import {
   View,
   Text,
@@ -10,29 +10,31 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { Image } from 'expo-image';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { Image } from "expo-image";
+import { Picker } from "@react-native-picker/picker";
 
-import { Header } from '../../components/header';
-// import globalStyles from '../../globalStyles';
+import { Header } from "../../components/header";
 
-import Avatar from '../../../assets/CatyProfile.png';
-import CustomButton from '../../components/customButton';
+import Avatar from "../../../assets/CatyProfile.png";
+import CustomButton from "../../components/customButton";
 
 const FormField = ({
   inputName,
   additionalStyles,
+  additionalInputStyles,
   value,
   type,
   onFormChange,
-  formValue,
-  setFormValue,
+  formValues,
+  setFormValues,
+  mutiline
 }) => {
   const handleChange = (name, value) => {
-    const updatedValues = { ...formValue, [name]: value };
-    setFormValue(updatedValues);
+    const updatedValues = { ...formValues, [name]: value };
+    setFormValues(updatedValues);
     onFormChange(updatedValues);
   };
 
@@ -41,23 +43,48 @@ const FormField = ({
       <Text style={{ fontSize: 14, paddingLeft: 20, opacity: 0.3 }}>
         {inputName}
       </Text>
-      <TextInput
-        onChangeText={(text) => handleChange(type, text)}
-        value={formValue[type]}
-        placeholder='...'
-        style={{
-          justifyContent: 'center',
-          height: 50,
-          fontSize: 14,
-          paddingLeft: 20,
-          paddingRight: 20,
-          opacity: 0.75,
-          backgroundColor: '#F9F9F9',
-          borderBottomWidth: 1,
-          borderBottomColor: '#DADADA',
-          borderRadius: 5,
-        }}
-      ></TextInput>
+      {mutiline
+        ? <TextInput
+            onChangeText={text => handleChange(type, text)}
+            value={formValues[type]}
+            placeholder="..."
+            multiline
+            style={[
+              {
+                justifyContent: "center",
+                height: 50,
+                fontSize: 16,
+                paddingLeft: 20,
+                paddingRight: 20,
+                opacity: 0.75,
+                backgroundColor: "#F9F9F9",
+                borderBottomWidth: 1,
+                borderBottomColor: "#DADADA",
+                borderRadius: 5
+              },
+              additionalInputStyles
+            ]}
+          />
+        : <TextInput
+            onChangeText={text => handleChange(type, text)}
+            value={formValues[type]}
+            placeholder="..."
+            style={[
+              {
+                justifyContent: "center",
+                height: 50,
+                fontSize: 16,
+                paddingLeft: 20,
+                paddingRight: 20,
+                opacity: 0.75,
+                backgroundColor: "#F9F9F9",
+                borderBottomWidth: 1,
+                borderBottomColor: "#DADADA",
+                borderRadius: 5
+              },
+              additionalInputStyles
+            ]}
+          />}
     </View>
   );
 };
@@ -66,83 +93,87 @@ const Troubleshoot = () => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const timeoutRef = useRef(null);
-  const { width, height } = Dimensions.get("window"); 
+  const { width, height } = Dimensions.get("window");
   const [opacity, setOpacity] = useState(1);
-  const [error, setError] = useState('');
-  const [formValue, setFormValue] = useState({
-    leakage: '',
-    breakdown: '',
-    theft: '',
+  const [error, setError] = useState("");
+  const [formValues, setFormValues] = useState({
+    case: "",
+    address: "",
+    message: ""
   });
+  const [value, setValue] = useState('');
 
-  // const headerHeight = useHeaderHeight();
-  // console.log(height)
+  // React.useEffect(()=> {
+  //   setValue('Изберете вид заявка')
+  // }, [])
 
-  React.useEffect(() => {
-    const tabBarVisible = isFocused ? 'none' : 'flex';
-    navigation.setOptions({
-      tabBarStyle: { display: tabBarVisible },
-    });
-  }, [isFocused, navigation]);
+  React.useEffect(
+    () => {
+      const tabBarVisible = isFocused ? "none" : "flex";
+      navigation.setOptions({
+        tabBarStyle: { display: tabBarVisible }
+      });
+    },
+    [isFocused, navigation]
+  );
 
-  /// TODO: ADD ERROR TEXT TO THE COMPONENT
-  useEffect(() => {
-    if (error) {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+
+  useEffect(
+    () => {
+      if (error) {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+        timeoutRef.current = setTimeout(() => {
+          setError("");
+        }, 3000);
       }
-      timeoutRef.current = setTimeout(() => {
-        setError('');
-      }, 3000);
-    }
 
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [error]);
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
+    },
+    [error]
+  );
 
-
-  
-  // const [opacity, setOpacity] = useState(1);
-  // const [error, setError] = useState('asd');
-
-  const handleFormChange = (newValues) => {
-    setFormValue(newValues);
-    console.log(newValues);
+  const handleFormChange = newValues => {
+    setFormValues(newValues);
+    // console.log(newValues);
   };
 
   const handleRemove = () => {
-    console.log('Remove Pressed');
+    console.log("Remove Pressed");
   };
 
   const onPressHandler = () => {
-    if (formValue.leakage === '' && formValue.breakdown === '' && formValue.theft === '') {
-      setError('Няма попълнено поле');
+    if (value === '' || formValues.address === "" || formValues.message === "") {
+      setError("Имате непопълнено поле");
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
       timeoutRef.current = setTimeout(() => {
-        setError('');
+        setError("");
       }, 3000);
+      return;
     } else {
-      setError('');
+      setError("");
     }
+    console.log(formValues)
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView 
-      style={{ flex: 1}}
-      contentContainerStyle={{ minHeight: height }}
-      alwaysBounceVertical={false}
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ minHeight: height }}
+        alwaysBounceVertical={false}
       >
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           keyboardVerticalOffset={height}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          andr
         >
           <Header />
           <View style={styles.reqContainer}>
@@ -165,49 +196,62 @@ const Troubleshoot = () => {
                       onPressOut={() => setOpacity(1)}
                       onPress={handleRemove}
                     >
-                      <Text style={[styles.removeBtn, { opacity }]}>Remove</Text>
+                      <Text style={[styles.removeBtn, { opacity }]}>
+                        Remove
+                      </Text>
                     </TouchableOpacity>
                   </TouchableOpacity>
                 </View>
               </View>
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={value}
+                  onValueChange={(itemValue, itemIndex) => {
+                    setValue(itemValue);
+                    formValues.case = itemValue;
+                  }}
+                  style={styles.picker}
+                >
+                  {value === '' && <Picker.Item label="Изберете вид заявка.." value="" />}
+                  <Picker.Item label="Теч" value="leakage" />
+                  <Picker.Item label="Авария" value="breakdown" />
+                  <Picker.Item label="Кражба на вода" value="theft" />
+                </Picker>
+              </View>
               <FormField
-                inputName={'Докладвай теч'}
-                type={'leakage'}
-                additionalStyles={{ marginTop: 50 }}
-                onFormChange={handleFormChange}
-                formValue={formValue}
-                setFormValue={setFormValue}
-              />
-              <FormField
-                inputName={'Докладвай авария'}
-                type={'breakdown'}
+                inputName={"Адрес"}
+                type={"address"}
                 additionalStyles={{ marginTop: 10 }}
                 onFormChange={handleFormChange}
-                formValue={formValue}
-                setFormValue={setFormValue}
+                formValues={formValues}
+                setFormValues={setFormValues}
               />
               <FormField
-                inputName={'Докладвай кражба на вода'}
-                type={'theft'}
+                inputName={"Съобщение"}
+                type={"message"}
                 additionalStyles={{ marginTop: 10 }}
                 onFormChange={handleFormChange}
-                formValue={formValue}
-                setFormValue={setFormValue}
+                formValues={formValues}
+                setFormValues={setFormValues}
+                mutiline={true}
+                additionalInputStyles={{ height: 70}}
               />
-              <Text style={styles.errorMessage}>{error}</Text>
+              <Text style={styles.errorMessage}>
+                {error}
+              </Text>
               <CustomButton
-                title={'Изпрати'}
+                title={"Изпрати"}
                 handlePress={onPressHandler}
                 additionalStyles={{
-                  width: '90%',
-                  alignSelf: 'center',
+                  width: "90%",
+                  alignSelf: "center",
                   height: 64,
                   borderRadius: 10,
-                  shadowColor: '#000',
+                  shadowColor: "#000",
                   shadowOffset: { width: 0, height: 6 },
                   shadowOpacity: 0.5,
                   shadowRadius: 7.3,
-                  elevation: 4,
+                  elevation: 4
                 }}
                 additionalTextStyle={{ fontSize: 18 }}
               />
@@ -222,63 +266,68 @@ const Troubleshoot = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9F9F9",
+    backgroundColor: "#F9F9F9"
   },
   reqContainer: {
     paddingTop: 10,
     paddingLeft: 30,
-    paddingRight: 30,
+    paddingRight: 30
   },
   screenLabel: {
-    fontSize: 24,
+    fontSize: 24
   },
   innerContainer: {
-    // flex: 1,
-    backgroundColor: '#FFFFFF',
-    height: '87%',
-    // height: 740,
-    // alignItems: 'center',
+    backgroundColor: "#FFFFFF",
+    height: "87%",
     marginTop: 30,
     paddingTop: 30,
     paddingBottom: 20,
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 20,
-    // gap: 30,
+    gap: 30
   },
   credentials: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 20,
     borderBottomWidth: 1,
-    borderBlockColor: '#E8E8E8',
-    paddingBottom: 25,
+    borderBlockColor: "#E8E8E8",
+    paddingBottom: 25
   },
   avatar: {
     width: 95,
     height: 95,
-    borderRadius: 25,
+    borderRadius: 25
   },
   clientInfo: {
     paddingTop: 10,
-    gap: 7,
+    gap: 7
   },
   clientName: {
-    // fontFamily: globalStyles.primaryFont,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold"
   },
   clientNumber: {
     fontSize: 12,
-    opacity: 0.3,
+    opacity: 0.3
   },
   removeBtn: {
     fontSize: 12,
-    color: '#F67280',
+    color: "#F67280"
   },
   errorMessage: {
-    color: 'red',
-    alignSelf: 'center',
-    paddingBottom: 30,
+    color: "red",
+    alignSelf: "center",
+    paddingBottom: 30
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#DADADA",
+    borderRadius: 5
+  },
+  picker: {
+    height: Platform.OS === "ios" ? 200 : 50,
+    fontSize: 16,
   }
 });
 

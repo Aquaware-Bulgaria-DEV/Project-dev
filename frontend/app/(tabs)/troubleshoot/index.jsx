@@ -102,6 +102,7 @@ const Troubleshoot = () => {
     message: ""
   });
   const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // React.useEffect(()=> {
   //   setValue('Изберете вид заявка')
@@ -118,29 +119,32 @@ const Troubleshoot = () => {
   );
 
 
-  useEffect(
-    () => {
-      if (error) {
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
-        timeoutRef.current = setTimeout(() => {
-          setError("");
-        }, 3000);
-      }
+  // useEffect(
+  //   () => {
+  //     if (error) {
+  //       if (timeoutRef.current) {
+  //         clearTimeout(timeoutRef.current);
+  //       }
+  //       timeoutRef.current = setTimeout(() => {
+  //         setError("");
+  //       }, 3000);
+  //     }
 
-      return () => {
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
-      };
-    },
-    [error]
-  );
+  //     return () => {
+  //       if (timeoutRef.current) {
+  //         clearTimeout(timeoutRef.current);
+  //       }
+  //     };
+  //   },
+  //   [error]
+  // );
 
   const handleFormChange = newValues => {
+    if(formValues.address !== '' && formValues.address !== '' && formValues.case !== ''){
+      setError('')
+    }
+
     setFormValues(newValues);
-    // console.log(newValues);
   };
 
   const handleRemove = () => {
@@ -150,13 +154,13 @@ const Troubleshoot = () => {
   const onPressHandler = () => {
     if (value === '' || formValues.address === "" || formValues.message === "") {
       setError("Имате непопълнено поле");
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        setError("");
-      }, 3000);
-      return;
+      // if (timeoutRef.current) {
+      //   clearTimeout(timeoutRef.current);
+      // }
+      // timeoutRef.current = setTimeout(() => {
+      //   setError("");
+      // }, 3000);
+      // return;
     } else {
       setError("");
     }
@@ -196,9 +200,9 @@ const Troubleshoot = () => {
                       onPressOut={() => setOpacity(1)}
                       onPress={handleRemove}
                     >
-                      <Text style={[styles.removeBtn, { opacity }]}>
+                      {/* <Text style={[styles.removeBtn, { opacity }]}>
                         Remove
-                      </Text>
+                      </Text> */}
                     </TouchableOpacity>
                   </TouchableOpacity>
                 </View>
@@ -207,8 +211,12 @@ const Troubleshoot = () => {
                 <Picker
                   selectedValue={value}
                   onValueChange={(itemValue, itemIndex) => {
-                    setValue(itemValue);
                     formValues.case = itemValue;
+                    setValue(itemValue);
+
+                    if(formValues.case !== ''){
+                      setError('')
+                    }
                   }}
                   style={styles.picker}
                 >
@@ -241,6 +249,7 @@ const Troubleshoot = () => {
               </Text>
               <CustomButton
                 title={"Изпрати"}
+                // isLoading={true}
                 handlePress={onPressHandler}
                 additionalStyles={{
                   width: "90%",

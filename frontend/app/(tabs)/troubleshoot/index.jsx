@@ -117,7 +117,14 @@ const Troubleshoot = () => {
     },
     [isFocused, navigation]
   );
-
+  
+  React.useEffect(() => {
+    if(error !== ''){
+      setIsLoading(true);
+    }else{
+      setIsLoading(false)
+    }
+  }, [error])
 
   // useEffect(
   //   () => {
@@ -214,7 +221,7 @@ const Troubleshoot = () => {
                     formValues.case = itemValue;
                     setValue(itemValue);
 
-                    if(formValues.case !== ''){
+                    if(formValues.case !== '' && formValues.address !== '' && formValues.message !== ''){
                       setError('')
                     }
                   }}
@@ -249,7 +256,7 @@ const Troubleshoot = () => {
               </Text>
               <CustomButton
                 title={"Изпрати"}
-                // isLoading={true}
+                isLoading={isLoading}
                 handlePress={onPressHandler}
                 additionalStyles={{
                   width: "90%",

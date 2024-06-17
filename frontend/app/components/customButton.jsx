@@ -8,7 +8,7 @@ const CustomButton = ({title, handlePress, isLoading, additionalStyles, imagePat
     <TouchableOpacity
     onPress={handlePress}
     activeOpacity={0.7}
-    style={[styles.container, isLoading ? {opacity : 50} : null, additionalStyles]}
+    style={[styles.container, isLoading ? {opacity : .5} : null, additionalStyles]}
     disabled={isLoading}
     >
       

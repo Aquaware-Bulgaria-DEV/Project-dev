@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9F9F9",
+    backgroundColor: '#F9F9F9',
   },
   scrollViewContent: {
     paddingBottom: 125,
@@ -14,17 +14,17 @@ export const styles = StyleSheet.create({
   },
   pic: {
     height: 190,
-    width: "100%",
-    justifyContent: "center",
-    alignSelf: "center",
+    width: '100%',
+    justifyContent: 'center',
+    alignSelf: 'center',
     margin: 25,
     borderRadius: 8,
   },
   title: {
-    fontFamily: "Muli",
+    fontFamily: 'Muli',
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontFamily: 'Muli_700Bold',
+    textAlign: 'center',
     marginBottom: 10,
     marginHorizontal: 10,
   },

@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const CARD_HEIGHT = 170;
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9F9F9",
+    backgroundColor: '#F9F9F9',
   },
   scrollViewContent: {
     paddingBottom: 125,
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   },
   description: {
     fontSize: 15,
-    color: "grey",
+    color: 'grey',
     letterSpacing: 0.1,
     lineHeight: 25,
     marginHorizontal: 24,
@@ -29,13 +29,13 @@ export const styles = StyleSheet.create({
   },
   text: {
     marginVertical: 35,
-    fontStyle: "normal",
+    // fontStyle: 'normal',
   },
   rooms: {
     height: CARD_HEIGHT,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     borderRadius: 20,
-    overflow: "hidden",
+    overflow: 'hidden',
     marginHorizontal: 24,
     marginVertical: 10,
     paddingLeft: 24,
@@ -44,11 +44,12 @@ export const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   roomText: {
-    color: "white",
+    color: 'white',
     fontSize: 25,
-    fontWeight: "bold",
+    fontFamily: 'Muli_700Bold',
+    // fontWeight: 'bold',
     marginBottom: 8,
-    fontStyle: "bolder",
+    // fontStyle: 'bolder',
   },
   // devices: {
   //   color: "white",

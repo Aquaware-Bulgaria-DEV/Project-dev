@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import React from "react";
 import { Tabs, Redirect } from "expo-router";
 import getIcon from '../../utils/icons';
@@ -8,6 +8,7 @@ import getIcon from '../../utils/icons';
 
 
 const TabIcon = ({localIcon, color, name, focused, iconName }) => {
+
   return (
     <View
       style={[{
@@ -31,6 +32,15 @@ const TabIcon = ({localIcon, color, name, focused, iconName }) => {
 };
 
 const TabsLayout = () => {
+  const { width, height } = Dimensions.get("window");
+  const [showTitle, setShowTitle] = React.useState(true)
+  React.useEffect(() => {
+    if(width <= 760){
+      setShowTitle(false);
+    }
+    // console.log(width)
+  }, [])
+
   return (
     <Tabs
       screenOptions={{
@@ -48,7 +58,8 @@ const TabsLayout = () => {
           tabBarIcon: ({ color, focused }) =>
             <TabIcon
               color={color}
-              name="Home"
+              name={showTitle ? "Home" : null}
+              showTitle
               iconName={'home'}
               focused={focused}
             />
@@ -60,9 +71,8 @@ const TabsLayout = () => {
           title: "Tips",
           tabBarIcon: ({ color, focused }) =>
             <TabIcon
-              // localIcon={require('../../assets/tabIcons/home.png')}
               color={color}
-              name="Tips"
+              name={showTitle ? "Tips" : null}
               iconName={'droplet'}
               focused={focused}
             />
@@ -74,10 +84,9 @@ const TabsLayout = () => {
           title: "User",
           tabBarIcon: ({ color, focused }) =>
             <TabIcon
-              // localIcon={require('../../assets/tabIcons/home.png')}
               color={color}
               iconName={'user'}
-              name="Users"
+              name={showTitle ? "Users" : null}
               focused={focused}
             />
         }}
@@ -88,10 +97,9 @@ const TabsLayout = () => {
           title: "Settings",
           tabBarIcon: ({ color, focused }) =>
             <TabIcon
-              // localIcon={require('../../assets/tabIcons/home.png')}
               iconName={'settings'}
               color={color}
-              name="Settings"
+              name={showTitle ? "Settings" : null}
               focused={focused}
             />
         }}
@@ -102,10 +110,9 @@ const TabsLayout = () => {
           title: "Statistics",
           tabBarIcon: ({ color, focused }) =>
             <TabIcon
-              // localIcon={require('../../assets/tabIcons/home.png')}
               iconName={'bar-chart'}
               color={color}
-              name="Statistics"
+              name={showTitle ? "Statistics" : null}
               focused={focused}
             />
         }}
@@ -116,10 +123,9 @@ const TabsLayout = () => {
           title: "Trouble",
           tabBarIcon: ({ color, focused }) =>
             <TabIcon
-              // localIcon={require('../../assets/tabIcons/home.png')}
               iconName={'emergency-share'}
               color={color}
-              name="Trouble"
+              name={showTitle ? "Breakdown" : null}
               focused={focused}
             />
         }}
@@ -133,13 +139,10 @@ export default TabsLayout;
 const styles = StyleSheet.create({
   tabBar: {
     display: "flex",
-    // flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    // alignItems: "center",
-    // justifyContent: "center",
     paddingLeft: 20,
     paddingRight: 20,
     borderTopWidth: 0,
@@ -149,7 +152,6 @@ const styles = StyleSheet.create({
   tabBarItem: {
     flex: 1,
     display: "flex",
-    // flexDirection: 'row',
     alignItems: "center",
     justifyContent: "center"
   },

@@ -1,0 +1,207 @@
+API: http://127.0.0.1:8000/profile/create/ - Creates new user account
+
+Method: POST
+Takes: 
+{
+    "username": "<email or username>",
+    "password": "<password>",
+}
+
+Response:
+
+New user created: Status code 201
+{
+    "username": "aquaware1@test.bg"
+}
+
+
+If user already exists: Status code 400
+{
+    "username": [
+        "A user with that username already exists."
+    ]
+}
+
+
+API: http://127.0.0.1:8000/profile/login/ Login user
+
+Method: POST
+Takes: 
+{
+    "username": "<email or username>",
+    "password": "<password>",
+}
+
+
+Response:
+
+User successfully logged in: Status code 200
+{
+    "token": "f3768e6996f537b0168cd82c8c22edd557548317"
+}
+
+If login failed: Status code 400
+{
+    "non_field_errors": [
+        "Unable to log in with provided credentials."
+    ]
+}
+
+
+API: http://127.0.0.1:8000/profile/details/ Profile details
+
+Method: GET
+Takes: 
+No data
+
+Response:
+
+{
+    "first_name": null,
+    "last_name": null,
+    "email": "",
+    "client_number": "",
+    "phone_number": null,
+    "date_joined": "2024-05-17T09:31:41.411095Z",
+    "profile_picture": null,
+    "language": "BG"
+}
+
+Method: PUT
+Takes: 
+{
+    "first_name": "Firstname",
+    "last_name": "Lastname",
+    "email": "email@email.com",
+    "client_number": "123123",
+    "phone_number": "0123456789",
+    "date_joined": "2024-05-17T09:31:41.411095Z",
+    "profile_picture": <file upload>,
+    "language": "BG"
+}
+
+
+Response:
+
+Profile successfully updated: Status code 200
+
+
+Method: DELETE
+Takes: 
+No data
+
+
+Response:
+
+Profile successfully deleted: Status code 200
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/facebook/login/
+
+Method: POST
+
+Takes :
+{
+    "access_token": "EAAGDK6W10D4BO3mZA0KTCjEcoW6QihWZAYXAGwbwx5CZCDlzcBcvjqqZBKTBYU15xKDml2CMnLSVDT3enTQSdQy110ruxSHVR63tokdiXuaZCJSma1dEUFTZAoZAa1lmV2oAGbZBq7hchGZCs2Kj0i9ZCvdBrzlZBw9G5ne5cjMnOwai7lhL0a1cBkvNAq0WFRSDGJf5aGZCB20E6RmR1ems9z12RuFExHVkMxIyOIQUjMha0enhsD3ZB1ZAUcEdo9JSLWKstbmAZDZD"
+}
+
+Response:
+{
+    "token": "af900fa3d2cfed70aebc1fe429a36c8ae9a1b96c",
+    "user_id": 2
+}
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/
+
+Metod: POST
+
+Takes:
+
+{
+    "issue": "Leaking Pipe",
+    "address": "123 Main St",
+    "water_company_id": 1,
+    "content": "Testing content"
+}
+
+Returns :
+
+{
+    "message": "Email sent successfully"
+}
+
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/client-numbers/
+Method:GET
+Returns all client numbers related to the logged user
+
+[
+    {
+        "id": 1,
+        "client_number": "99999",
+        "water_company": 1,
+        "users": [
+            2
+        ]
+    },
+    {
+        "id": 2,
+        "client_number": "88888",
+        "water_company": 1,
+        "users": [
+            2
+        ]
+    }
+]
+
+
+Method: POST
+Takes:
+
+{
+        "client_number": "99999",
+        "water_company": <water_company_id>,
+        "users": <user_id>
+    },
+
+
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/user-water-meters/
+
+Method : GET
+
+Returns all water meters related to the current user
+
+{
+        "client_number": "99999",
+        "meter_number": "909090"
+    }
+
+Method: POST
+
+Takes:
+
+{
+        "client_number": "<existing client number",
+        "meter_number": "909090"
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Admin credentials for the Django admin panel: http://127.0.0.1:8000/admin/
+user: aquaware_admin
+pass: admin123

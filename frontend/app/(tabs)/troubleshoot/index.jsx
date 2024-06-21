@@ -17,10 +17,9 @@ import { Image } from "expo-image";
 import { Picker } from "@react-native-picker/picker";
 
 import { Header } from "../../components/header";
+import AuthContext from "../../Context/AuthContext";
 
-import Avatar from "../../../assets/CatyProfile.png";
 import CustomButton from "../../components/customButton";
-
 const FormField = ({
   inputName,
   additionalStyles,
@@ -97,13 +96,19 @@ const Troubleshoot = () => {
   const [opacity, setOpacity] = useState(1);
   const [error, setError] = useState("");
   const [formValues, setFormValues] = useState({
-    case: "",
+    issue: "",
     address: "",
-    message: ""
+    water_company_id: 1,
+    content: ""
   });
   const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const {
+    token, 
+    removeToken,
+    userInfo
+  } = React.useContext(AuthContext);
   // React.useEffect(()=> {
   //   setValue('Изберете вид заявка')
   // }, [])
@@ -126,28 +131,8 @@ const Troubleshoot = () => {
     }
   }, [error])
 
-  // useEffect(
-  //   () => {
-  //     if (error) {
-  //       if (timeoutRef.current) {
-  //         clearTimeout(timeoutRef.current);
-  //       }
-  //       timeoutRef.current = setTimeout(() => {
-  //         setError("");
-  //       }, 3000);
-  //     }
-
-  //     return () => {
-  //       if (timeoutRef.current) {
-  //         clearTimeout(timeoutRef.current);
-  //       }
-  //     };
-  //   },
-  //   [error]
-  // );
-
   const handleFormChange = newValues => {
-    if(formValues.address !== '' && formValues.address !== '' && formValues.case !== ''){
+    if(formValues.address !== '' && formValues.address !== '' && formValues.issue !== ''){
       setError('')
     }
 
@@ -158,8 +143,8 @@ const Troubleshoot = () => {
     console.log("Remove Pressed");
   };
 
-  const onPressHandler = () => {
-    if (value === '' || formValues.address === "" || formValues.message === "") {
+  const onPressHandler = async () => {
+    if (value === '' || formValues.address === "" || formValues.content === "") {
       setError("Имате непопълнено поле");
       // if (timeoutRef.current) {
       //   clearTimeout(timeoutRef.current);
@@ -169,9 +154,24 @@ const Troubleshoot = () => {
       // }, 3000);
       // return;
     } else {
-      setError("");
+      try{
+        const response = await fetch("http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/", {
+          method: "POST",
+          headers: {
+            'Authorization':`Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({...formValues})
+        })
+        const data = await response.json();
+        if(!response.ok){
+          throw new Error("Something went wrong.")
+        }
+        setError("");
+      }catch(e){
+        setError(e.message)
+      }
     }
-    console.log(formValues)
   };
 
   return (
@@ -191,9 +191,9 @@ const Troubleshoot = () => {
             <Text style={styles.screenLabel}>Заявки</Text>
             <View style={styles.innerContainer}>
               <View style={styles.credentials}>
-                <Image style={styles.avatar} source={Avatar} />
+                <Image style={styles.avatar} source={userInfo.profile_picture} />
                 <View style={styles.clientInfo}>
-                  <Text style={styles.clientName}>Кети Петрова</Text>
+                  <Text style={styles.clientName}>{`${userInfo.first_name} ${userInfo.last_name}`}</Text>
                   <Text style={styles.clientNumber}>
                     Клиентски номер: 119862
                   </Text>
@@ -218,10 +218,10 @@ const Troubleshoot = () => {
                 <Picker
                   selectedValue={value}
                   onValueChange={(itemValue, itemIndex) => {
-                    formValues.case = itemValue;
+                    formValues.issue = itemValue;
                     setValue(itemValue);
 
-                    if(formValues.case !== '' && formValues.address !== '' && formValues.message !== ''){
+                    if(formValues.issue !== '' && formValues.address !== '' && formValues.content !== ''){
                       setError('')
                     }
                   }}
@@ -243,7 +243,7 @@ const Troubleshoot = () => {
               />
               <FormField
                 inputName={"Съобщение"}
-                type={"message"}
+                type={"content"}
                 additionalStyles={{ marginTop: 10 }}
                 onFormChange={handleFormChange}
                 formValues={formValues}
@@ -251,7 +251,7 @@ const Troubleshoot = () => {
                 mutiline={true}
                 additionalInputStyles={{ height: 70}}
               />
-              <Text style={styles.errorMessage}>
+              <Text style={styles.errorcontent}>
                 {error}
               </Text>
               <CustomButton
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#F67280"
   },
-  errorMessage: {
+  errorcontent: {
     color: "red",
     alignSelf: "center",
     paddingBottom: 30

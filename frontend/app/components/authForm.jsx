@@ -23,7 +23,7 @@ const FormField = ({title, value, placeholder, onFormChange, formValues, setForm
       <Text style={styles.inputName}>{title}</Text>
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputField} value={formValues[type]} onChangeText={(text) => handleChange(type, text)}
-        secureTextEntry={title === "Парола" || 'Password' ? true : false}></TextInput>
+        secureTextEntry={title === "Парола" ? true : false}></TextInput>
       </View>
     </View>
   )

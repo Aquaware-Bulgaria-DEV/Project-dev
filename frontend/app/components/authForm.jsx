@@ -11,7 +11,7 @@ import CustomButton from './customButton';
 import GooglePath from '../../assets/authSvg/google.png'
 import FacebookPath from '../../assets/authSvg/facebook.png'
 
-const FormField = ({title, value, placeholder, onFormChange, formValues, setFormValues, type, ...props}) => {
+const FormField = ({title, value, placeholder, onFormChange, formValues, setFormValues, type, isSecure, ...props}) => {
   const handleChange = (name, value) => {
     const updatedValues = { ...formValues, [name]: value };
     setFormValues(updatedValues);
@@ -23,7 +23,7 @@ const FormField = ({title, value, placeholder, onFormChange, formValues, setForm
       <Text style={styles.inputName}>{title}</Text>
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputField} value={formValues[type]} onChangeText={(text) => handleChange(type, text)}
-        secureTextEntry={title === "Парола" ? true : false}></TextInput>
+        secureTextEntry={isSecure}></TextInput>
       </View>
     </View>
   )
@@ -56,9 +56,9 @@ const AuthForm = ({
     return (
       <>
         {/* {isReg && <FormField title={"Име"} type={'name'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />} */}
-        <FormField title={"Е-Поща"} type={'email'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
-        <FormField title={"Парола"} type={'password'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
-        {isReg && <FormField title={"Повтори парола"} type={'repeatPassword'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />}
+        <FormField title={"Е-Поща"} type={'email'} isSecure={false} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
+        <FormField title={"Парола"} type={'password'} isSecure={true} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
+        {isReg && <FormField title={"Повтори парола"} isSecure={true} type={'repeatPassword'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />}
         <Text style={styles.errorMsg}>{errorMessage}</Text>
         {
         isReg 

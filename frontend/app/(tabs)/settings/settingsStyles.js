@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     marginLeft: 15,
   },
   settingsButton: {
-    width: 331,
+    // width: 331,
     height: 68,
     paddingHorizontal: 20,
     borderWidth: 1,

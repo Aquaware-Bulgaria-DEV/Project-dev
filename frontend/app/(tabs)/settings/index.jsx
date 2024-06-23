@@ -45,6 +45,7 @@ const Settings = () => {
             <SettingsButton
               style={styles.settingsButton}
               title={'Самоотчет'}
+              screen={'subscreens/selfReport'}
             ></SettingsButton>
           </View>
         </View>

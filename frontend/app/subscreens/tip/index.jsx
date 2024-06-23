@@ -1,12 +1,15 @@
-import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
-import { Header } from "../components/header.jsx";
-import { styles } from "./tipStyle.js";
-import * as tipsServices from "../services/tipsServices.js";
-
-import { useEffect, useState } from "react";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native';
+import React from 'react';
+import { Header } from '../../globalComponents/header.jsx';
+import { styles } from './tipStyle.js';
+import * as tipsServices from '../../services/tipsServices.js';
+import AuthContext from '../../Context/AuthContext.jsx';
+import { useEffect, useState } from 'react';
+import { useLocalSearchParams } from 'expo-router';
 
 const Tip = () => {
+  // const { token } = React.useContext(AuthContext);
+  // console.log(token);
   const [tip, setTip] = useState([]);
   const { tipId } = useLocalSearchParams();
 
@@ -16,7 +19,7 @@ const Tip = () => {
 
       setTip(response);
     } catch (error) {
-      console.error("error fetching tips:", error);
+      console.error('error fetching tips:', error);
     }
   };
 
@@ -32,7 +35,7 @@ const Tip = () => {
       >
         <Header showProfilePic={false} />
         <View style={styles.content}>
-          <Image source={{ uri: tip["background_image"] }} style={styles.pic} />
+          <Image source={{ uri: tip['background_image'] }} style={styles.pic} />
           <Text style={styles.title}>{tip.title}</Text>
 
           <Text style={styles.text}>{tip.content}</Text>

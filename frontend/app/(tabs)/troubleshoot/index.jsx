@@ -3,7 +3,6 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import {
   View,
   Text,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
   ScrollView,
@@ -20,6 +19,8 @@ import { Header } from '../../globalComponents/header.jsx';
 import AuthContext from '../../Context/AuthContext';
 
 import CustomButton from '../../globalComponents/customButton.jsx';
+
+import { styles } from './troubleshootStyles.js'
 const FormField = ({
   inputName,
   additionalStyles,
@@ -294,72 +295,6 @@ const Troubleshoot = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F9F9',
-  },
-  reqContainer: {
-    paddingTop: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-  },
-  screenLabel: {
-    fontSize: 24,
-  },
-  innerContainer: {
-    backgroundColor: '#FFFFFF',
-    height: '87%',
-    marginTop: 30,
-    paddingTop: 30,
-    paddingBottom: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderRadius: 20,
-    gap: 30,
-  },
-  credentials: {
-    flexDirection: 'row',
-    gap: 20,
-    borderBottomWidth: 1,
-    borderBlockColor: '#E8E8E8',
-    paddingBottom: 25,
-  },
-  avatar: {
-    width: 95,
-    height: 95,
-    borderRadius: 25,
-  },
-  clientInfo: {
-    paddingTop: 10,
-    gap: 7,
-  },
-  clientName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  clientNumber: {
-    fontSize: 12,
-    opacity: 0.3,
-  },
-  removeBtn: {
-    fontSize: 12,
-    color: '#F67280',
-  },
-  errorcontent: {
-    color: 'red',
-    alignSelf: 'center',
-    paddingBottom: 30,
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#DADADA',
-    borderRadius: 5,
-  },
-  picker: {
-    height: Platform.OS === 'ios' ? 200 : 50,
-    fontSize: 16,
-  },
-});
+
 
 export default Troubleshoot;

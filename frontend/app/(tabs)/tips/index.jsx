@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
-import { Header } from "../../components/header.jsx";
-import { styles } from "./tipsStyles.js";
+import React from 'react';
+import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native';
+import { Header } from '../../globalComponents/header.jsx';
+import { styles } from './tipsStyles.js';
 
-import HANDS_PIC from "../../../assets/hands.jpeg";
-import { List } from "./subcomponents/list.jsx";
+import HANDS_PIC from '../../../assets/hands.jpeg';
+import { List } from './subcomponents/list.jsx';
 
 const Tips = () => {
   return (

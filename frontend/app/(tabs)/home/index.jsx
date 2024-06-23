@@ -1,5 +1,5 @@
-import React from "react";
-import { styles } from "./homeStyles.js";
+import React from 'react';
+import { styles } from './homeStyles.js';
 import {
   View,
   Text,
@@ -7,13 +7,13 @@ import {
   ImageBackground,
   ScrollView,
   Pressable,
-} from "react-native";
+} from 'react-native';
 
-import { Header } from "../../components/header.jsx";
+import { Header } from '../../globalComponents/header.jsx';
 
-import KITCHEN_SOURCE from "../../../assets/kitchen-pic.jpg";
-import BATHROOM_SOURCE from "../../../assets/bathroom.jpg";
-import TOILET_SOURCE from "../../../assets/toilet.png";
+import KITCHEN_SOURCE from '../../../assets/kitchen-pic.jpg';
+import BATHROOM_SOURCE from '../../../assets/bathroom.jpg';
+import TOILET_SOURCE from '../../../assets/toilet.png';
 
 const Home = () => {
   return (
@@ -31,7 +31,7 @@ const Home = () => {
         </View>
         <Pressable
           style={styles.paddingZero}
-          onPress={() => console.log("TODO: redirect")}
+          onPress={() => console.log('TODO: redirect')}
         >
           <ImageBackground style={styles.rooms} source={KITCHEN_SOURCE}>
             <Text style={styles.roomText}>Кухня</Text>
@@ -40,7 +40,7 @@ const Home = () => {
         </Pressable>
         <Pressable
           style={styles.paddingZero}
-          onPress={() => console.log("TODO: redirect")}
+          onPress={() => console.log('TODO: redirect')}
         >
           <ImageBackground style={styles.rooms} source={BATHROOM_SOURCE}>
             <Text style={styles.roomText}>Баня</Text>
@@ -49,7 +49,7 @@ const Home = () => {
         </Pressable>
         <Pressable
           style={styles.paddingZero}
-          onPress={() => console.log("TODO: redirect")}
+          onPress={() => console.log('TODO: redirect')}
         >
           <ImageBackground style={styles.rooms} source={TOILET_SOURCE}>
             <Text style={styles.roomText}>Тоалетна</Text>

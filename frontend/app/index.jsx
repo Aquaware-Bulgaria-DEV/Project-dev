@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useEffect } from 'react';
-import CustomButton from './components/customButton';
+import CustomButton from './globalComponents/customButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Redirect, router } from 'expo-router';

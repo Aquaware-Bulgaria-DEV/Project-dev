@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text, ScrollView, SafeAreaView, Pressable } from 'react-native';
-import { Header } from '../../components/header.jsx';
+import { View, Text, ScrollView, SafeAreaView } from 'react-native';
+import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './settingsStyles.js';
-import SettingsButton from '../../components/settingsButton.jsx';
-
-//linear gradiant for the buttons
+import SettingsButton from '../../globalComponents/settingsButton.jsx';
 
 const Settings = () => {
   return (
@@ -20,14 +18,17 @@ const Settings = () => {
             <SettingsButton
               style={styles.settingsButton}
               title={'Личен профил'}
+              screen={'subscreens/myProfile'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
               title={'Направи заявка'}
+              screen={'troubleshoot'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
               title={'Управление на имоти'}
+              screen={'subscreens/myProperties'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}

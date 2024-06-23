@@ -53,6 +53,18 @@ const getIcon = (name,color) => {
         return (
           <MaterialIcons name={name} size={35} color={color} />
         );
+      case 'plus':
+        return (
+          <AntDesign name={name} size={35} color={color} />
+        );
+      case 'trash':
+        return (
+          <EvilIcons name={name} size={35} color={color} />
+        );
+      case 'pencil':
+        return (
+          <SimpleLineIcons name={name} size={20} color={color} />
+        );
       default:
         break;
     }

@@ -31,11 +31,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   gradient: {
+    flexDirection: 'row',
     backgroundGradient: 'horizontal',
-    width: 331,
     height: 68,
     margin: -20,
-    justifyContent: 'center',
+    paddingRight: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderRadius: 20,
   },
   textGradient: {

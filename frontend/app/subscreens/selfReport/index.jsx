@@ -7,7 +7,6 @@ import SettingsButton from '../../globalComponents/settingsButton';
 import { Header } from '../../globalComponents/header.jsx';
 
 import getIcon from '../../../utils/icons.js';
-import globalStyles from '../../globalStyles.js';
 
 const DataComponent = ({data}) =>{
 
@@ -17,8 +16,8 @@ const DataComponent = ({data}) =>{
 
     return(
       <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10}}>
-        <Pressable onPressIn={() => setPenOpacity(.5)} onPressOut={() => setPenOpacity(1)} style={{ width: 35, height: 35, borderRadius: 35/2, alignItems: 'center', justifyContent: 'center', opacity: penOpacity}}>{getIcon('pencil', '#131313')}</Pressable>
-        <Pressable onPressIn={() => setTrashOpacity(.5)} onPressOut={() => setTrashOpacity(1)} style={{ width: 35, height: 35, borderRadius: 35/2, alignItems: 'center', justifyContent: 'center', opacity: trashOpacity}}>{getIcon('trash', '#131313')}</Pressable>
+        <Pressable onPressIn={() => setPenOpacity(.5)} onPressOut={() => setPenOpacity(1)} style={{ /* width: 35, height: 35, borderRadius: 35/2, */ alignItems: 'center', justifyContent: 'center', opacity: penOpacity}}>{getIcon('pencil', '#131313')}</Pressable>
+        <Pressable onPressIn={() => setTrashOpacity(.5)} onPressOut={() => setTrashOpacity(1)} style={{ /* width: 35, height: 35, borderRadius: 35/2, */ alignItems: 'center', justifyContent: 'center', opacity: trashOpacity}}>{getIcon('trash', '#131313')}</Pressable>
       </View>
     );
   }
@@ -47,6 +46,7 @@ const selfReport = () => {
           <SettingsButton
           title={"Добавяне на данни"}
           style={[styles.settingsBtn, {marginBottom: 20}]}
+          screen={'subscreens/formSelfReport'}
           icon={'plus'}
           iconColor={"#131313"}
           />

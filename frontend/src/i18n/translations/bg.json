@@ -17,7 +17,16 @@
     "welcomeQuestion": "За коя част от дома искаш да провериш потреблението си?",
     "kitchen": "Кухня",
     "bathroom": "Баня",
-    "toilet": "Тоалетна"
+    "toilet": "Тоалетна",
+    "generalTips": "Съвети за пестене на вода за теб",
+    "highestConsumption": "НАЙ-ВИСОКО ПОТРЕБЛЕНИЕ",
+    "myAccount": "Моят акаунт",
+    "compare": "Сравни с минали месеци",
+    "categoryKitchenSink": "МИВКА КУХНЯ",
+    "categoryWasher": "ПЕРАЛНЯ",
+    "categoryBathroomShower": "ДУШ БАНЯ",
+    "categoryToilet": "ТОАЛЕТНА",
+    "categories": "Категории"
 
 
 }

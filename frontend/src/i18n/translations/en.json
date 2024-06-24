@@ -17,5 +17,14 @@
     "welcomeQuestion": "For what part of your home would you like to check your consumption?",
     "kitchen": "Kitchen",
     "bathroom": "Bathroom",
-    "toilet": "Toilet"
+    "toilet": "Toilet",
+    "generalTips": "Water saving advices for you",
+    "highestConsumption": "HIGHEST CONSUMPTION",
+    "myAccount": "My account",
+    "compare": "Compare with previous months",
+    "categoryKitchenSink": "KITCHEN SINK",
+    "categoryWasher": "WASHER",
+    "categoryBathroomShower": "BATHROOM SHOWER",
+    "categoryToilet": "TOILET",
+    "categories": "Categories"
 }

@@ -6,9 +6,15 @@ import { styles } from "./subcompStyles.js";
 
 import { TipsByCategory } from "./tips.jsx";
 
+import '../../../../src/i18n/i18n.config';
+import { useTranslation } from 'react-i18next';
+
 const categories = ["МИВКА КУХНЯ", "ПЕРАЛНЯ", "ДУШ БАНЯ", "ТОАЛЕТНА"];
 
 export const List = () => {
+
+  const { t, i18n } = useTranslation();
+
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
   const pressHandler = (category) => {
@@ -20,7 +26,7 @@ export const List = () => {
   return (
     <ScrollView>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>НАЙ-ВИСОКО ПОТРЕБЛЕНИЕ</Text>
+        <Text style={styles.title}>{t('highestConsumption')}</Text>
       </View>
       <View style={styles.listContainer}>
         {categories.map((category, index) => (
@@ -48,8 +54,8 @@ export const List = () => {
         <View style={styles.account}>
           <AntDesignI name={"user"} size={25} style={styles.userIcon} />
           <View>
-            <Text style={styles.accountTitle}>Моят акаунт</Text>
-            <Text style={styles.accountSubtitle}>сравни с минали месеци</Text>
+            <Text style={styles.accountTitle}>{t('myAccount')}</Text>
+            <Text style={styles.accountSubtitle}>{t('compare')}</Text>
           </View>
         </View>
         <AntDesignI name={"arrowright"} size={35} style={styles.arrow} />

@@ -17,8 +17,8 @@ const DataComponent = ({data}) =>{
 
     return(
       <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10}}>
-        <Pressable onPressIn={() => setPenOpacity(.5)} onPressOut={() => setPenOpacity(1)} style={{backgroundColor: globalStyles.primaryColor, width: 35, height: 35, borderRadius: 35/2, alignItems: 'center', justifyContent: 'center', opacity: penOpacity}}>{getIcon('pencil', '#fff')}</Pressable>
-        <Pressable onPressIn={() => setTrashOpacity(.5)} onPressOut={() => setTrashOpacity(1)} style={{backgroundColor: globalStyles.primaryColor, width: 35, height: 35, borderRadius: 35/2, alignItems: 'center', justifyContent: 'center', opacity: trashOpacity}}>{getIcon('trash', '#fff')}</Pressable>
+        <Pressable onPressIn={() => setPenOpacity(.5)} onPressOut={() => setPenOpacity(1)} style={{ width: 35, height: 35, borderRadius: 35/2, alignItems: 'center', justifyContent: 'center', opacity: penOpacity}}>{getIcon('pencil', '#131313')}</Pressable>
+        <Pressable onPressIn={() => setTrashOpacity(.5)} onPressOut={() => setTrashOpacity(1)} style={{ width: 35, height: 35, borderRadius: 35/2, alignItems: 'center', justifyContent: 'center', opacity: trashOpacity}}>{getIcon('trash', '#131313')}</Pressable>
       </View>
     );
   }
@@ -39,6 +39,7 @@ const selfReport = () => {
       <ScrollView
         style={{ flex: 1, }}
         contentContainerStyle={styles.scrollViewContent}
+        showsVerticalScrollIndicator={false}
       >
       <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
@@ -46,8 +47,18 @@ const selfReport = () => {
           <SettingsButton
           title={"Добавяне на данни"}
           style={[styles.settingsBtn, {marginBottom: 20}]}
+          icon={'plus'}
+          iconColor={"#131313"}
           />
           <View style={{borderBottomColor: '#131313', borderBottomWidth: 1,opacity: .1, marginBottom: 20}} />
+          <DataComponent data={data} />
+          <DataComponent data={data} />
+          <DataComponent data={data} />
+          <DataComponent data={data} />
+          <DataComponent data={data} />
+          <DataComponent data={data} />
+          <DataComponent data={data} />
+          <DataComponent data={data} />
           <DataComponent data={data} />
           <DataComponent data={data} />
           <DataComponent data={data} />

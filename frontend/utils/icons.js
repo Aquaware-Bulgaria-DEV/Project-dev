@@ -55,7 +55,7 @@ const getIcon = (name,color) => {
         );
       case 'plus':
         return (
-          <AntDesign name={name} size={35} color={color} />
+          <AntDesign name={name} size={25} color={color} />
         );
       case 'trash':
         return (

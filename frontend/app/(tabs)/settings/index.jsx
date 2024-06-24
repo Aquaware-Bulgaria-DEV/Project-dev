@@ -1,10 +1,23 @@
 import React from 'react';
-import { View, Text, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './settingsStyles.js';
 import SettingsButton from '../../globalComponents/settingsButton.jsx';
 
+import '../../../src/i18n/i18n.config';
+import { useTranslation } from 'react-i18next';
+
 const Settings = () => {
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = () => {
+    if (i18n.language === 'bg') {
+      i18n.changeLanguage('en');
+    } else {
+      i18n.changeLanguage('bg');
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -13,42 +26,47 @@ const Settings = () => {
       >
         <Header showProfilePic={false} />
         <View style={styles.content}>
-          <Text style={styles.title}>Настройки</Text>
+          <Text style={styles.title}>{t('settings')}</Text>
           <View>
             <SettingsButton
               style={styles.settingsButton}
-              title={'Личен профил'}
+              title={t('settingsPersonalInfo')}
               screen={'subscreens/myProfile'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
-              title={'Направи заявка'}
+              title={t('settingsMakeARequest')}
               screen={'troubleshoot'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
-              title={'Управление на имоти'}
+              title={t('settingsPropertiesManagement')}
               screen={'subscreens/myProperties'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
-              title={'Нотификации'}
+              title={t('settingsNotifications')}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
-              title={'Настройки на приложението'}
+              title={t('settingsApp')}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
-              title={'Език'}
+              title={t('settingsLanguage')}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
-              title={'Самоотчет'}
+              title={t('settingsSelfReport')}
             ></SettingsButton>
           </View>
         </View>
+        {/* Change language button - for removal after successful translation implementation */}
+        <TouchableOpacity onPress={changeLanguage}>
+          <Text>{t('changeLanguage')}</Text>
+        </TouchableOpacity>
       </ScrollView>
+
     </SafeAreaView>
   );
 };

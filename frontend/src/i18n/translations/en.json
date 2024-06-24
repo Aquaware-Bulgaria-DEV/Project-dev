@@ -26,5 +26,15 @@
     "categoryWasher": "WASHER",
     "categoryBathroomShower": "BATHROOM SHOWER",
     "categoryToilet": "TOILET",
-    "categories": "Categories"
+    "categories": "Categories",
+    "error": "Error",
+    "fillAllFields": "Please, fill all fields",
+    "settings": "Settings",
+    "settingsPersonalInfo": "Personal Information",
+    "settingsMakeARequest": "Make a request",
+    "settingsPropertiesManagement": "Properties Management",
+    "settingsNotifications": "Notifications",
+    "settingsApp": "App settings",
+    "settingsLanguage": "Language",
+    "settingsSelfReport": "Self Report"
 }

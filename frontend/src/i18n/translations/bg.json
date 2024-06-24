@@ -26,7 +26,16 @@
     "categoryWasher": "ПЕРАЛНЯ",
     "categoryBathroomShower": "ДУШ БАНЯ",
     "categoryToilet": "ТОАЛЕТНА",
-    "categories": "Категории"
-
+    "categories": "Категории",
+    "error": "Грешка",
+    "fillAllFields": "Моля, попълнете всички полета",    
+    "settings": "Настройки",
+    "settingsPersonalInfo": "Профил",
+    "settingsMakeARequest": "Направи заявка",
+    "settingsPropertiesManagement": "Управление на имоти",
+    "settingsNotifications": "Нотификации",
+    "settingsApp": "Настройки на приложението",
+    "settingsLanguage": "Език",
+    "settingsSelfReport": "Самоотчет"
 
 }

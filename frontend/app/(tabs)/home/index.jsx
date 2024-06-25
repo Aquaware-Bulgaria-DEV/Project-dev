@@ -18,8 +18,13 @@ import { useTranslation } from 'react-i18next';
 import KITCHEN_SOURCE from '../../../assets/kitchen-pic.jpg';
 import BATHROOM_SOURCE from '../../../assets/bathroom.jpg';
 import TOILET_SOURCE from '../../../assets/toilet.png';
+import AuthContext from '../../Context/AuthContext.jsx';
 
 const Home = () => {
+
+  //const { removeToken, removeUserInfo } = React.useContext(AuthContext);
+  //removeToken();
+  //removeUserInfo();
   const { t, i18n } = useTranslation();
 
   const changeLanguage = () => {

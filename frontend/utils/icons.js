@@ -27,43 +27,43 @@ export const MaterialCommunityIcons = props => (
  const Zocial = props => <ZocialI {...props} />
  const AntDesign = props => <AntDesignI {...props} />
 
-const getIcon = (name,color) => {
+const getIcon = (name,color, size) => {
     switch (name) {
       case 'home':
         return (
-          <Octicons name={name} size={35} color={color} />
+          <Octicons name={name} size={size? size : 35} color={color} />
         );
       case 'droplet':
         return (
-          <Feather name={name} size={35} color={color} />
+          <Feather name={name} size={size? size : 35} color={color} />
         );
       case 'user':
         return (
-          <AntDesign name={name} size={35} color={color} />
+          <AntDesign name={name} size={size? size : 35} color={color} />
         );
       case 'settings':
         return (
-          <SimpleLineIcons name={name} size={35} color={color} />
+          <SimpleLineIcons name={name} size={size? size : 35} color={color} />
         );
       case 'bar-chart':
         return (
-          <MaterialIcons name={name} size={35} color={color} />
+          <MaterialIcons name={name} size={size? size : 35} color={color} />
         );
       case 'emergency-share':
         return (
-          <MaterialIcons name={name} size={35} color={color} />
+          <MaterialIcons name={name} size={size? size : 35} color={color} />
         );
       case 'plus':
         return (
-          <AntDesign name={name} size={25} color={color} />
+          <AntDesign name={name} size={size? size : 25} color={color} />
         );
       case 'trash':
         return (
-          <EvilIcons name={name} size={35} color={color} />
+          <EvilIcons name={name} size={size? size : 35} color={color} />
         );
       case 'pencil':
         return (
-          <SimpleLineIcons name={name} size={20} color={color} />
+          <SimpleLineIcons name={name} size={size? size : 20} color={color} />
         );
       default:
         break;

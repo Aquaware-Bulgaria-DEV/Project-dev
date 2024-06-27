@@ -33,8 +33,24 @@ const WaterMeter = ({
   );
 
   const handleTextInputChange = text => {
-    const numericText = text.replace(/[^0-9.]/g, "");
-    setQuantity(numericText);
+     let numericText = text.replace(/[^0-9.]/g, "");
+
+     let result = '';
+     let dotAdded = false;
+ 
+     for (let i = 0; i < numericText.length; i++) {
+         if (numericText[i] === '.') {
+             if (!dotAdded && result.length > 0 && /\d/.test(result[result.length - 1])) {
+                 result += numericText[i];
+                 dotAdded = true;
+             }
+         } else {
+             result += numericText[i];
+         }
+     }
+ 
+     setQuantity(result);
+     return result;
   };
 
   return (

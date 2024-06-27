@@ -1,17 +1,49 @@
 import { View, Text, TextInput } from "react-native";
-import React from "react";
-import RNPickerSelect from 'react-native-picker-select';
+import React, { useState, useEffect } from "react";
+import RNPickerSelect from "react-native-picker-select";
 
-import { styles } from "./waterMeter.js";
+import { styles } from "./waterMeterStyles.js";
 
-const WaterMeter = ({ waterMeters, setValue, value }) => {
+// TODO: make it more clean formData
+
+const WaterMeter = ({
+  waterMeters,
+  setFormData,
+  formData,
+  houseKey,
+  meterKey
+}) => {
+  const [meterId, setMeterId] = useState();
+  const [quantity, setQuantity] = useState("");
+
+  useEffect(
+    () => {
+      const updatedFormData = {
+        ...formData,
+        [houseKey]: {
+          ...formData[houseKey],
+          [meterKey]: {
+            [meterId]: quantity
+          }
+        }
+      };
+      setFormData(updatedFormData);
+    },
+    [meterId, quantity, houseKey, meterKey, setFormData]
+  );
+
+  const handleTextInputChange = text => {
+    const numericText = text.replace(/[^0-9.]/g, "");
+    setQuantity(numericText);
+  };
+
   return (
     <View style={styles.waterMeterContainer}>
       <View>
         <Text style={styles.labels}>Номер на водомер</Text>
         <View style={styles.pickerContainer}>
           <RNPickerSelect
-            onValueChange={value => setValue(value)}
+            onValueChange={value => setMeterId(value)}
             items={waterMeters}
             style={{
               inputIOS: styles.pickerItem,
@@ -21,7 +53,7 @@ const WaterMeter = ({ waterMeters, setValue, value }) => {
               label: "Избери водомер",
               value: ""
             }}
-            value={value}
+            value={meterId}
           />
         </View>
       </View>
@@ -44,6 +76,10 @@ const WaterMeter = ({ waterMeters, setValue, value }) => {
               paddingLeft: 10,
               alignItems: "center"
             }}
+            keyboardType="numeric"
+            onChangeText={handleTextInputChange}
+            value={quantity}
+            placeholder="Въведи стойност"
           />
           <Text
             style={{

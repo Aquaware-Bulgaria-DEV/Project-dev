@@ -15,5 +15,16 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#fff'
-    }
+    },
+    gradient: {
+        flexDirection: 'row',
+        backgroundGradient: 'horizontal',
+        height: 68,
+        // margin: -20,
+        // paddingRight: 20,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 20,
+      },
 })

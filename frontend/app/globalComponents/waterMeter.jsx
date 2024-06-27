@@ -16,41 +16,44 @@ const WaterMeter = ({
   const [meterId, setMeterId] = useState();
   const [quantity, setQuantity] = useState("");
 
-  useEffect(
-    () => {
-      const updatedFormData = {
-        ...formData,
-        [houseKey]: {
-          ...formData[houseKey],
-          [meterKey]: {
-            [meterId]: quantity
-          }
+  useEffect(() => {
+    if (waterMeters.length === 1) {
+      setMeterId(waterMeters[0].value);
+    }
+  }, [waterMeters]);
+
+  useEffect(() => {
+    const updatedFormData = {
+      ...formData,
+      [houseKey]: {
+        ...formData[houseKey],
+        [meterKey]: {
+          [meterId]: quantity
         }
-      };
-      setFormData(updatedFormData);
-    },
-    [meterId, quantity, houseKey, meterKey, setFormData]
-  );
+      }
+    };
+    setFormData(updatedFormData);
+  }, [meterId, quantity, houseKey, meterKey, setFormData]);
 
-  const handleTextInputChange = text => {
-     let numericText = text.replace(/[^0-9.]/g, "");
+  const handleTextInputChange = (text) => {
+    let numericText = text.replace(/[^0-9.]/g, "");
 
-     let result = '';
-     let dotAdded = false;
- 
-     for (let i = 0; i < numericText.length; i++) {
-         if (numericText[i] === '.') {
-             if (!dotAdded && result.length > 0 && /\d/.test(result[result.length - 1])) {
-                 result += numericText[i];
-                 dotAdded = true;
-             }
-         } else {
-             result += numericText[i];
-         }
-     }
- 
-     setQuantity(result);
-     return result;
+    let result = '';
+    let dotAdded = false;
+
+    for (let i = 0; i < numericText.length; i++) {
+      if (numericText[i] === '.') {
+        if (!dotAdded && result.length > 0 && /\d/.test(result[result.length - 1])) {
+          result += numericText[i];
+          dotAdded = true;
+        }
+      } else {
+        result += numericText[i];
+      }
+    }
+
+    setQuantity(result);
+    return result;
   };
 
   return (

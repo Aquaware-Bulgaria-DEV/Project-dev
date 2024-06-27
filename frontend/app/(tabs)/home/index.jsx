@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { styles } from './homeStyles.js';
 import {
   View,
@@ -14,6 +14,7 @@ import { Header } from '../../globalComponents/header.jsx';
 
 import '../../../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
+import LanguageContext from '../../../src/context/LanguageContext.js';
 
 import KITCHEN_SOURCE from '../../../assets/kitchen-pic.jpg';
 import BATHROOM_SOURCE from '../../../assets/bathroom.jpg';
@@ -25,15 +26,18 @@ const Home = () => {
   //const { removeToken, removeUserInfo } = React.useContext(AuthContext);
   //removeToken();
   //removeUserInfo();
+  
   const { t, i18n } = useTranslation();
+  const { language, toggleLanguage } = useContext(LanguageContext);
+  const { userInfo } = useContext(AuthContext);
 
-  const changeLanguage = () => {
-    if (i18n.language === 'bg') {
-      i18n.changeLanguage('en');
-    } else {
-      i18n.changeLanguage('bg');
-    }
-  };
+  // const changeLanguage = () => {
+  //   if (i18n.language === 'bg') {
+  //     i18n.changeLanguage('en');
+  //   } else {
+  //     i18n.changeLanguage('bg');
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -68,7 +72,7 @@ const Home = () => {
         </Pressable>
         
         {/* Change language button - for removal after successful translation implementation */}
-        <TouchableOpacity onPress={changeLanguage}>
+        <TouchableOpacity onPress={toggleLanguage}>
         <Text>{t('changeLanguage')}</Text>
         </TouchableOpacity>
         

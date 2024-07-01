@@ -11,9 +11,10 @@ const WaterMeter = ({
   setFormData,
   formData,
   houseKey,
-  meterKey
+  meterKey,
+  setIsLoading
 }) => {
-  const [meterId, setMeterId] = useState();
+  const [meterId, setMeterId] = useState("");
   const [quantity, setQuantity] = useState("");
 
   useEffect(() => {
@@ -21,6 +22,14 @@ const WaterMeter = ({
       setMeterId(waterMeters[0].value);
     }
   }, [waterMeters]);
+  
+  useEffect(() => {
+    if(meterId === "" || quantity === ""){
+      setIsLoading(true)
+    }else{
+      setIsLoading(false)
+    }
+  }, [meterId, quantity])
 
   useEffect(() => {
     const updatedFormData = {

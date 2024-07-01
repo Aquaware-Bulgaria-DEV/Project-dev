@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Pressable } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./formSelfReportStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
@@ -7,26 +7,57 @@ import RNPickerSelect from "react-native-picker-select";
 import WaterMeter from "../../globalComponents/waterMeter.jsx";
 import getIcon from "../../../utils/icons.js";
 import CustomButton from "../../globalComponents/customButton.jsx";
+import AuthContext from "../../Context/AuthContext.jsx";
 
-const selfReport = () => {
+const SelfReport = () => {
   const [value, setValue] = useState("");
   const [opacity, setOpacity] = useState(1);
   const [meterCount, setMeterCount] = useState(2);
   const [meters, setMeters] = useState([]);
   const [formData, setFormData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [waterItems, setWaterItems] = useState([]);
+
+  const { token, removeToken, removeUserInfo } = useContext(AuthContext);
 
   const dataHouses = ["Имот 1", "Имот 2", "Имот 3", "Имот 4", "Имот 5"];
-  const dataWaterMeter = ["Водомер 1", "Водомер 2"];
 
   const houseItems = dataHouses.map((key) => ({
     label: key,
     value: key,
   }));
 
-  const waterItems = dataWaterMeter.map((key) => ({
-    label: key,
-    value: key,
-  }));
+  useEffect(() => {
+    const fetchWaterMeters = async () => {
+      try {
+        const response = await fetch('http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/', {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Something went wrong.");
+        }
+
+        const data = await response.json();
+        const metterArray = data[0]["water_meters"].map((item) => ({
+          label: item["meter_number"],
+          value: item["meter_number"],
+        }));
+        
+        setWaterItems(metterArray);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(`Error: ${JSON.stringify(err)}`);
+        setIsLoading(false);
+      }
+    };
+
+    fetchWaterMeters();
+  }, [token]);
 
   useEffect(() => {
     if (value) {
@@ -39,6 +70,7 @@ const selfReport = () => {
           formData={formData}
           houseKey={value}
           meterKey={meterKey}
+          setIsLoading={setIsLoading}
         />,
       ]);
       setFormData({
@@ -49,7 +81,7 @@ const selfReport = () => {
       });
       setMeterCount(2);
     }
-  }, [value]);
+  }, [value, waterItems]);
 
   const handleValueChange = (value) => {
     setValue(value);
@@ -66,6 +98,7 @@ const selfReport = () => {
           setFormData={setFormData}
           formData={formData}
           houseKey={value}
+          setIsLoading={setIsLoading}
           meterKey={meterKey}
         />,
       ]);
@@ -78,12 +111,42 @@ const selfReport = () => {
       }));
       setMeterCount(meterCount + 1);
     }
-    // console.log(formData);
   };
 
-  const handlePress = () => {
-    console.log(formData)
+  function getCleanData(data) {
+    let cleanData = {};
+    for (let property in data) {
+      let cleanMeters = {};
+      for (let meter in data[property]) {
+        Object.assign(cleanMeters, data[property][meter]);
+      }
+      cleanData[property] = cleanMeters;
+    }
+    return cleanData;
   }
+
+  const handlePress = async () => {
+      try {
+        const response = await fetch('http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/', {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Something went wrong.");
+        }
+
+        const data = await response.json();
+        console.log(data)        
+      } catch (err) {
+        console.log(`Error: ${JSON.stringify(err)}`);
+      };
+    const data = getCleanData(formData);
+    console.log(data);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -110,7 +173,6 @@ const selfReport = () => {
                   value: "",
                 }}
                 value={value}
-                
               />
             </View>
           </View>
@@ -126,6 +188,7 @@ const selfReport = () => {
           </Pressable>
           <CustomButton
             handlePress={handlePress}
+            isLoading={isLoading}
             color={"#388FED"}
             secondColor={"#205187"}
             title={"Добави"}
@@ -138,4 +201,4 @@ const selfReport = () => {
   );
 };
 
-export default selfReport;
+export default SelfReport;

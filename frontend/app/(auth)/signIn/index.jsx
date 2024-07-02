@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 
 import AuthForm from '../../globalComponents/authForm.jsx';
 import AuthContext from '../../Context/AuthContext';
@@ -13,7 +14,7 @@ import AquawareLogo from '../../../assets/AquawareLogo.svg';
 import { login } from '../../services/fetch';
 
 const SignIn = () => {
-  const { token, saveToken, saveUserInfo, removeUserInfo } =
+  const { saveToken, saveUserInfo,} =
     React.useContext(AuthContext);
 
   const [formValues, setFormValues] = React.useState({
@@ -21,6 +22,7 @@ const SignIn = () => {
     password: '',
   });
   const [error, setError] = React.useState('');
+  const router = useRouter();
 
   const handleFormChange = (newValues) => {
     setFormValues(newValues);
@@ -59,9 +61,10 @@ const SignIn = () => {
       }
 
       const profileData = await response.json();
-      console.log(profileData);
-      saveUserInfo(profileData); // Assuming you have a function to save user info
-      setError(''); // Clear the error message on successful profile fetch
+      // console.log(profileData);
+      saveUserInfo(profileData); 
+      setError(''); 
+      router.push("/home");
     } catch (e) {
       setError(e.message);
       console.error(e);

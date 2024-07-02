@@ -1,15 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useHeaderHeight } from '@react-navigation/elements';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  Dimensions,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
@@ -22,6 +12,9 @@ import CustomButton from '../../globalComponents/customButton.jsx';
 
 import { styles } from './troubleshootStyles.js'
 import { addReport } from '../../services/fetch.js';
+
+import DefaultAvatar from "../../../assets/defaultAvatar.png"
+
 const FormField = ({
   inputName,
   additionalStyles,
@@ -31,7 +24,7 @@ const FormField = ({
   onFormChange,
   formValues,
   setFormValues,
-  mutiline,
+  multiline,
 }) => {
   const handleChange = (name, value) => {
     const updatedValues = { ...formValues, [name]: value };
@@ -44,7 +37,7 @@ const FormField = ({
       <Text style={{ fontSize: 14, paddingLeft: 20, opacity: 0.3 }}>
         {inputName}
       </Text>
-      {mutiline ? (
+      {multiline ? (
         <TextInput
           onChangeText={(text) => handleChange(type, text)}
           value={formValues[type]}
@@ -110,10 +103,6 @@ const Troubleshoot = () => {
 
   const { token, userInfo, } = React.useContext(AuthContext);
 
-  // React.useEffect(()=> {
-  //   setValue('Изберете вид заявка')
-  // }, [])
-
   React.useEffect(() => {
     const tabBarVisible = isFocused ? 'none' : 'flex';
     navigation.setOptions({
@@ -152,15 +141,8 @@ const Troubleshoot = () => {
       formValues.content === ''
     ) {
       setError('Имате непопълнено поле');
-      // if (timeoutRef.current) {
-      //   clearTimeout(timeoutRef.current);
-      // }
-      // timeoutRef.current = setTimeout(() => {
-      //   setError("");
-      // }, 3000);
-      // return;
     } else {
-      await addReport( setError, token, formValues)
+      await addReport(setError, token, formValues)
       console.log(userInfo)
     }
   };
@@ -184,7 +166,7 @@ const Troubleshoot = () => {
               <View style={styles.credentials}>
                 <Image
                   style={styles.avatar}
-                  source={userInfo.profile_picture}
+                  source={userInfo.profile_picture ? { uri: userInfo.profile_picture } : DefaultAvatar}
                 />
                 <View style={styles.clientInfo}>
                   <Text
@@ -250,7 +232,7 @@ const Troubleshoot = () => {
                 onFormChange={handleFormChange}
                 formValues={formValues}
                 setFormValues={setFormValues}
-                mutiline={true}
+                multiline={true}
                 additionalInputStyles={{ height: 70 }}
               />
               <Text style={styles.errorcontent}>{error}</Text>
@@ -278,7 +260,5 @@ const Troubleshoot = () => {
     </SafeAreaView>
   );
 };
-
-
 
 export default Troubleshoot;

@@ -21,6 +21,7 @@ import AuthContext from '../../Context/AuthContext';
 import CustomButton from '../../globalComponents/customButton.jsx';
 
 import { styles } from './troubleshootStyles.js'
+import { addReport } from '../../services/fetch.js';
 const FormField = ({
   inputName,
   additionalStyles,
@@ -107,7 +108,8 @@ const Troubleshoot = () => {
   const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const { token, removeToken, userInfo } = React.useContext(AuthContext);
+  const { token, userInfo, } = React.useContext(AuthContext);
+
   // React.useEffect(()=> {
   //   setValue('Изберете вид заявка')
   // }, [])
@@ -158,26 +160,8 @@ const Troubleshoot = () => {
       // }, 3000);
       // return;
     } else {
-      try {
-        const response = await fetch(
-          'http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/',
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Token ${token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ ...formValues }),
-          }
-        );
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error('Something went wrong.');
-        }
-        setError('');
-      } catch (e) {
-        setError(e.message);
-      }
+      await addReport( setError, token, formValues)
+      console.log(userInfo)
     }
   };
 

@@ -4,15 +4,14 @@ import RNPickerSelect from "react-native-picker-select";
 
 import { styles } from "./waterMeterStyles.js";
 
-// TODO: make it more clean formData
-
 const WaterMeter = ({
   waterMeters,
   setFormData,
   formData,
   houseKey,
   meterKey,
-  setIsLoading
+  setIsLoading,
+  selectedMeters, 
 }) => {
   const [meterId, setMeterId] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -22,14 +21,14 @@ const WaterMeter = ({
       setMeterId(waterMeters[0].value);
     }
   }, [waterMeters]);
-  
+
   useEffect(() => {
-    if(meterId === "" || quantity === ""){
-      setIsLoading(true)
-    }else{
-      setIsLoading(false)
+    if (meterId === "" || quantity === "") {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
     }
-  }, [meterId, quantity])
+  }, [meterId, quantity]);
 
   useEffect(() => {
     const updatedFormData = {
@@ -37,9 +36,9 @@ const WaterMeter = ({
       [houseKey]: {
         ...formData[houseKey],
         [meterKey]: {
-          [meterId]: quantity
-        }
-      }
+          [meterId]: quantity,
+        },
+      },
     };
     setFormData(updatedFormData);
   }, [meterId, quantity, houseKey, meterKey, setFormData]);
@@ -47,11 +46,11 @@ const WaterMeter = ({
   const handleTextInputChange = (text) => {
     let numericText = text.replace(/[^0-9.]/g, "");
 
-    let result = '';
+    let result = "";
     let dotAdded = false;
 
     for (let i = 0; i < numericText.length; i++) {
-      if (numericText[i] === '.') {
+      if (numericText[i] === ".") {
         if (!dotAdded && result.length > 0 && /\d/.test(result[result.length - 1])) {
           result += numericText[i];
           dotAdded = true;
@@ -65,21 +64,23 @@ const WaterMeter = ({
     return result;
   };
 
+  const availableMeters = waterMeters.filter((meter) => !selectedMeters.includes(meter.value));
+
   return (
     <View style={styles.waterMeterContainer}>
       <View>
         <Text style={styles.labels}>Номер на водомер</Text>
         <View style={styles.pickerContainer}>
           <RNPickerSelect
-            onValueChange={value => setMeterId(value)}
-            items={waterMeters}
+            onValueChange={(value) => setMeterId(value)}
+            items={availableMeters} 
             style={{
               inputIOS: styles.pickerItem,
-              inputAndroid: styles.pickerItem
+              inputAndroid: styles.pickerItem,
             }}
             placeholder={{
               label: "Избери водомер",
-              value: ""
+              value: "",
             }}
             value={meterId}
           />
@@ -91,7 +92,7 @@ const WaterMeter = ({
           style={{
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-around"
+            justifyContent: "space-around",
           }}
         >
           <TextInput
@@ -102,7 +103,7 @@ const WaterMeter = ({
               borderRadius: 20,
               height: 68,
               paddingLeft: 10,
-              alignItems: "center"
+              alignItems: "center",
             }}
             keyboardType="numeric"
             onChangeText={handleTextInputChange}
@@ -114,7 +115,7 @@ const WaterMeter = ({
               width: "20%",
               fontSize: 20,
               color: "#999999",
-              paddingLeft: 15
+              paddingLeft: 15,
             }}
           >
             куб. м

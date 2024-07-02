@@ -71,6 +71,7 @@ const SelfReport = () => {
           houseKey={value}
           meterKey={meterKey}
           setIsLoading={setIsLoading}
+          selectedMeters={Object.values(formData[value] || {}).map((m) => Object.keys(m)[0])}
         />,
       ]);
       setFormData({
@@ -88,7 +89,7 @@ const SelfReport = () => {
   };
 
   const addWaterMeter = () => {
-    if (meterCount <= 5 && value) {
+    if (meterCount <= waterItems.length && value) {
       const meterKey = `meter${meterCount}`;
       setMeters([
         ...meters,
@@ -100,6 +101,7 @@ const SelfReport = () => {
           houseKey={value}
           setIsLoading={setIsLoading}
           meterKey={meterKey}
+          selectedMeters={Object.values(formData[value] || {}).map((m) => Object.keys(m)[0])}
         />,
       ]);
       setFormData((prevFormData) => ({

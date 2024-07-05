@@ -17,9 +17,10 @@ const SelfReport = () => {
   const [formData, setFormData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [waterItems, setWaterItems] = useState([]);
-
+  const [ propertyitems, setPropertyItems ] = useState([]);
+  
   const { token, removeToken, removeUserInfo } = useContext(AuthContext);
-
+  
   const dataHouses = ["Имот 1", "Имот 2", "Имот 3", "Имот 4", "Имот 5"];
 
   const houseItems = dataHouses.map((key) => ({
@@ -28,7 +29,7 @@ const SelfReport = () => {
   }));
 
   useEffect(() => {
-    const fetchWaterMeters = async () => {
+    const fetchProperties = async () => {
       try {
         const response = await fetch('http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/', {
           method: "GET",
@@ -43,21 +44,57 @@ const SelfReport = () => {
         }
 
         const data = await response.json();
-        const metterArray = data[0]["water_meters"].map((item) => ({
+
+        const properties = data.map((obj) => (
+            {
+              label: obj["type"]["type"],
+              value: obj["id"],
+            }
+         ))
+
+        setPropertyItems(properties);
+      } catch (err) {
+        console.log(`Error: ${JSON.stringify(err.message)}`);
+        setIsLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  useEffect(() => {
+    const fetchWaterMeters = async () => {
+      try {
+        
+        const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${value}/`, {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          // Here gets error because there is latency of useState hook for value.
+          throw new Error("Something went wrong waterMeters (Ignore for now).");
+        }
+
+        const data = await response.json();
+        const metterArray = data["water_meters"].map((item) => ({
           label: item["meter_number"],
           value: item["meter_number"],
         }));
-        
+
         setWaterItems(metterArray);
         setIsLoading(false);
       } catch (err) {
-        console.log(`Error: ${JSON.stringify(err)}`);
+        console.log(`Error: ${JSON.stringify(err.message)}`);
         setIsLoading(false);
       }
     };
 
     fetchWaterMeters();
-  }, [token]);
+  }, [value]);
 
   useEffect(() => {
     if (value) {
@@ -138,7 +175,7 @@ const SelfReport = () => {
         });
 
         if (!response.ok) {
-          throw new Error("Something went wrong.");
+          throw new Error("Something went wrong handlePress.");
         }
 
         const data = await response.json();
@@ -147,7 +184,7 @@ const SelfReport = () => {
         console.log(`Error: ${JSON.stringify(err)}`);
       };
     const data = getCleanData(formData);
-    console.log(data);
+    console.log(data)
   };
 
   return (
@@ -165,7 +202,7 @@ const SelfReport = () => {
             <View style={styles.pickerContainer}>
               <RNPickerSelect
                 onValueChange={handleValueChange}
-                items={houseItems}
+                items={propertyitems}
                 style={{
                   inputIOS: styles.pickerItem,
                   inputAndroid: styles.pickerItem,

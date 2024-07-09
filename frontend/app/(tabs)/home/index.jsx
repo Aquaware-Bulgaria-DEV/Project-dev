@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { styles } from './homeStyles.js';
 import {
   View,
@@ -7,15 +7,38 @@ import {
   ImageBackground,
   ScrollView,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
 
 import { Header } from '../../globalComponents/header.jsx';
 
+import '../../../src/i18n/i18n.config';
+import { useTranslation } from 'react-i18next';
+import LanguageContext from '../../../src/context/LanguageContext.js';
+
 import KITCHEN_SOURCE from '../../../assets/kitchen-pic.jpg';
 import BATHROOM_SOURCE from '../../../assets/bathroom.jpg';
 import TOILET_SOURCE from '../../../assets/toilet.png';
+import AuthContext from '../../Context/AuthContext.jsx';
 
 const Home = () => {
+
+  //const { removeToken, removeUserInfo } = React.useContext(AuthContext);
+  //removeToken();
+  //removeUserInfo();
+  
+  const { t, i18n } = useTranslation();
+  const { language, toggleLanguage } = useContext(LanguageContext);
+  const { userInfo } = useContext(AuthContext);
+
+  // const changeLanguage = () => {
+  //   if (i18n.language === 'bg') {
+  //     i18n.changeLanguage('en');
+  //   } else {
+  //     i18n.changeLanguage('bg');
+  //   }
+  // };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -24,9 +47,9 @@ const Home = () => {
       >
         <Header showProfilePic={true} />
         <View style={styles.text}>
-          <Text style={styles.headerTitle}>Здравей, username!</Text>
+          <Text style={styles.headerTitle}>{t('welcome')}, username!</Text>
           <Text style={styles.description}>
-            За коя част от дома искаш да провериш потреблението си?
+          {t('welcomeQuestion')}
           </Text>
         </View>
         <Pressable
@@ -34,7 +57,7 @@ const Home = () => {
           onPress={() => console.log('TODO: redirect')}
         >
           <ImageBackground style={styles.rooms} source={KITCHEN_SOURCE}>
-            <Text style={styles.roomText}>Кухня</Text>
+            <Text style={styles.roomText}>{t('kitchen')}</Text>
             {/* <Text style={styles.devices}>5 уреда</Text> */}
           </ImageBackground>
         </Pressable>
@@ -43,10 +66,16 @@ const Home = () => {
           onPress={() => console.log('TODO: redirect')}
         >
           <ImageBackground style={styles.rooms} source={BATHROOM_SOURCE}>
-            <Text style={styles.roomText}>Баня</Text>
+            <Text style={styles.roomText}>{t('bathroom')}</Text>
             {/* <Text style={styles.devices}>4 уреда</Text> */}
           </ImageBackground>
         </Pressable>
+        
+        {/* Change language button - for removal after successful translation implementation */}
+        <TouchableOpacity onPress={toggleLanguage}>
+        <Text>{t('changeLanguage')}</Text>
+        </TouchableOpacity>
+        
         <Pressable
           style={styles.paddingZero}
           onPress={() => console.log('TODO: redirect')}

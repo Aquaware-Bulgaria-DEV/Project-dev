@@ -11,10 +11,15 @@ import { useState, useEffect } from "react";
 import * as tipsServices from "../../../services/fetch.js";
 import { useRouter } from "expo-router";
 
+import '../../../../src/i18n/i18n.config'
+import { useTranslation } from 'react-i18next';
+
 export const TipsByCategory = () => {
   const router = useRouter();
   const [tips, setTips] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { t, i18n } = useTranslation();
 
   const getTips = async () => {
     try {
@@ -42,7 +47,7 @@ export const TipsByCategory = () => {
 
   return (
     <ScrollView>
-      <Text style={styles.categories}>Категории</Text>
+      <Text style={styles.categories}>{t('categories')}</Text>
 
       {tips.map((tip) => (
         <View key={tip.id}>

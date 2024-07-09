@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AuthProvider } from './Context/AuthContext'; 
 import AuthContext from './Context/AuthContext';
+import { LanguageProvider } from '../src/context/LanguageContext';
 
 // const MyStack = () => {
 
@@ -22,7 +23,9 @@ import AuthContext from './Context/AuthContext';
 const RootLayout = () => {
   return (
     <AuthProvider>
-      <Stack screenOptions={{headerShown: false}}/>
+      <LanguageProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </LanguageProvider>
     </AuthProvider>
   );
 };

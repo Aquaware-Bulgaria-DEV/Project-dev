@@ -133,6 +133,185 @@ Returns :
 
 
 
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-companies/
+Method: GET
+Връща всички налични дружества
+
+[
+    {
+        "id": 1,
+        "name": "Тест ВИК",
+        "phone_number": "088383838",
+        "email": "svilen.b.petkov@gmail.com"
+    }
+]
+
+
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/
+Method:GET
+връща всички имоти на клиента със съответните данни:
+
+[
+    {
+        "id": 1,
+        "type": {
+            "id": 2,
+            "type": "Мезонет",
+            "image": "http://ec2-18-234-44-48.compute-1.amazonaws.com/media/profile_pics/93f732ed873641b49449745ca9dac201.jpeg"
+        },
+        "num_people": 1,
+        "client_number": {
+            "id": 1,
+            "client_number": "123456",
+            "water_company": 1,
+            "users": [
+                1
+            ]
+        },
+        "water_meters": [
+            {
+                "client_number": "123456",
+                "meter_number": "12"
+            },
+            {
+                "client_number": "123456",
+                "meter_number": "13"
+            }
+        ]
+    }
+]
+
+
+Method: POST:
+Създава нов имот със съответните данни:
+
+{
+  "property_type": {
+    "id": <id на типа имот (апартамент, къща, гараж, др.>
+  },
+  "water_company": {
+    "id": <ID на ВИК дружеството>
+  },
+  "client_number": {
+    "client_number": "<клиентски номер>",
+    "users": [<id на потребителя>]
+  },
+  "property": {
+    "num_people": <брой на живущите в имота>
+  },
+  "water_meters": ["<номер водомер 1>", "<номер водомер 2(ако има)>"]
+}
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/< property_id >/rooms/
+
+MEthod: GET
+Връща всички стай добавени към имота <property_id>
+
+{
+    "id": 1,
+    "room_type": "KITCHEN",
+    "name": "Main Kitchen"
+}
+
+Method: POST
+добавя стая към имота
+
+{
+    "room_type": "KITCHEN",
+    "name": "<Име на стаята подадена от клиента>"
+}
+
+!!!
+room_type трябва да бъде едно от следните:
+
+KITCHEN 
+BATHROOM 
+TOILET 
+LAUNDRY 
+GARDEN 
+GARAGE 
+
+!!!
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/< property_id >/rooms/ < room_id >/
+
+Method: GET
+Детайли за конкретната стая 
+
+{
+    "id": 1,
+    "room_type": "GARAGE",
+    "name": "Гараж"
+}
+
+
+Method: PUT
+Промяна на данните 
+
+{
+    "room_type": "GARAGE",
+    "name": "Гараж 1"
+}
+
+Method: DELETE
+изтрива стаята 
+
+
+
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/< property_id >/water-meter-readings/
+
+Method: GET
+Връща всички данни за самоотчет на дадения имот
+
+пример:
+
+[
+    {
+        "id": 1,
+        "water_meter": 1,
+        "user": 1,
+        "value": 55,
+        "date": "2024-06-28T14:28:08.955242Z"
+    },
+    {
+        "id": 2,
+        "water_meter": 2,
+        "user": 1,
+        "value": 10,
+        "date": "2024-06-28T14:28:08.959928Z"
+    }
+]
+
+
+
+Method: POST
+Запазва данни за лист от водомери
+
+{
+    "readings": [
+        {
+            "meter_number": "< номер на водомер 1 >",
+            "value": <int>
+        },
+        {
+            "meter_number": "< номер на водомер 2 >",
+            "value": <int>
+        }
+    ]
+}
+
+
+
+
+
+
+
 API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/client-numbers/
 Method:GET
 Returns all client numbers related to the logged user

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import CustomButton from './globalComponents/customButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -7,6 +7,7 @@ import { Redirect, router } from 'expo-router';
 
 import '../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
+import LanguageContext from '../src/context/LanguageContext';
 
 import AuthContext from './Context/AuthContext';
 
@@ -36,14 +37,15 @@ const AuthLayout = () => {
   }, [fontsLoaded]);
 
   const { t, i18n } = useTranslation();
+  const { language, toggleLanguage } = useContext(LanguageContext);
 
-  const changeLanguage = () => {
-    if (i18n.language === 'bg') {
-      i18n.changeLanguage('en');
-    } else {
-      i18n.changeLanguage('bg');
-    }
-  };
+  // const changeLanguage = () => {
+  //   if (i18n.language === 'bg') {
+  //     i18n.changeLanguage('en');
+  //   } else {
+  //     i18n.changeLanguage('bg');
+  //   }
+  // };
 
   const { token } = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(true);
@@ -75,7 +77,7 @@ const AuthLayout = () => {
         title={t('home')}
         handlePress={() => router.push('/home')}
       />
-      <TouchableOpacity onPress={changeLanguage}>
+      <TouchableOpacity onPress={toggleLanguage}>
         <Text>{t('changeLanguage')}</Text>
       </TouchableOpacity>
       {/* <CustomButton title={'Начало'} handlePress={() => console.log("Mario Auth") }/> */}

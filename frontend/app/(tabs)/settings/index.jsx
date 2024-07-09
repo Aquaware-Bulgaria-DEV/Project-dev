@@ -59,7 +59,13 @@ const Settings = () => {
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
-              title={t('settingsSelfReport')}
+              title={'Самоотчет'}
+              screen={'subscreens/selfReport'}
+            ></SettingsButton>
+            <SettingsButton
+              style={styles.settingsButton}
+              title={'Излез от профила'}
+              screen={'signOut'}
             ></SettingsButton>
           </View>
         </View>

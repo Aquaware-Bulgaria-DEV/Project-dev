@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     // marginHorizontal: 24,
     marginTop: 35,
   },
-  content: {
+  contentContainer: {
     margin: 26,
     justifyContent: 'center',
   },
@@ -19,8 +19,7 @@ export const styles = StyleSheet.create({
     marginBottom: 28,
     marginLeft: 15,
   },
-  settingsButton: {
-    // width: 331,
+  settingsBtn: {
     height: 68,
     paddingHorizontal: 20,
     borderWidth: 1,
@@ -29,25 +28,5 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white',
     justifyContent: 'center',
-  },
-  gradient: {
-    flexDirection: 'row',
-    backgroundGradient: 'horizontal',
-    height: 68,
-    margin: -20,
-    paddingRight: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderRadius: 20,
-  },
-  textGradient: {
-    color: 'white',
-    fontSize: 18,
-    justifyContent: 'center',
-    marginLeft: 20,
-  },
-  text: {
-    color: '#999999',
-    fontSize: 18,
-  },
+  }
 });

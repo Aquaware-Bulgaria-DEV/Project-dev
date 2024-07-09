@@ -83,3 +83,28 @@ export const register = async (email, password) => {
     // Alert.alert("Грешка", "Проблем при връзката със сървъра");
   }
 };
+
+export const addReport = async ( setError , token ,formValues ) => {
+
+  try {
+    const response = await fetch(
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formValues }),
+      }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error('Something went wrong.');
+    }
+    setError('');
+  } catch (e) {
+    setError(e.message);
+  }
+
+} 

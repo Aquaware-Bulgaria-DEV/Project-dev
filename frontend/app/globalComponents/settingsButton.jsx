@@ -3,8 +3,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../(tabs)/settings/settingsStyles.js';
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
+import getIcon from '../../utils/icons.js';
 
-const SettingsButton = ({ style, title, screen }) => {
+const SettingsButton = ({ style, title, screen, icon, iconColor }) => {
   const router = useRouter();
   const [isPressed, setIsPressed] = useState(false);
   return (
@@ -17,10 +18,12 @@ const SettingsButton = ({ style, title, screen }) => {
       {isPressed ? (
         <LinearGradient colors={['#388FED', '#4C62C7']} style={styles.gradient}>
           <Text style={styles.textGradient}>{title}</Text>
+          {icon ? getIcon(icon, iconColor) : null}
         </LinearGradient>
       ) : (
-        <View>
+        <View style={{justifyContent: 'space-between',  flexDirection: 'row',}}>
           <Text style={styles.text}>{title}</Text>
+          {icon ? getIcon(icon, iconColor) : null}
         </View>
       )}
     </Pressable>

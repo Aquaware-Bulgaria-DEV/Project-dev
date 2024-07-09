@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 
 import AuthForm from '../../globalComponents/authForm.jsx';
 import AuthContext from '../../Context/AuthContext';
@@ -20,16 +21,12 @@ const SignUp = () => {
     repeatPassword: '',
   });
   const {
-    token,
-    preferences,
-    getToken,
     saveToken,
-    removeToken,
-    savePreferences,
-    removePreferences,
+    saveUserInfo
   } = React.useContext(AuthContext);
 
   const [error, setError] = React.useState('');
+  const router = useRouter();
 
   const handleFormChange = (newValues) => {
     setFormValues(newValues);
@@ -52,14 +49,32 @@ const SignUp = () => {
 
     try {
       const user = await register(formValues.email, formValues.password);
-      // console.log(`user is : ${JSON.stringify(user)}`)
       const userInfo = await login(formValues);
-      // console.log(userInfo)
       const token = userInfo.token;
-      // console.log(`Token is ${token}`)
       saveToken(token);
-      // console.log(`Authorization token is ${JSON.stringify(token)}`)
-      // console.log(`Preferences token is ${preferences}`)
+
+      const response = await fetch(
+        'http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log('Error Response Data:', errorData);
+        throw new Error('Failed to fetch profile details');
+      }
+
+      const profileData = await response.json();
+      saveUserInfo(profileData); 
+      setError(''); 
+      // console.log(profileData);
+      router.push("/home");
     } catch (error) {
       setError(error.message);
     }

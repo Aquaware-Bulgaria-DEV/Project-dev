@@ -18,6 +18,7 @@ const SelfReport = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [waterItems, setWaterItems] = useState([]);
   const [ propertyitems, setPropertyItems ] = useState([]);
+  const [isEnabled, setIsEnabled] = useState(true)
   
   const { token, removeToken, removeUserInfo } = useContext(AuthContext);
   
@@ -149,6 +150,9 @@ const SelfReport = () => {
         },
       }));
       setMeterCount(meterCount + 1);
+      setIsEnabled(true)
+    }else{
+      setIsEnabled(false);
     }
   };
 
@@ -220,8 +224,9 @@ const SelfReport = () => {
             onPress={addWaterMeter}
             onPressIn={() => setOpacity(0.5)}
             onPressOut={() => setOpacity(1)}
+            // disabled={isEnabled}
           >
-            <Text style={[styles.addWaterMeter, { opacity }]}>
+            <Text  style={[styles.addWaterMeter, { opacity }, isEnabled  ? { opacity: 1 } : { opacity: .5 }]}>
               {getIcon("plus", "#3CA5D8", 15)}Добави водомер
             </Text>
           </Pressable>

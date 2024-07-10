@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native';
 import React from 'react';
 import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './tipStyle.js';
-import * as tipsServices from '../../services/tipsServices.js';
+import * as tipsServices from '../../services/fetch.js';
 import AuthContext from '../../Context/AuthContext.jsx';
 import { useEffect, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';

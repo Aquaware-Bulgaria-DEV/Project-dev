@@ -38,6 +38,8 @@
     "settingsLanguage": "Language",
     "settingsSelfReport": "Self Report",
     "settingsLogout": "Logout",
+    "settingsChangeLanguageEN": "English",
+    "settingsChangeLanguageBG": "Bulgarian",
     "subscreenSelfReport": "Self Report",
     "subscreenAddData": "Add data"
 }

@@ -56,6 +56,7 @@ const Settings = () => {
             <SettingsButton
               style={styles.settingsButton}
               title={t('settingsLanguage')}
+              screen={'subscreens/languagePreferences'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}

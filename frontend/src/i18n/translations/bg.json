@@ -38,6 +38,8 @@
     "settingsLanguage": "Език",
     "settingsSelfReport": "Самоотчет",
     "settingsLogout": "Излез от профила",
+    "settingsChangeLanguageEN": "Английски",
+    "settingsChangeLanguageBG": "Български",
     "subscreenSelfReport": "Самоотчет",
     "subscreenAddData": "Добавяне на данни"
 }

@@ -36,5 +36,8 @@
     "settingsNotifications": "Notifications",
     "settingsApp": "App settings",
     "settingsLanguage": "Language",
-    "settingsSelfReport": "Self Report"
+    "settingsSelfReport": "Self Report",
+    "settingsLogout": "Logout",
+    "subscreenSelfReport": "Self Report",
+    "subscreenAddData": "Add data"
 }

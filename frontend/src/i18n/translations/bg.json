@@ -36,6 +36,8 @@
     "settingsNotifications": "Нотификации",
     "settingsApp": "Настройки на приложението",
     "settingsLanguage": "Език",
-    "settingsSelfReport": "Самоотчет"
-
+    "settingsSelfReport": "Самоотчет",
+    "settingsLogout": "Излез от профила",
+    "subscreenSelfReport": "Самоотчет",
+    "subscreenAddData": "Добавяне на данни"
 }

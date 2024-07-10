@@ -1,18 +1,23 @@
-import { View, Text, ScrollView, StyleSheet, Dimensions, Pressable } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView, StyleSheet, Dimensions, Pressable, TouchableOpacity } from 'react-native'
+import React, { useContext } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {  styles  } from "./selfReportStyles.js"
 import SettingsButton from '../../globalComponents/settingsButton';
 import { Header } from '../../globalComponents/header.jsx';
 
-import getIcon from '../../../utils/icons.js';
+import '../../../src/i18n/i18n.config';
+import { useTranslation } from 'react-i18next';
+import LanguageContext from '../../../src/context/LanguageContext.js';
 
-const DataComponent = ({data}) =>{
+import getIcon from '../../../utils/icons.js';
+import { t } from 'i18next';
+
+const DataComponent = ({ data }) => {
 
   const IconsComp = () => {
     const [ penOpacity, setPenOpacity ] = React.useState(1);
-    const [ trashOpacity, setTrashOpacity ] = React.useState(1);
+    const [trashOpacity, setTrashOpacity] = React.useState(1);
 
     return(
       <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10}}>
@@ -31,6 +36,9 @@ const DataComponent = ({data}) =>{
 }
 
 const selfReport = () => {
+  const { t, i18n } = useTranslation();
+  const { language, toggleLanguage } = useContext(LanguageContext);
+
   // const { width, height } = Dimensions.get('window');
   const data = "28.07.2024";
   return (
@@ -42,9 +50,9 @@ const selfReport = () => {
       >
       <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
-        <Text style={styles.title}>Самоотчет</Text>
+        <Text style={styles.title}>{t('subscreenSelfReport')}</Text>
           <SettingsButton
-          title={"Добавяне на данни"}
+          title={t('subscreenAddData')}
           style={[styles.settingsBtn, {marginBottom: 20}]}
           screen={'subscreens/formSelfReport'}
           icon={'plus'}
@@ -65,6 +73,10 @@ const selfReport = () => {
           <DataComponent data={data} />
           <DataComponent data={data} />
         </View>
+                {/* Change language button - for removal after successful translation implementation */}
+                <TouchableOpacity onPress={toggleLanguage}>
+          <Text>{t('changeLanguage')}</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

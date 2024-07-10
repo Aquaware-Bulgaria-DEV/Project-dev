@@ -20,7 +20,6 @@ import KITCHEN_SOURCE from '../../../assets/kitchen-pic.jpg';
 import BATHROOM_SOURCE from '../../../assets/bathroom.jpg';
 import TOILET_SOURCE from '../../../assets/toilet.png';
 import AuthContext from '../../Context/AuthContext.jsx';
-
 const Home = () => {
 
   //const { removeToken, removeUserInfo } = React.useContext(AuthContext);

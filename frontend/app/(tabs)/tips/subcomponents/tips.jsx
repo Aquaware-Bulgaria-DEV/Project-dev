@@ -5,30 +5,34 @@ import {
   ImageBackground,
   View,
   ActivityIndicator,
-} from "react-native";
-import { styles } from "./subcompStyles.js";
-import { useState, useEffect } from "react";
-import * as tipsServices from "../../../services/fetch.js";
-import { useRouter } from "expo-router";
+} from 'react-native';
+import { styles } from './subcompStyles.js';
+import { useState, useEffect, useContext } from 'react';
+import * as tipsServices from '../../../services/fetch.js';
+import { useRouter } from 'expo-router';
+import React from 'react';
 
-import '../../../../src/i18n/i18n.config'
+import '../../../../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
+import AuthContext from '../../../Context/AuthContext.jsx';
 
 export const TipsByCategory = () => {
   const router = useRouter();
   const [tips, setTips] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const { token } = React.useContext(AuthContext);
+
   const { t, i18n } = useTranslation();
 
   const getTips = async () => {
     try {
-      const response = await tipsServices.getTips();
+      const response = await tipsServices.getTips(token);
 
       setTips(response);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching tips:", error);
+      console.error('Error fetching tips:', error);
       setLoading(false);
     }
   };
@@ -40,7 +44,7 @@ export const TipsByCategory = () => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size='large' color='black' />
       </View>
     );
   }
@@ -53,7 +57,10 @@ export const TipsByCategory = () => {
         <View key={tip.id}>
           <Pressable
             onPress={() =>
-              router.push({ pathname: "tip", params: { tipId: tip.id } })
+              router.push({
+                pathname: 'subscreens/tip',
+                params: { tipId: tip.id },
+              })
             }
           >
             <ImageBackground

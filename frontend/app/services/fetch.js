@@ -1,11 +1,21 @@
-const server = "http://ec2-18-234-44-48.compute-1.amazonaws.com";
+const server = 'http://ec2-18-234-44-48.compute-1.amazonaws.com';
 
-export const getTips = async () => {
+export const getTips = async (token) => {
   try {
-    const response = await fetch(`${server}/advices/advice/`);
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+
     const result = await response.json();
 
     return result;
@@ -14,17 +24,69 @@ export const getTips = async () => {
   }
 };
 
-export const getATip = async (tipId) => {
+export const getATip = async (tipId, token) => {
   try {
-    console.log(tipId);
-    const response = await fetch(`${server}/advices/advice/${tipId}`);
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/${tipId}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const result = await response.json();
 
-    console.log("result test", result);
+    console.log('result test', result);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllProperties = async (token) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getPropertyRooms = async (id, token) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${id}/rooms/`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
     return result;
   } catch (error) {
     throw error;
@@ -34,10 +96,10 @@ export const getATip = async (tipId) => {
 export const login = async (data) => {
   try {
     const response = await fetch(`${server}/profile/login/`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify({
         username: data.email,
@@ -51,7 +113,7 @@ export const login = async (data) => {
     if (user.token) {
       return user;
     } else {
-      throw new Error("Грешен имейл или парола");
+      throw new Error('Грешен имейл или парола');
     }
   } catch (error) {
     throw new Error(error.message);
@@ -61,9 +123,9 @@ export const login = async (data) => {
 export const register = async (email, password) => {
   try {
     const response = await fetch(`${server}/profile/create/`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         username: email,
@@ -84,8 +146,7 @@ export const register = async (email, password) => {
   }
 };
 
-export const addReport = async ( setError , token ,formValues ) => {
-
+export const addReport = async (setError, token, formValues) => {
   try {
     const response = await fetch(
       'http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/',
@@ -106,5 +167,4 @@ export const addReport = async ( setError , token ,formValues ) => {
   } catch (e) {
     setError(e.message);
   }
-
-} 
+};

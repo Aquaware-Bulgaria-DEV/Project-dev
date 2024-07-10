@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { styles } from './homeStyles.js';
 import {
   View,
@@ -11,25 +11,71 @@ import {
 } from 'react-native';
 
 import { Header } from '../../globalComponents/header.jsx';
-
+import RNPickerSelect from 'react-native-picker-select';
 import '../../../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
 import LanguageContext from '../../../src/context/LanguageContext.js';
-
+import * as services from '../../services/fetch.js';
 import KITCHEN_SOURCE from '../../../assets/kitchen-pic.jpg';
-import BATHROOM_SOURCE from '../../../assets/bathroom.jpg';
-import TOILET_SOURCE from '../../../assets/toilet.png';
+
 import AuthContext from '../../Context/AuthContext.jsx';
 const Home = () => {
-
-  //const { removeToken, removeUserInfo } = React.useContext(AuthContext);
-  //removeToken();
-  //removeUserInfo();
-  
   const { t, i18n } = useTranslation();
   const { language, toggleLanguage } = useContext(LanguageContext);
-  const { userInfo } = useContext(AuthContext);
+  const { userInfo, token } = useContext(AuthContext);
+  const [selectedProp, setSelectedProperty] = useState('');
+  const [properties, setProperties] = useState([]);
+  const [rooms, setRooms] = useState([]);
 
+  const fetchProperties = async () => {
+    try {
+      const response = await services.getAllProperties(token);
+
+      setProperties(
+        response.map((obj) => ({
+          label: obj['type']['type'],
+          value: obj['id'],
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+    }
+  };
+
+  const fetchPropertyRooms = async (value) => {
+    try {
+      const response = await services.getPropertyRooms(value, token);
+      setRooms(
+        response.map((obj) => ({
+          label: obj['name'],
+          value: obj['id'],
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching property rooms:', error);
+    }
+  };
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  useEffect(() => {
+    if (properties.length > 0) {
+      const defaultProperty = properties[0].value;
+      setSelectedProperty(defaultProperty);
+      fetchPropertyRooms(defaultProperty);
+    }
+  }, [properties]);
+
+  const handlePropertyChange = (value) => {
+    setSelectedProperty(value);
+
+    if (value) {
+      fetchPropertyRooms(value);
+    } else {
+      setRooms([]);
+    }
+  };
   // const changeLanguage = () => {
   //   if (i18n.language === 'bg') {
   //     i18n.changeLanguage('en');
@@ -46,44 +92,42 @@ const Home = () => {
       >
         <Header showProfilePic={true} />
         <View style={styles.text}>
-          <Text style={styles.headerTitle}>{t('welcome')}, username!</Text>
-          <Text style={styles.description}>
-          {t('welcomeQuestion')}
+          <Text style={styles.headerTitle}>
+            {t('welcome')}, {userInfo.first_name}!
           </Text>
+          <Text style={styles.description}>{t('welcomeQuestion')}</Text>
         </View>
-        <Pressable
-          style={styles.paddingZero}
-          onPress={() => console.log('TODO: redirect')}
-        >
-          <ImageBackground style={styles.rooms} source={KITCHEN_SOURCE}>
-            <Text style={styles.roomText}>{t('kitchen')}</Text>
-            {/* <Text style={styles.devices}>5 уреда</Text> */}
-          </ImageBackground>
-        </Pressable>
-        <Pressable
-          style={styles.paddingZero}
-          onPress={() => console.log('TODO: redirect')}
-        >
-          <ImageBackground style={styles.rooms} source={BATHROOM_SOURCE}>
-            <Text style={styles.roomText}>{t('bathroom')}</Text>
-            {/* <Text style={styles.devices}>4 уреда</Text> */}
-          </ImageBackground>
-        </Pressable>
-        
+        <View style={styles.pickerContainer}>
+          <RNPickerSelect
+            onValueChange={handlePropertyChange}
+            items={properties}
+            style={{
+              inputIOS: styles.pickerItem,
+              inputAndroid: styles.pickerItem,
+            }}
+            // placeholder={{
+            //   label: 'Избери имот',
+            //   value: '',
+            // }}
+            value={selectedProp}
+          />
+        </View>
+        {rooms.map((room) => (
+          <Pressable
+            key={room.value}
+            style={styles.paddingZero}
+            onPress={() => console.log('TODO: redirect')}
+          >
+            <ImageBackground style={styles.rooms} source={KITCHEN_SOURCE}>
+              <Text style={styles.roomText}>{room.label}</Text>
+            </ImageBackground>
+          </Pressable>
+        ))}
+
         {/* Change language button - for removal after successful translation implementation */}
         <TouchableOpacity onPress={toggleLanguage}>
-        <Text>{t('changeLanguage')}</Text>
+          <Text>{t('changeLanguage')}</Text>
         </TouchableOpacity>
-        
-        <Pressable
-          style={styles.paddingZero}
-          onPress={() => console.log('TODO: redirect')}
-        >
-          <ImageBackground style={styles.rooms} source={TOILET_SOURCE}>
-            <Text style={styles.roomText}>Тоалетна</Text>
-            {/* <Text style={styles.devices}>2 уреда</Text> */}
-          </ImageBackground>
-        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );

@@ -51,6 +51,20 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
     // fontStyle: 'bolder',
   },
+  pickerContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    height: 68,
+
+    width: '88%',
+    alignSelf: 'center',
+  },
+  pickerItem: {
+    fontSize: 18,
+    color: '#000',
+    marginTop: 20,
+    marginLeft: 15,
+  },
   // devices: {
   //   color: "white",
   //   fontSize: 18,

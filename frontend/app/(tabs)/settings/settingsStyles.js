@@ -50,4 +50,8 @@ export const styles = StyleSheet.create({
     color: '#999999',
     fontSize: 18,
   },
+  icons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
 });

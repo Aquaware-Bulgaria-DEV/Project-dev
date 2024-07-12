@@ -130,6 +130,20 @@ const TabsLayout = () => {
             />
         }}
       />
+      <Tabs.Screen 
+        name="singleRoom/index"
+        options={{
+          title: 'SingleRoomView',
+          tabBarIcon: ({ color, focused }) =>
+          <TabIcon
+            iconName={'emergency-share'}
+            color={color}
+            name={showTitle ? "Breakdown" : null}
+            focused={focused}
+          />,
+          href: null
+        }}
+      />
     </Tabs>
   );
 };

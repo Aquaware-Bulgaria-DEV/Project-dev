@@ -19,6 +19,7 @@ import * as services from '../../services/fetch.js';
 import KITCHEN_SOURCE from '../../../assets/kitchen-pic.jpg';
 
 import AuthContext from '../../Context/AuthContext.jsx';
+import { router } from 'expo-router';
 const Home = () => {
   const { t, i18n } = useTranslation();
   const { language, toggleLanguage } = useContext(LanguageContext);
@@ -116,7 +117,7 @@ const Home = () => {
           <Pressable
             key={room.value}
             style={styles.paddingZero}
-            onPress={() => console.log('TODO: redirect')}
+            onPress={() => router.push({pathname: 'singleRoom', params: {id: room.value}})}
           >
             <ImageBackground style={styles.rooms} source={KITCHEN_SOURCE}>
               <Text style={styles.roomText}>{room.label}</Text>

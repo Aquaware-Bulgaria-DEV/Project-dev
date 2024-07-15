@@ -4,11 +4,23 @@ import { View, Text, Button, ScrollView } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Header } from '../../globalComponents/header.jsx'
 
+import { getRoomData } from '../../services/fetch.js'
+
 import { styles } from './singleRoomStyles'
 
-const SingleRoom = () => {
-  const { id } = useLocalSearchParams();
+import AuthContext from '../../Context/AuthContext.jsx';
 
+const SingleRoom = () => {
+  const [roomData, setRoomData] = React.useState('')
+
+  const { propertyId, roomId } = useLocalSearchParams();
+  const {token} = React.useContext(AuthContext)
+
+  React.useEffect(() => {
+    getRoomData(token, propertyId, roomId)
+    .then(data => setRoomData(data))
+    .catch(e => console.error(e));
+  }, [roomId])
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView
@@ -17,6 +29,7 @@ const SingleRoom = () => {
       showsVerticalScrollIndicator={false}
     >
       <Header showProfilePic={false} />
+      <Text>{propertyId}</Text>
     </ScrollView>
   </SafeAreaView>
   );

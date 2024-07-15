@@ -117,7 +117,7 @@ const Home = () => {
           <Pressable
             key={room.value}
             style={styles.paddingZero}
-            onPress={() => router.push({pathname: 'singleRoom', params: {id: room.value}})}
+            onPress={() => router.push({pathname: 'singleRoom', params: { propertyId: selectedProp, roomId: room.value}})}
           >
             <ImageBackground style={styles.rooms} source={KITCHEN_SOURCE}>
               <Text style={styles.roomText}>{room.label}</Text>

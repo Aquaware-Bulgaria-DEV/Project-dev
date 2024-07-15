@@ -21,6 +21,9 @@ const SingleRoom = () => {
     .then(data => setRoomData(data))
     .catch(e => console.error(e));
   }, [roomId])
+
+
+
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView
@@ -29,7 +32,12 @@ const SingleRoom = () => {
       showsVerticalScrollIndicator={false}
     >
       <Header showProfilePic={false} />
-      <Text>{propertyId}</Text>
+      <View style={styles.dataContainer}>
+        <View style={styles.roomInfo}>
+          <Text style={styles.roomName}>{roomData.name}</Text>
+          <Text style={styles.activeDevices}>4 активни уреда</Text>
+        </View>
+      </View>
     </ScrollView>
   </SafeAreaView>
   );

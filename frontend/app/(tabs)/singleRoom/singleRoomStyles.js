@@ -12,4 +12,19 @@ export const styles = StyleSheet.create({
       paddingBottom: 125,
       marginTop: 35,
     },
+    dataContainer: {
+      marginTop: 10,
+      paddingHorizontal: 25
+    },
+    roomInfo: {
+      gap: 5,
+    },
+    roomName: {
+      color: '000',
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+    activeDevices: {
+      color: 'gray'
+    }
 })

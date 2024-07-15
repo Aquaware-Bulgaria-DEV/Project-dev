@@ -1,4 +1,3 @@
-// app/subscreens/singleRoom/index.jsx
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';

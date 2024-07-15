@@ -136,9 +136,9 @@ const TabsLayout = () => {
           title: 'SingleRoomView',
           tabBarIcon: ({ color, focused }) =>
           <TabIcon
-            iconName={'emergency-share'}
+            // iconName={'emergency-share'}
             color={color}
-            name={showTitle ? "Breakdown" : null}
+            name={showTitle ? "SingleRoomView" : null}
             focused={focused}
           />,
           href: null

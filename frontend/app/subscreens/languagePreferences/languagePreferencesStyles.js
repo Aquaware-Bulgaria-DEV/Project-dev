@@ -28,5 +28,11 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white',
     justifyContent: 'center',
+  },
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
   }
 });

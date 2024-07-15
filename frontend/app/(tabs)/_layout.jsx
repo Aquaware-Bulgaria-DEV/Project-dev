@@ -133,12 +133,12 @@ const TabsLayout = () => {
       <Tabs.Screen 
         name="singleRoom/index"
         options={{
-          title: 'SingleRoomView',
+          title: 'SingleRoom',
           tabBarIcon: ({ color, focused }) =>
           <TabIcon
             // iconName={'emergency-share'}
             color={color}
-            name={showTitle ? "SingleRoomView" : null}
+            name={showTitle ? "SingleRoom" : null}
             focused={focused}
           />,
           href: null

@@ -1,17 +1,25 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, Button, ScrollView } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
+import { Header } from '../../globalComponents/header.jsx'
 
-const SingleRoomView = ({route, navigation}) => {
+import { styles } from './singleRoomStyles'
+
+const SingleRoom = () => {
   const { id } = useLocalSearchParams();
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Single Room View</Text>
-      <Text>{id}</Text>
-      <Button title="Go Back" onPress={() => router.back()} />
-    </View>
+    <SafeAreaView style={styles.container}>
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={styles.scrollViewContent}
+      showsVerticalScrollIndicator={false}
+    >
+      <Header showProfilePic={false} />
+    </ScrollView>
+  </SafeAreaView>
   );
 };
 
-export default SingleRoomView;
+export default SingleRoom;

@@ -7,21 +7,18 @@ import {
   ImageBackground,
   ScrollView,
   Pressable,
-  TouchableOpacity,
 } from 'react-native';
 
 import { Header } from '../../globalComponents/header.jsx';
 import RNPickerSelect from 'react-native-picker-select';
 import '../../../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
-import LanguageContext from '../../../src/context/LanguageContext.js';
 import * as services from '../../services/fetch.js';
 import KITCHEN_SOURCE from '../../../assets/kitchen-pic.jpg';
 
 import AuthContext from '../../Context/AuthContext.jsx';
 const Home = () => {
   const { t, i18n } = useTranslation();
-  const { language, toggleLanguage } = useContext(LanguageContext);
   const { userInfo, token } = useContext(AuthContext);
   const [selectedProp, setSelectedProperty] = useState('');
   const [properties, setProperties] = useState([]);
@@ -76,13 +73,6 @@ const Home = () => {
       setRooms([]);
     }
   };
-  // const changeLanguage = () => {
-  //   if (i18n.language === 'bg') {
-  //     i18n.changeLanguage('en');
-  //   } else {
-  //     i18n.changeLanguage('bg');
-  //   }
-  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -123,11 +113,6 @@ const Home = () => {
             </ImageBackground>
           </Pressable>
         ))}
-
-        {/* Change language button - for removal after successful translation implementation */}
-        <TouchableOpacity onPress={toggleLanguage}>
-          <Text>{t('changeLanguage')}</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

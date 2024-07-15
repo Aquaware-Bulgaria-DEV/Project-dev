@@ -5,14 +5,12 @@ import {
   StyleSheet,
   Dimensions,
   Pressable,
-  TouchableOpacity,
   Switch,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styles } from "./languagePreferencesStyles.js";
-import SettingsButton from "../../globalComponents/settingsButton";
 import { Header } from "../../globalComponents/header.jsx";
 
 import "../../../src/i18n/i18n.config";
@@ -22,7 +20,7 @@ import LanguageContext from "../../../src/context/LanguageContext.js";
 const languagePreferences = () => {
   const { t, i18n } = useTranslation();
   const { language, toggleLanguage } = useContext(LanguageContext);
-  const [isLanguageEnglish, setEnglishLanguage] = useState(language === 'bg');
+  const [isLanguageEnglish, setEnglishLanguage] = useState(language !== 'en');
 
   useEffect(() => {
     setEnglishLanguage(language === 'en');

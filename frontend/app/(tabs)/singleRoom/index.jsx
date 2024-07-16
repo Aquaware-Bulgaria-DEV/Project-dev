@@ -9,6 +9,9 @@ import { getRoomData } from '../../services/fetch.js'
 import { styles } from './singleRoomStyles'
 
 import AuthContext from '../../Context/AuthContext.jsx';
+import ProgressBar from '../../globalComponents/progressBar.jsx';
+
+import ProgressBarImage from '../../../assets/CatyProfile.png'
 
 const SingleRoom = () => {
   const [roomData, setRoomData] = React.useState('')
@@ -33,9 +36,14 @@ const SingleRoom = () => {
     >
       <Header showProfilePic={false} />
       <View style={styles.dataContainer}>
-        <View style={styles.roomInfo}>
-          <Text style={styles.roomName}>{roomData.name}</Text>
-          <Text style={styles.activeDevices}>4 активни уреда</Text>
+        <View style={styles.wrapper}>
+          <View style={styles.roomInfo}>
+            <Text style={styles.roomName}>{roomData.name}</Text>
+            <Text style={styles.activeDevices}>4 активни уреда</Text>
+          </View>
+          <View style={styles.progressContainer}>
+            <ProgressBar progress={25} size={300} imageSource={ProgressBarImage}/>
+          </View>
         </View>
       </View>
     </ScrollView>

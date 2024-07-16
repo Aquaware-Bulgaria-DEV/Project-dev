@@ -14,10 +14,14 @@ export const styles = StyleSheet.create({
     },
     dataContainer: {
       marginTop: 10,
-      paddingHorizontal: 25
+      paddingHorizontal: 25,
+    },
+    wrapper: {
+      gap: 5,
+      justifyContent: 'space-between',
     },
     roomInfo: {
-      gap: 5,
+      
     },
     roomName: {
       color: '000',
@@ -26,5 +30,9 @@ export const styles = StyleSheet.create({
     },
     activeDevices: {
       color: 'gray'
+    },
+    progressContainer: {
+      justifyContent: 'center',
+      alignItems: 'center'
     }
 })

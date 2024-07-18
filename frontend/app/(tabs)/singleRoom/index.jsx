@@ -12,6 +12,7 @@ import AuthContext from '../../Context/AuthContext.jsx';
 import ProgressBar from '../../globalComponents/progressBar.jsx';
 
 import ProgressBarImage from '../../../assets/CatyProfile.png'
+import CustomButton from '../../globalComponents/customButton.jsx';
 
 const SingleRoom = () => {
   const [roomData, setRoomData] = React.useState('')
@@ -42,8 +43,13 @@ const SingleRoom = () => {
             <Text style={styles.activeDevices}>4 активни уреда</Text>
           </View>
           <View style={styles.progressContainer}>
-            <ProgressBar progress={25} size={300} imageSource={ProgressBarImage}/>
+            <ProgressBar progress={75} size={300} /* imageSource={ProgressBarImage} */ />
           </View>
+            <CustomButton title={"Разбери какво значи"} 
+            color={"#388FED"}
+            secondColor={"#205187"}
+            additionalStyles={{ width: "80%", height: 68, borderRadius: 20, padding: 0, alignSelf: 'center' }}
+            additionalTextStyle={{ fontSize: 20, textAlign: "center" }} />
         </View>
       </View>
     </ScrollView>

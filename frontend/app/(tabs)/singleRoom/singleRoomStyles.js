@@ -9,22 +9,25 @@ export const styles = StyleSheet.create({
       flex: 1,
     },
     scrollViewContent: {
+      flex: 1,
       paddingBottom: 125,
       marginTop: 35,
     },
     dataContainer: {
+      flex: 1,
       marginTop: 10,
       paddingHorizontal: 25,
     },
     wrapper: {
-      gap: 5,
+      flex: 1,
       justifyContent: 'space-between',
+      // gap: 50
     },
     roomInfo: {
       
     },
     roomName: {
-      color: '000',
+      color: '#000',
       fontWeight: 'bold',
       fontSize: 20,
     },
@@ -32,7 +35,7 @@ export const styles = StyleSheet.create({
       color: 'gray'
     },
     progressContainer: {
-      justifyContent: 'center',
+      // justifyContent: 'space-around',
       alignItems: 'center'
     }
 })

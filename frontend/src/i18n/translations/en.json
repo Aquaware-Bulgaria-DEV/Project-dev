@@ -46,5 +46,8 @@
     "notificationsEmailNotifications": "Email notifications",
     "notificationsScheduledDaily": "Every day",
     "notificationsScheduledWeekly": "Every week",
-    "notificationsScheduledMonthly": "Every month"
+    "notificationsScheduledMonthly": "Every month",
+    "appSettingsBiometricDataLogin": "Log In with Face/Touch ID",
+    "appSettingsPasswordLogin": "Login with password",
+    "appSettingsChangePassword": "Change your password"
 }

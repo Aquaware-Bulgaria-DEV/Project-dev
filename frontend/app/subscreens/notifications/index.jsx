@@ -3,6 +3,7 @@ import {
   Text,
   ScrollView,
   Switch,
+  Alert,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,12 +18,54 @@ import { NotificationContext } from "../../../src/context/NotificationsContext.j
 
 const notifications = () => {
   const { t, i18n } = useTranslation();
-  const { pushNotifications, togglePushNotifications } = useContext(NotificationContext);
-  const [isPushNotificationsTurnedOn, turnOnNotifications] = useState(pushNotifications !== true);
+  const { pushNotifications, togglePushNotifications, expoPushToken } = useContext(NotificationContext);
+  
+  const [isPushNotificationsTurnedOn, turnOnNotifications] = useState(pushNotifications);
+  const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] = useState(false);
+  const [isScheduledDailyTurnedOn, setScheduledDailyTurnedOn] = useState(false);
+  const [isScheduledWeeklyTurnedOn, setScheduledWeeklyTurnedOn] = useState(false);
+  const [isScheduledMonthlyTurnedOn, setScheduledMonthlyTurnedOn] = useState(false);
 
   const handleTogglePushNotificationsBtn = () => {
     togglePushNotifications();
     turnOnNotifications(prevState => !prevState);
+    if (!isPushNotificationsTurnedOn) {
+      Alert.alert('Push Notifications', `Your push notification token is: ${expoPushToken}`);
+    }
+  };
+
+  const handleToggleEmailNotificationsBtn = () => {
+    setEmailNotificationsTurnedOn(prevState => !prevState);
+
+    // if (!isEmailNotificationsTurnedOn) {
+    //   sendEmailNotification();
+    // }
+  };
+
+  //! Email notifications
+  // const sendEmailNotification = async () => {
+  //   try {
+  //     const response = await axios.post('http://your-backend-url/send-email', {
+  //       email: 'user-email@example.com', // Replace with the user's email
+  //       subject: 'Email Notification',
+  //       message: 'This is a test email notification.',
+  //     });
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const handleToggleScheduledDailyBtn = () => {
+    setScheduledDailyTurnedOn(prevState => !prevState);
+  };
+
+  const handleToggleScheduledWeeklyBtn = () => {
+    setScheduledWeeklyTurnedOn(prevState => !prevState);
+  };
+
+  const handleToggleScheduledMonthlyBtn = () => {
+    setScheduledMonthlyTurnedOn(prevState => !prevState);
   };
 
 
@@ -48,8 +91,8 @@ const notifications = () => {
           <View style={[styles.settingsBtn, styles.switchContainer]}>
             <Text style={styles.buttonText}>{t("notificationsEmailNotifications")}</Text>
             <Switch
-              value={isPushNotificationsTurnedOn}
-              onValueChange={handleTogglePushNotificationsBtn}
+              value={isEmailNotificationsTurnedOn}
+              onValueChange={handleToggleEmailNotificationsBtn}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />
@@ -57,8 +100,8 @@ const notifications = () => {
           <View style={[styles.settingsBtn, styles.switchContainer]}>
             <Text style={styles.buttonText}>{t("notificationsScheduledDaily")}</Text>
             <Switch
-              value={isPushNotificationsTurnedOn}
-              onValueChange={handleTogglePushNotificationsBtn}
+              value={isScheduledDailyTurnedOn}
+              onValueChange={handleToggleScheduledDailyBtn}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />
@@ -66,8 +109,8 @@ const notifications = () => {
           <View style={[styles.settingsBtn, styles.switchContainer]}>
             <Text style={styles.buttonText}>{t("notificationsScheduledWeekly")}</Text>
             <Switch
-              value={isPushNotificationsTurnedOn}
-              onValueChange={handleTogglePushNotificationsBtn}
+              value={isScheduledWeeklyTurnedOn}
+              onValueChange={handleToggleScheduledWeeklyBtn}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />
@@ -75,8 +118,8 @@ const notifications = () => {
           <View style={[styles.settingsBtn, styles.switchContainer]}>
             <Text style={styles.buttonText}>{t("notificationsScheduledMonthly")}</Text>
             <Switch
-              value={isPushNotificationsTurnedOn}
-              onValueChange={handleTogglePushNotificationsBtn}
+              value={isScheduledMonthlyTurnedOn}
+              onValueChange={handleToggleScheduledMonthlyBtn}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />

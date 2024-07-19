@@ -8,7 +8,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { styles } from "./notificationsStyles.js";
+import { styles } from "./appSettingsStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
 
 import "../../../src/i18n/i18n.config";
@@ -16,15 +16,13 @@ import { useTranslation } from "react-i18next";
 import { NotificationContext } from "../../../src/context/NotificationsContext.js";
 
 
-const notifications = () => {
+const appSettings = () => {
   const { t, i18n } = useTranslation();
   const { pushNotifications, togglePushNotifications, expoPushToken } = useContext(NotificationContext);
   
   const [isPushNotificationsTurnedOn, turnOnNotifications] = useState(pushNotifications);
   const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] = useState(false);
   const [isScheduledDailyTurnedOn, setScheduledDailyTurnedOn] = useState(false);
-  const [isScheduledWeeklyTurnedOn, setScheduledWeeklyTurnedOn] = useState(false);
-  const [isScheduledMonthlyTurnedOn, setScheduledMonthlyTurnedOn] = useState(false);
 
   const handleTogglePushNotificationsBtn = () => {
     togglePushNotifications();
@@ -36,36 +34,10 @@ const notifications = () => {
 
   const handleToggleEmailNotificationsBtn = () => {
     setEmailNotificationsTurnedOn(prevState => !prevState);
-
-    // if (!isEmailNotificationsTurnedOn) {
-    //   sendEmailNotification();
-    // }
   };
-
-  //! Email notifications - set it after getting the API from BE for sending email
-  // const sendEmailNotification = async () => {
-  //   try {
-  //     const response = await axios.post('http://your-backend-url/send-email', {
-  //       email: 'user-email@example.com', // Replace with the user's email
-  //       subject: 'Email Notification',
-  //       message: 'This is a test email notification.',
-  //     });
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const handleToggleScheduledDailyBtn = () => {
     setScheduledDailyTurnedOn(prevState => !prevState);
-  };
-
-  const handleToggleScheduledWeeklyBtn = () => {
-    setScheduledWeeklyTurnedOn(prevState => !prevState);
-  };
-
-  const handleToggleScheduledMonthlyBtn = () => {
-    setScheduledMonthlyTurnedOn(prevState => !prevState);
   };
 
 
@@ -78,9 +50,9 @@ const notifications = () => {
       >
         <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>{t("settingsNotifications")}</Text>
+          <Text style={styles.title}>{t("settingsApp")}</Text>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>{t("notificationsPushNotifications")}</Text>
+            <Text style={styles.buttonText}>{t("appSettingsBiometricDataLogin")}</Text>
             <Switch
               value={isPushNotificationsTurnedOn}
               onValueChange={handleTogglePushNotificationsBtn}
@@ -89,7 +61,7 @@ const notifications = () => {
             />
           </View>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>{t("notificationsEmailNotifications")}</Text>
+            <Text style={styles.buttonText}>{t("appSettingsPasswordLogin")}</Text>
             <Switch
               value={isEmailNotificationsTurnedOn}
               onValueChange={handleToggleEmailNotificationsBtn}
@@ -98,28 +70,10 @@ const notifications = () => {
             />
           </View>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>{t("notificationsScheduledDaily")}</Text>
+            <Text style={styles.buttonText}>{t("appSettingsChangePassword")}</Text>
             <Switch
               value={isScheduledDailyTurnedOn}
               onValueChange={handleToggleScheduledDailyBtn}
-              trackColor={{ false: "#999999", true: "#388FED" }}
-              thumbColor={"#F9F9F9"}
-            />
-          </View>
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>{t("notificationsScheduledWeekly")}</Text>
-            <Switch
-              value={isScheduledWeeklyTurnedOn}
-              onValueChange={handleToggleScheduledWeeklyBtn}
-              trackColor={{ false: "#999999", true: "#388FED" }}
-              thumbColor={"#F9F9F9"}
-            />
-          </View>
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>{t("notificationsScheduledMonthly")}</Text>
-            <Switch
-              value={isScheduledMonthlyTurnedOn}
-              onValueChange={handleToggleScheduledMonthlyBtn}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />
@@ -130,4 +84,4 @@ const notifications = () => {
   );
 };
 
-export default notifications;
+export default appSettings;

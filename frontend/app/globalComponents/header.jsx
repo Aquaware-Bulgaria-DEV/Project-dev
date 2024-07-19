@@ -15,6 +15,8 @@ import LOGO_COVER from '../../assets/AquawareLogo.svg';
 export const Header = ({ showProfilePic }) => {
   const { userInfo } = React.useContext(AuthContext);
 
+  const isLogged = userInfo != {} ? true : false
+
   const router = useRouter();
   const onArrowPress = () => {
     router.back();
@@ -27,10 +29,12 @@ export const Header = ({ showProfilePic }) => {
       <Pressable onPress={showProfilePic ? onProfilePress : onArrowPress}>
         {showProfilePic ? (
           <View>
-            {!userInfo.profile_picture ? (
+            {isLogged && (
+              <Image style={styles.pics} source={userInfo?.profile_picture} />
+              )}
+              {!isLogged &&
+                  (
               <Image style={styles.pics} source={PROFILE_PIC} />
-            ) : (
-              <Image style={styles.pics} source={userInfo.profile_picture} />
             )}
           </View>
         ) : (

@@ -38,6 +38,7 @@ const Settings = () => {
             <SettingsButton
               style={styles.settingsButton}
               title={t('settingsNotifications')}
+              screen={'subscreens/notifications'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}

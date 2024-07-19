@@ -5,6 +5,8 @@ import Svg, { Circle } from 'react-native-svg';
 const { width } = Dimensions.get('window');
 
 const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
+  const dotsVisible = progress < 100 ? true : false;
+  const progressColor = progress >= 95 ? progress >=100 ? "#E4003A" : "#EB5B00"  : "#339DFA";
   const strokeWidthBackground = 15;
   const strokeWidthProgress = 6;
   const dotRadius = strokeWidthProgress * 1; // Outer dot radius
@@ -36,7 +38,7 @@ const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
           strokeWidth={strokeWidthBackground}
         />
         <Circle
-          stroke="#339DFA"
+          stroke={progressColor}
           fill="none"
           cx={size / 2}
           cy={size / 2}
@@ -48,7 +50,9 @@ const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
           rotation="-90"
           origin={`${size / 2}, ${size / 2}`}
         />
-        <Circle
+        {dotsVisible && 
+        <>
+          <Circle
           cx={startDotPosition.x}
           cy={startDotPosition.y}
           r={dotRadius}
@@ -72,6 +76,9 @@ const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
           r={innerDotRadius}
           fill="#000000"
         />
+      </>
+      }
+        
       </Svg>
       {imageSource ? (
         <Image

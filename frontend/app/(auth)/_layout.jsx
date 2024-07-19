@@ -19,6 +19,12 @@ const AuthLayout = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name='signOut/index'
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
 
       {/* <StatusBar backgroundColor='gray' style='light'/> */}

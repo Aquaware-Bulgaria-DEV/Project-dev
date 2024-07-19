@@ -39,6 +39,7 @@ const Home = () => {
         }))
       );
     } catch (error) {
+      router.push('/')
       console.error('Error fetching properties:', error);
     }
   };
@@ -94,7 +95,7 @@ const Home = () => {
         <Header showProfilePic={true} />
         <View style={styles.text}>
           <Text style={styles.headerTitle}>
-            {t('welcome')}, {userInfo.first_name}!
+            {t('welcome')}, {userInfo?.first_name}!
           </Text>
           <Text style={styles.description}>{t('welcomeQuestion')}</Text>
         </View>

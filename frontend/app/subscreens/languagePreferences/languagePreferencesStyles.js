@@ -34,5 +34,9 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#999999'
   }
 });

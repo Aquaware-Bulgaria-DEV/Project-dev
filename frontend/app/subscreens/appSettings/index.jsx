@@ -4,6 +4,7 @@ import {
   ScrollView,
   Switch,
   Alert,
+  Pressable,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +15,7 @@ import { Header } from "../../globalComponents/header.jsx";
 import "../../../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 import { NotificationContext } from "../../../src/context/NotificationsContext.js";
+import SettingsButton from "../../globalComponents/settingsButton.jsx";
 
 
 const appSettings = () => {
@@ -69,15 +71,11 @@ const appSettings = () => {
               thumbColor={"#F9F9F9"}
             />
           </View>
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>{t("appSettingsChangePassword")}</Text>
-            <Switch
-              value={isScheduledDailyTurnedOn}
-              onValueChange={handleToggleScheduledDailyBtn}
-              trackColor={{ false: "#999999", true: "#388FED" }}
-              thumbColor={"#F9F9F9"}
-            />
-          </View>
+          <SettingsButton
+          style={styles.settingsBtn}
+              title={t('appSettingsChangePassword')}
+              screen={'subscreens/changePassword'}>
+          </SettingsButton>
         </View>
       </ScrollView>
     </SafeAreaView>

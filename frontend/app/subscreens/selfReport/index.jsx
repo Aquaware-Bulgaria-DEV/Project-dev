@@ -44,7 +44,7 @@ const selfReport = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        style={{ flex: 1, }}
+        style={{ flexGrow: 1, }}
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
       >

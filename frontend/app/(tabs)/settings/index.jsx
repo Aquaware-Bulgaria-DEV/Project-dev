@@ -1,24 +1,14 @@
-import React, { useContext } from 'react';
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, ScrollView, SafeAreaView } from 'react-native';
 import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './settingsStyles.js';
 import SettingsButton from '../../globalComponents/settingsButton.jsx';
 
 import '../../../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
-import LanguageContext from '../../../src/context/LanguageContext.js';
 
 const Settings = () => {
   const { t, i18n } = useTranslation();
-  const { language, toggleLanguage } = useContext(LanguageContext);
-
-  // const changeLanguage = () => {
-  //   if (i18n.language === 'bg') {
-  //     i18n.changeLanguage('en');
-  //   } else {
-  //     i18n.changeLanguage('bg');
-  //   }
-  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,10 +38,12 @@ const Settings = () => {
             <SettingsButton
               style={styles.settingsButton}
               title={t('settingsNotifications')}
+              screen={'subscreens/notifications'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
               title={t('settingsApp')}
+              screen={'subscreens/appSettings'}
             ></SettingsButton>
             <SettingsButton
               style={styles.settingsButton}
@@ -70,12 +62,7 @@ const Settings = () => {
             ></SettingsButton>
           </View>
         </View>
-        {/* Change language button - for removal after successful translation implementation */}
-        <TouchableOpacity onPress={toggleLanguage}>
-          <Text>{t('changeLanguage')}</Text>
-        </TouchableOpacity>
       </ScrollView>
-
     </SafeAreaView>
   );
 };

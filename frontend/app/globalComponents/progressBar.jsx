@@ -27,7 +27,7 @@ const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
   const endDotPosition = calculateDotPosition(progress);
 
   return (
-    <View style={[styles.container, { width: size, height: size }]}>
+    <View style={[styles.container, { width: size, height: size }, ]}>
       <Svg width={size} height={size}>
         <Circle
           stroke="#e6e6e6"
@@ -83,7 +83,7 @@ const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
       {imageSource ? (
         <Image
           source={imageSource}
-          style={[styles.image, { width: size - strokeWidthBackground, height: size - strokeWidthBackground }]}
+          style={[styles.image, { width: size - strokeWidthBackground - 12, height: size - strokeWidthBackground - 12 }]}
           resizeMode="cover"
         />
       ) : (

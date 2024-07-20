@@ -4,7 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Header } from '../../globalComponents/header'
 
 import {styles}  from './doubleProgressBarStyles'
-import CircularProgressBar from '../../globalComponents/progressBar'
+import CircularProgressBar from '../../globalComponents/progressBar';
+
+import FishTank from "../../../assets/Fish.png"
+import BathTub from "../../../assets/Bathtub.png"
 
 const DoubleProgressBar = () => {
   return (
@@ -21,7 +24,7 @@ const DoubleProgressBar = () => {
             <Text style={styles.quantity}>280 литра</Text>
             <Text style={styles.tip}>колкото един аквариум в хотел</Text>
           </View>
-          <CircularProgressBar progress={90} size={300}/>
+          <CircularProgressBar progress={90} size={300} imageSource={FishTank}/>
         </View>
         <Text style={styles.quantity}>или</Text>
         <View style={styles.subContainer}>
@@ -29,7 +32,7 @@ const DoubleProgressBar = () => {
             <Text style={styles.quantity}>280 литра</Text>
             <Text style={styles.tip}>колкото една почти пълна вана</Text>
           </View>
-          <CircularProgressBar progress={100} size={300} />
+          <CircularProgressBar progress={100} size={300} imageSource={BathTub}/>
         </View>
       </View>
   </ScrollView>

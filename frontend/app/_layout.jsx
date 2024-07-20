@@ -8,7 +8,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthProvider } from './Context/AuthContext'; 
 import AuthContext from './Context/AuthContext';
 import { LanguageProvider } from '../src/context/LanguageContext';
-import { NotificationProvider } from '../src/context/NotificationsContext';
 
 // const MyStack = () => {
 
@@ -25,9 +24,7 @@ const RootLayout = () => {
   return (
     <AuthProvider>
       <LanguageProvider>
-        <NotificationProvider>
-          <Stack screenOptions={{ headerShown: false }} />
-        </NotificationProvider>
+        <Stack screenOptions={{ headerShown: false }} />
       </LanguageProvider>
     </AuthProvider>
   );

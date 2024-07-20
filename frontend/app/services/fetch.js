@@ -27,7 +27,7 @@ export const getTips = async (token) => {
 export const getATip = async (tipId, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/${tipId}/`,
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/${tipId}`,
       {
         method: 'GET',
         headers: {
@@ -42,6 +42,7 @@ export const getATip = async (tipId, token) => {
     }
     const result = await response.json();
 
+    console.log('result test', result);
     return result;
   } catch (error) {
     throw error;
@@ -92,27 +93,26 @@ export const getPropertyRooms = async (id, token) => {
   }
 };
 
-export const getRoomDetails = async (propertyId, roomId, token) => {
-  try {
-    const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyId}/rooms/${roomId}/`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Token ${token}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    if (!response.ok) {
+export const getRoomData = async (token, propertyId, roomId) => {
+  try{
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyId}/rooms/${roomId}/`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if(!response.ok){
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
+    const data = await response.json();
+    console.log(data);
+    return data;
+  }catch(err){
+    throw err;
   }
-};
+}
 
 export const login = async (data) => {
   try {

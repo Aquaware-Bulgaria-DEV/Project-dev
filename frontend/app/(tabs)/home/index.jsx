@@ -23,6 +23,7 @@ const Home = () => {
   const [selectedProp, setSelectedProperty] = useState('');
   const [properties, setProperties] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const [hideDropdown, setHideDropdown] = useState(true);
 
   const fetchProperties = async () => {
     try {
@@ -42,6 +43,7 @@ const Home = () => {
   const fetchPropertyRooms = async (value) => {
     try {
       const response = await services.getPropertyRooms(value, token);
+
       setRooms(
         response.map((obj) => ({
           label: obj['name'],
@@ -61,6 +63,9 @@ const Home = () => {
       const defaultProperty = properties[0].value;
       setSelectedProperty(defaultProperty);
       fetchPropertyRooms(defaultProperty);
+    }
+    if (properties.length > 1) {
+      setHideDropdown(false);
     }
   }, [properties]);
 
@@ -87,21 +92,20 @@ const Home = () => {
           </Text>
           <Text style={styles.description}>{t('welcomeQuestion')}</Text>
         </View>
-        <View style={styles.pickerContainer}>
-          <RNPickerSelect
-            onValueChange={handlePropertyChange}
-            items={properties}
-            style={{
-              inputIOS: styles.pickerItem,
-              inputAndroid: styles.pickerItem,
-            }}
-            // placeholder={{
-            //   label: 'Избери имот',
-            //   value: '',
-            // }}
-            value={selectedProp}
-          />
-        </View>
+        {!hideDropdown ? (
+          <View style={styles.pickerContainer}>
+            <RNPickerSelect
+              onValueChange={handlePropertyChange}
+              items={properties}
+              style={{
+                inputIOS: styles.pickerItem,
+                inputAndroid: styles.pickerItem,
+              }}
+              value={selectedProp}
+            />
+          </View>
+        ) : null}
+
         {rooms.map((room) => (
           <Pressable
             key={room.value}

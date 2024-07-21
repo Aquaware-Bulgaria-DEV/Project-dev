@@ -23,18 +23,20 @@ const Home = () => {
   const [selectedProp, setSelectedProperty] = useState('');
   const [properties, setProperties] = useState([]);
   const [rooms, setRooms] = useState([]);
-  const [hideDropdown, setHideDropdown] = useState(true);
 
   const fetchProperties = async () => {
     try {
       const response = await services.getAllProperties(token);
-
-      setProperties(
-        response.map((obj) => ({
-          label: obj['type']['type'],
-          value: obj['id'],
-        }))
-      );
+      const remoteProperties = response.map((obj) => ({
+        label: obj['type']['type'],
+        value: obj['id'],
+      }));
+      setProperties(remoteProperties);
+      if (remoteProperties.length > 0) {
+        const defaultProperty = remoteProperties[0].value;
+        setSelectedProperty(defaultProperty);
+        await fetchPropertyRooms(defaultProperty);
+      }
     } catch (error) {
       console.error('Error fetching properties:', error);
     }
@@ -43,13 +45,11 @@ const Home = () => {
   const fetchPropertyRooms = async (value) => {
     try {
       const response = await services.getPropertyRooms(value, token);
-
-      setRooms(
-        response.map((obj) => ({
-          label: obj['name'],
-          value: obj['id'],
-        }))
-      );
+      const rooms = response.map((obj) => ({
+        label: obj['name'],
+        value: obj['id'],
+      }));
+      setRooms(rooms);
     } catch (error) {
       console.error('Error fetching property rooms:', error);
     }
@@ -58,18 +58,12 @@ const Home = () => {
     fetchProperties();
   }, []);
 
-  useEffect(() => {
-    if (properties.length > 0) {
-      const defaultProperty = properties[0].value;
-      setSelectedProperty(defaultProperty);
-      fetchPropertyRooms(defaultProperty);
-    }
-    if (properties.length > 1) {
-      setHideDropdown(false);
-    }
-  }, [properties]);
-
   const handlePropertyChange = (value) => {
+    if (value === null || value === 'null') {
+      setSelectedProperty('');
+      setRooms([]);
+      return;
+    }
     setSelectedProperty(value);
 
     if (value) {
@@ -85,14 +79,14 @@ const Home = () => {
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
       >
-        <Header showProfilePic={true} />
+        <Header showProfilePic />
         <View style={styles.text}>
           <Text style={styles.headerTitle}>
             {t('welcome')}, {userInfo.first_name}!
           </Text>
           <Text style={styles.description}>{t('welcomeQuestion')}</Text>
         </View>
-        {!hideDropdown ? (
+        {properties.length > 1 ? (
           <View style={styles.pickerContainer}>
             <RNPickerSelect
               onValueChange={handlePropertyChange}

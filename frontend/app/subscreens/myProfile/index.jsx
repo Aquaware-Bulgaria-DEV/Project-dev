@@ -1,3 +1,5 @@
+import { useState, useEffect, useContext } from 'react';
+
 import {
   ScrollView,
   Text,
@@ -10,17 +12,18 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-
-import CustomButton from '../../globalComponents/customButton.jsx';
-import AuthContext from '../../Context/AuthContext.jsx';
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Header } from '../../globalComponents/header.jsx';
-import { styles } from './myProfileStyles.js';
-import { parseISO, format } from 'date-fns';
-import * as ImagePicker from 'expo-image-picker'; // Import expo-image-picker
 import { useForm, Controller } from 'react-hook-form';
+import * as ImagePicker from 'expo-image-picker';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { parseISO, format } from 'date-fns';
+
+import AuthContext from '../../Context/AuthContext.jsx';
+import CustomButton from '../../globalComponents/customButton.jsx';
+import { Header } from '../../globalComponents/header.jsx';
 import getIcon from '../../../utils/icons.js';
+import { styles } from './myProfileStyles.js';
+
+const { height } = Dimensions.get('window');
 
 const MyProfile = () => {
   const [name, setName] = useState('');
@@ -28,27 +31,25 @@ const MyProfile = () => {
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
   const [picture, setPicture] = useState(null);
-  const { width, height } = Dimensions.get('window');
   const [opacity, setOpacity] = useState(1);
-  const { userInfo } = React.useContext(AuthContext);
+
+  const { userInfo } = useContext(AuthContext);
+  const { control } = useForm();
+
+  const pencil = getIcon('pencil', 'white', 13);
+  const formattedDate = format(parseISO(userInfo.date_joined), 'dd.MM.yyyy');
+
+  useEffect(() => {
+    setName(userInfo.first_name + ' ' + userInfo.last_name);
+    setPhone(userInfo.phone_number);
+    setEmail(userInfo.email);
+    setPicture(userInfo.profile_picture);
+    setDate(formattedDate);
+  }, [userInfo]);
 
   const handleRemove = () => {
     console.log('Remove Pressed');
   };
-
-  const pencil = getIcon('pencil', 'white', 13);
-
-  const { control } = useForm();
-
-  const formattedDate = format(parseISO(userInfo.date_joined), 'dd.MM.yyyy');
-
-  useEffect(() => {
-    setName(userInfo['first_name'] + ' ' + userInfo['last_name']);
-    setPhone(userInfo['phone_number']);
-    setEmail(userInfo['email']);
-    setPicture(userInfo.profile_picture);
-    setDate(formattedDate);
-  }, [userInfo]);
 
   const changePicture = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -144,7 +145,7 @@ const MyProfile = () => {
                   name='email'
                   style={styles.inputField}
                   value={email}
-                  readOnly={true}
+                  readOnly
                   keyboardType='email-address'
                 />
 

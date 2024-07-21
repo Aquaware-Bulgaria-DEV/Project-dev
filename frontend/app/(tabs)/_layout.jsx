@@ -4,7 +4,7 @@ import { Tabs, Redirect } from "expo-router";
 import getIcon from '../../utils/icons';
 
 
-
+/////////////////////////// Try to add as a tabs.screen the singleRoom and hide just that tab from the tab bar
 
 
 const TabIcon = ({localIcon, color, name, focused, iconName }) => {
@@ -128,6 +128,20 @@ const TabsLayout = () => {
               name={showTitle ? "Breakdown" : null}
               focused={focused}
             />
+        }}
+      />
+      <Tabs.Screen 
+        name="singleRoom/index"
+        options={{
+          title: 'SingleRoom',
+          tabBarIcon: ({ color, focused }) =>
+          <TabIcon
+            // iconName={'emergency-share'}
+            color={color}
+            name={showTitle ? "SingleRoom" : null}
+            focused={focused}
+          />,
+          href: null
         }}
       />
     </Tabs>

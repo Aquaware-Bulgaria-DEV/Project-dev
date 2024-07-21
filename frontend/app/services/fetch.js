@@ -27,7 +27,7 @@ export const getTips = async (token) => {
 export const getATip = async (tipId, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/${tipId}/`,
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/${tipId}`,
       {
         method: 'GET',
         headers: {
@@ -42,6 +42,7 @@ export const getATip = async (tipId, token) => {
     }
     const result = await response.json();
 
+    console.log('result test', result);
     return result;
   } catch (error) {
     throw error;

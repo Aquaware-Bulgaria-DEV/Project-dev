@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   scrollViewContent: {
+    flexGrow: 1,
     paddingBottom: 125,
     // marginHorizontal: 24,
     marginTop: 35,

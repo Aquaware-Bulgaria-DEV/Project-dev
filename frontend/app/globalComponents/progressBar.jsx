@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window');
 const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
   const dotsVisible = progress < 100 ? true : false;
   const progressColor = progress >= 95 ? progress >=100 ? "#E4003A" : "#EB5B00"  : "#339DFA";
-  const strokeWidthBackground = 15;
+  const strokeWidthBackground = 20;
   const strokeWidthProgress = 6;
   const dotRadius = strokeWidthProgress * 1; // Outer dot radius
   const innerDotRadius = dotRadius / 2; // Inside dot radius (2x smaller)
@@ -30,7 +30,7 @@ const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
     <View style={[styles.container, { width: size, height: size }, ]}>
       <Svg width={size} height={size}>
         <Circle
-          stroke="#e6e6e6"
+          stroke="rgba(150, 150, 150, .1)"
           fill="none"
           cx={size / 2}
           cy={size / 2}

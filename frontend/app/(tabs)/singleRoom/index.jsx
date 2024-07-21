@@ -4,7 +4,7 @@ import { View, Text, Button, ScrollView } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Header } from '../../globalComponents/header.jsx'
 
-import { getRoomData } from '../../services/fetch.js'
+import { getRoomDetails } from '../../services/fetch.js'
 
 import { styles } from './singleRoomStyles'
 
@@ -24,7 +24,7 @@ const SingleRoom = () => {
   const {token} = React.useContext(AuthContext)
 
   React.useEffect(() => {
-    getRoomData(token, propertyId, roomId)
+    getRoomDetails( propertyId, roomId, token)
     .then(data => setRoomData(data))
     .catch(e => console.error(e));
   }, [roomId])

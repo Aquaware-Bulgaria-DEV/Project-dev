@@ -92,7 +92,33 @@ export const getPropertyRooms = async (id, token) => {
     throw error;
   }
 };
+export const getWaterMetters = async (token, value ) => {
+  try {
+        
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${value}/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
+    if (!response.ok) {
+      // Here gets error because there is latency of useState hook for value.
+      throw new Error("Something went wrong waterMeters (Ignore for now).");
+    }
+
+    const data = await response.json();
+    const metterArray = data["water_meters"].map((item) => ({
+      label: item["meter_number"],
+      value: item["meter_number"],
+    }));
+
+    return metterArray;
+  } catch (err) {
+    throw err;
+  }
+};
 export const getRoomDetails = async (propertyId, roomId, token) => {
   try {
     const response = await fetch(

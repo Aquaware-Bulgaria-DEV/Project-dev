@@ -130,9 +130,9 @@ const Troubleshoot = () => {
     setFormValues(newValues);
   };
 
-  const handleRemove = () => {
-    console.log('Remove Pressed');
-  };
+  // const handleRemove = () => {
+  //   console.log('Remove Pressed');
+  // };
 
   const onPressHandler = async () => {
     if (
@@ -143,7 +143,6 @@ const Troubleshoot = () => {
       setError('Имате непопълнено поле');
     } else {
       await addReport(setError, token, formValues)
-      console.log(userInfo)
     }
   };
 
@@ -175,7 +174,7 @@ const Troubleshoot = () => {
                   <Text style={styles.clientNumber}>
                     Клиентски номер: 119862
                   </Text>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPressIn={() => setOpacity(0.7)}
                     onPressOut={() => setOpacity(1)}
                     onPress={handleRemove}
@@ -185,11 +184,11 @@ const Troubleshoot = () => {
                       onPressOut={() => setOpacity(1)}
                       onPress={handleRemove}
                     >
-                      {/* <Text style={[styles.removeBtn, { opacity }]}>
+                      <Text style={[styles.removeBtn, { opacity }]}>
                         Remove
-                      </Text> */}
+                      </Text>
                     </TouchableOpacity>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </View>
               <View style={styles.pickerContainer}>

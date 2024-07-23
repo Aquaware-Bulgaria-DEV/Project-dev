@@ -22,13 +22,7 @@ const WaterMeter = ({
     }
   }, [waterMeters]);
 
-  useEffect(() => {
-    if (meterId === "" || quantity === "") {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [meterId, quantity]);
+
 
   useEffect(() => {
     const updatedFormData = {

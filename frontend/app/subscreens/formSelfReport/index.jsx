@@ -139,7 +139,7 @@ const SelfReport = () => {
   };
 
   const addWaterMeter = () => {
-    if (meterCount <= waterItems.length && value) {
+    if (meterCount <= waterItems.length && value && meterCount < 6) {
       const meterKey = `meter${meterCount}`;
       setMeters([
         ...meters,

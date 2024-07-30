@@ -369,6 +369,123 @@ Takes:
     }
 
 
+~~~~~~~~~~~~~~~~~~
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/<int:property_id>/water-meter-readings/
+
+GET: 
+
+Returns all water meter readings to the given property. It may contain reading from all the water meters related to the property. 
+
+Example:
+
+[
+    {
+        "id": 13,
+        "water_meter_id": 1,
+        "user": 1,
+        "value": 124,
+        "date": "2024-07-29T10:29:29.566911Z"
+    },
+    {
+        "id": 14,
+        "water_meter_id": 1,
+        "user": 1,
+        "value": 126,
+        "date": "2024-07-30T14:49:33.672878Z"
+    }
+]
+
+POST :
+
+Takes a list with readings with the water meter id and the new value. Can take multiple readings at a time.
+
+Example 
+
+{
+    "readings": [
+        {
+            "water_meter_id": 1,
+            "value": 125.5
+        },
+        {
+            "water_meter_id": 2,
+            "value": 130.7
+        }
+    ]
+}
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+
+API : http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/<int:water-meter-reading-id>/
+
+GET: Returns the details of the reading with the ID in the link
+Example:
+
+{
+    "id": 13,
+    "water_meter_id": 1,
+    "user": 1,
+    "value": 125,
+    "date": "2024-07-29T10:29:29.566911Z"
+}
+
+PUT:
+
+Takes new value 
+
+Example:
+
+{
+    "value": 124
+}
+
+Response 
+{
+    "id": 13,
+    "water_meter_id": 1,
+    "user": 1,
+    "value": 124,
+    "date": "2024-07-29T10:29:29.566911Z"
+}
+
+DELETE: 
+
+Deletes the reading from the DB
+
+
+~~~~~~~~~~~~~~~~~~~~~
+
+API : http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/client-numbers/1/average-consumption/
+
+GET
+
+Returns the average consumption of the client, based on the client-number (other fetures still in development)
+
+Returns 
+
+{
+    "approximate": false,
+    "average_monthly_consumption": 60.0
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

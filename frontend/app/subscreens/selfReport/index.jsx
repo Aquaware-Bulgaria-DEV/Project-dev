@@ -108,18 +108,6 @@ const selfReport = () => {
             }}
           />
           <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
-          <DataComponent data={data} />
         </View>
       </ScrollView>
     </SafeAreaView>

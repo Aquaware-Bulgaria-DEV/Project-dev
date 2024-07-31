@@ -46,5 +46,8 @@
     "notificationsEmailNotifications": "Известия по имейл",
     "notificationsScheduledDaily": "Всеки ден",
     "notificationsScheduledWeekly": "Всяка седмица",
-    "notificationsScheduledMonthly": "Всеки месец"
+    "notificationsScheduledMonthly": "Всеки месец",
+    "appSettingsBiometricDataLogin": "Вход с биометрични данни",
+    "appSettingsPasswordLogin": "Вход с парола",
+    "appSettingsChangePassword": "Смяна на паролата"
 }

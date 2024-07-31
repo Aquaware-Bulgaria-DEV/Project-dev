@@ -1,4 +1,10 @@
-import { View, Text, ScrollView, Switch, Alert } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Switch,
+  Alert,
+} from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -9,35 +15,27 @@ import "../../../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 import { NotificationContext } from "../../../src/context/NotificationsContext.js";
 
+
 const notifications = () => {
   const { t, i18n } = useTranslation();
-  const { pushNotifications, togglePushNotifications, expoPushToken } =
-    useContext(NotificationContext);
-
-  const [isPushNotificationsTurnedOn, turnOnNotifications] =
-    useState(pushNotifications);
-  const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] =
-    useState(false);
+  const { pushNotifications, togglePushNotifications, expoPushToken } = useContext(NotificationContext);
+  
+  const [isPushNotificationsTurnedOn, turnOnNotifications] = useState(pushNotifications);
+  const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] = useState(false);
   const [isScheduledDailyTurnedOn, setScheduledDailyTurnedOn] = useState(false);
-  const [isScheduledWeeklyTurnedOn, setScheduledWeeklyTurnedOn] =
-    useState(false);
-  const [isScheduledMonthlyTurnedOn, setScheduledMonthlyTurnedOn] =
-    useState(false);
+  const [isScheduledWeeklyTurnedOn, setScheduledWeeklyTurnedOn] = useState(false);
+  const [isScheduledMonthlyTurnedOn, setScheduledMonthlyTurnedOn] = useState(false);
 
   const handleTogglePushNotificationsBtn = () => {
     togglePushNotifications();
-    turnOnNotifications((prevState) => !prevState);
+    turnOnNotifications(prevState => !prevState);
+    if (!isPushNotificationsTurnedOn) {
+      Alert.alert('Push Notifications', `Your push notification token is: ${expoPushToken}`);
+    }
   };
 
-  if (!isPushNotificationsTurnedOn) {
-    Alert.alert(
-      "Push Notifications",
-      `Your push notification token is: ${expoPushToken}`
-    );
-  }
-
   const handleToggleEmailNotificationsBtn = () => {
-    setEmailNotificationsTurnedOn((prevState) => !prevState);
+    setEmailNotificationsTurnedOn(prevState => !prevState);
 
     // if (!isEmailNotificationsTurnedOn) {
     //   sendEmailNotification();
@@ -59,16 +57,17 @@ const notifications = () => {
   // };
 
   const handleToggleScheduledDailyBtn = () => {
-    setScheduledDailyTurnedOn((prevState) => !prevState);
+    setScheduledDailyTurnedOn(prevState => !prevState);
   };
 
   const handleToggleScheduledWeeklyBtn = () => {
-    setScheduledWeeklyTurnedOn((prevState) => !prevState);
+    setScheduledWeeklyTurnedOn(prevState => !prevState);
   };
 
   const handleToggleScheduledMonthlyBtn = () => {
-    setScheduledMonthlyTurnedOn((prevState) => !prevState);
+    setScheduledMonthlyTurnedOn(prevState => !prevState);
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,9 +80,7 @@ const notifications = () => {
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{t("settingsNotifications")}</Text>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("notificationsPushNotifications")}
-            </Text>
+            <Text style={styles.buttonText}>{t("notificationsPushNotifications")}</Text>
             <Switch
               value={isPushNotificationsTurnedOn}
               onValueChange={handleTogglePushNotificationsBtn}
@@ -92,9 +89,7 @@ const notifications = () => {
             />
           </View>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("notificationsEmailNotifications")}
-            </Text>
+            <Text style={styles.buttonText}>{t("notificationsEmailNotifications")}</Text>
             <Switch
               value={isEmailNotificationsTurnedOn}
               onValueChange={handleToggleEmailNotificationsBtn}
@@ -103,9 +98,7 @@ const notifications = () => {
             />
           </View>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("notificationsScheduledDaily")}
-            </Text>
+            <Text style={styles.buttonText}>{t("notificationsScheduledDaily")}</Text>
             <Switch
               value={isScheduledDailyTurnedOn}
               onValueChange={handleToggleScheduledDailyBtn}
@@ -114,9 +107,7 @@ const notifications = () => {
             />
           </View>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("notificationsScheduledWeekly")}
-            </Text>
+            <Text style={styles.buttonText}>{t("notificationsScheduledWeekly")}</Text>
             <Switch
               value={isScheduledWeeklyTurnedOn}
               onValueChange={handleToggleScheduledWeeklyBtn}
@@ -125,9 +116,7 @@ const notifications = () => {
             />
           </View>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("notificationsScheduledMonthly")}
-            </Text>
+            <Text style={styles.buttonText}>{t("notificationsScheduledMonthly")}</Text>
             <Switch
               value={isScheduledMonthlyTurnedOn}
               onValueChange={handleToggleScheduledMonthlyBtn}

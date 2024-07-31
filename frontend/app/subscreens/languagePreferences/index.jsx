@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Switch,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./languagePreferencesStyles.js";
 import SettingsButton from "../../globalComponents/settingsButton";
@@ -21,7 +21,16 @@ import LanguageContext from "../../../src/context/LanguageContext.js";
 const languagePreferences = () => {
   const { t, i18n } = useTranslation();
   const { language, toggleLanguage } = useContext(LanguageContext);
-  const [isLanguageEnglish, setEnglishLanguage] = useState(false);
+  const [isLanguageEnglish, setEnglishLanguage] = useState(language === 'bg');
+
+  useEffect(() => {
+    setEnglishLanguage(language === 'en');
+  }, [language]);
+
+  const handleToggleLanguage = () => {
+    toggleLanguage();
+    setEnglishLanguage(prevState => !prevState);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,9 +48,7 @@ const languagePreferences = () => {
             </Text>
             <Switch
               value={isLanguageEnglish}
-              onValueChange={() =>
-                setEnglishLanguage((previousState) => !previousState)
-              }
+              onValueChange={handleToggleLanguage}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />
@@ -53,9 +60,7 @@ const languagePreferences = () => {
             </Text>
             <Switch
               value={!isLanguageEnglish}
-              onValueChange={() =>
-                setEnglishLanguage((previousState) => !previousState)
-              }
+              onValueChange={handleToggleLanguage}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />

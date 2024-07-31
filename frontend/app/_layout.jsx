@@ -24,7 +24,9 @@ const RootLayout = () => {
   return (
     <AuthProvider>
       <LanguageProvider>
-        <Stack screenOptions={{ headerShown: false }} />
+      <NotificationProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </NotificationProvider>
       </LanguageProvider>
     </AuthProvider>
   );

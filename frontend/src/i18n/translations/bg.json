@@ -33,7 +33,7 @@
     "settingsPersonalInfo": "Профил",
     "settingsMakeARequest": "Направи заявка",
     "settingsPropertiesManagement": "Управление на имоти",
-    "settingsNotifications": "Нотификации",
+    "settingsNotifications": "Известия",
     "settingsApp": "Настройки на приложението",
     "settingsLanguage": "Език",
     "settingsSelfReport": "Самоотчет",
@@ -41,5 +41,10 @@
     "settingsChangeLanguageEN": "Английски",
     "settingsChangeLanguageBG": "Български",
     "subscreenSelfReport": "Самоотчет",
-    "subscreenAddData": "Добавяне на данни"
+    "subscreenAddData": "Добавяне на данни",
+    "notificationsPushNotifications": "Известия на екрана",
+    "notificationsEmailNotifications": "Известия по имейл",
+    "notificationsScheduledDaily": "Всеки ден",
+    "notificationsScheduledWeekly": "Всяка седмица",
+    "notificationsScheduledMonthly": "Всеки месец"
 }

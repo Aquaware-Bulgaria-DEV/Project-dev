@@ -54,13 +54,9 @@ const appSettings = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={styles.scrollViewContent}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} />
-        <View style={styles.contentContainer}>
+        <View style={styles.content}>
           <Text style={styles.title}>{t("settingsApp")}</Text>
           <View style={[styles.settingsBtn, styles.switchContainer]}>
             <Text style={styles.buttonText}>
@@ -87,7 +83,7 @@ const appSettings = () => {
           <SettingsButton
             style={styles.settingsBtn}
             title={t("appSettingsChangePassword")}
-            screen={"subscreens/appSettings"}
+            screen={"subscreens/changePassword"}
           ></SettingsButton>
 
         </View>

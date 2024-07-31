@@ -72,7 +72,6 @@ const notifications = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        style={{ flex: 1 }}
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
       >

@@ -49,5 +49,8 @@
     "notificationsScheduledMonthly": "Every month",
     "appSettingsBiometricDataLogin": "Log In with Face/Touch ID",
     "appSettingsPasswordLogin": "Login with password",
-    "appSettingsChangePassword": "Change your password"
+    "appSettingsChangePassword": "Change your password",
+    "appSettingsChangePasswordNewPass": "New password",
+    "appSettingsChangePasswordNewPassRetype": "Repeat new password",
+    "appSettingsChangePasswordOldPass": "Old password"
 }

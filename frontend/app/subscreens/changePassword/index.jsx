@@ -1,75 +1,112 @@
-import { View, Text, ScrollView, Switch, Alert } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+  TextInput,
+  Alert,
+  Pressable,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "./changePasswordStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
-
-import "../../../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
-import { NotificationContext } from "../../../src/context/NotificationsContext.js";
-import SettingsButton from "../../globalComponents/settingsButton.jsx";
 
-const changePassword = () => {
-  const { t, i18n } = useTranslation();
-  const { pushNotifications, togglePushNotifications, expoPushToken } =
-    useContext(NotificationContext);
+const ChangePassword = () => {
+  const { t } = useTranslation();
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
-  const [isPushNotificationsTurnedOn, turnOnNotifications] =
-    useState(pushNotifications);
-  const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] =
-    useState(false);
-  const [isScheduledDailyTurnedOn, setScheduledDailyTurnedOn] = useState(false);
-
-  const handleTogglePushNotificationsBtn = () => {
-    togglePushNotifications();
-    turnOnNotifications((prevState) => !prevState);
+  const validateData = () => {
+    const newErrors = {};
+    if (!oldPassword) newErrors.oldPassword = "Моля, въведете стара парола";
+    if (!newPassword) newErrors.newPassword = "Моля, въведете нова парола";
+    if (!confirmNewPassword)
+      newErrors.confirmNewPassword = "Моля, потвърдете новата парола";
+    if (newPassword !== confirmNewPassword)
+      newErrors.confirmNewPassword = "Паролите не съвпадат";
+    return newErrors;
   };
 
-  const handleToggleEmailNotificationsBtn = () => {
-    setEmailNotificationsTurnedOn((prevState) => !prevState);
-  };
+  const handleChangePassword = () => {
+    const validationErrors = validateData();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
-  const handleToggleScheduledDailyBtn = () => {
-    setScheduledDailyTurnedOn((prevState) => !prevState);
+    // Handle password change logic here
+    Alert.alert("Success", "Password changed successfully.");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={styles.scrollViewContent}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} />
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}>{t("settingsApp")}</Text>
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("appSettingsBiometricDataLogin")}
+        <View style={styles.content}>
+          <Text style={styles.title}>{t("appSettingsChangePassword")}</Text>
+
+          <View style={styles.form}>
+            <Text style={styles.text}>
+            {t("appSettingsChangePasswordNewPass")}{" "}
+              <Text style={{ color: "red", alignSelf: "flex-start" }}>*</Text>
             </Text>
-            <Switch
-              value={isPushNotificationsTurnedOn}
-              onValueChange={handleTogglePushNotificationsBtn}
-              trackColor={{ false: "#999999", true: "#388FED" }}
-              thumbColor={"#F9F9F9"}
+            <TextInput
+              style={styles.inputField}
+              secureTextEntry
+              value={newPassword}
+              onChangeText={setNewPassword}
+              placeholder=""
             />
-          </View>
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("appSettingsPasswordLogin")}
+            {errors.newPassword && (
+              <Text style={styles.errorText}>{errors.newPassword}</Text>
+            )}
+
+            <Text style={styles.text}>
+            {t("appSettingsChangePasswordNewPassRetype")}{" "}
+              <Text style={{ color: "red", alignSelf: "flex-start" }}>*</Text>
             </Text>
-            <Switch
-              value={isEmailNotificationsTurnedOn}
-              onValueChange={handleToggleEmailNotificationsBtn}
-              trackColor={{ false: "#999999", true: "#388FED" }}
-              thumbColor={"#F9F9F9"}
+            <TextInput
+              style={styles.inputField}
+              secureTextEntry
+              value={confirmNewPassword}
+              onChangeText={setConfirmNewPassword}
+              placeholder=""
             />
+            {errors.confirmNewPassword && (
+              <Text style={styles.errorText}>{errors.confirmNewPassword}</Text>
+            )}
+
+            <Text style={styles.text}>
+            {t("appSettingsChangePasswordOldPass")}{" "}
+              <Text style={{ color: "red", alignSelf: "flex-start" }}>*</Text>
+            </Text>
+            <TextInput
+              style={styles.inputField}
+              secureTextEntry
+              value={oldPassword}
+              onChangeText={setOldPassword}
+              placeholder=""
+            />
+            {errors.oldPassword && (
+              <Text style={styles.errorText}>{errors.oldPassword}</Text>
+            )}
           </View>
+          <Pressable onPress={handleChangePassword}>
+            <LinearGradient
+              style={styles.addButton}
+              colors={["#388FED", "#205187"]}
+            >
+              <Text style={styles.addText}>{t("appSettingsChangePassword")}</Text>
+            </LinearGradient>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default changePassword;
+export default ChangePassword;

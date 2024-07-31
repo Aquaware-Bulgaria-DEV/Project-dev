@@ -7,10 +7,9 @@ export const styles = StyleSheet.create({
   },
   scrollViewContent: {
     paddingBottom: 125,
-    // marginHorizontal: 24,
     marginTop: 35,
   },
-  contentContainer: {
+  content: {
     margin: 26,
     justifyContent: "center",
   },
@@ -19,24 +18,37 @@ export const styles = StyleSheet.create({
     marginBottom: 28,
     marginLeft: 15,
   },
-  settingsBtn: {
+  form: {
+    marginHorizontal: 3,
+  },
+  inputField: {
     height: 68,
     paddingHorizontal: 20,
     borderWidth: 1,
     borderColor: "white",
-    marginVertical: 6,
+    marginVertical: 8,
     borderRadius: 20,
     backgroundColor: "white",
-    justifyContent: "center",
   },
-  switchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-  },
-  buttonText: {
+  text: {
+    color: "grey",
     fontSize: 18,
-    color: "#999999",
+    marginBottom: 5,
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 20,
+  },
+  addButton: {
+    marginHorizontal: 28,
+    borderRadius: 17,
+    justifyContent: "center",
+    height: 54,
+    marginTop: 20,
+  },
+  addText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 20,
   },
 });

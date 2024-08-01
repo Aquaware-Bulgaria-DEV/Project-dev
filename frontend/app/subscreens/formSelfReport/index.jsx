@@ -184,10 +184,20 @@ const SelfReport = () => {
     } catch (err) {
       console.log(`Error: ${JSON.stringify(err)}`);
     };
-    const data = getCleanData(formData);
+    const data = flattenData(formData);
     console.log(data);
   };
 
+  const flattenData = (cleanData) => {
+    const data = getCleanData(cleanData);
+    let flattenedData = {};
+    for (let property in data) {
+      for (let meter in data[property]) {
+          flattenedData[meter] = data[property][meter];
+      }
+    }
+    return flattenedData;
+};
   const getCleanData = (data) => {
     let cleanData = {};
     for (let property in data) {
@@ -199,6 +209,7 @@ const SelfReport = () => {
     }
     return cleanData;
   };
+
 
   return (
     <SafeAreaView style={styles.container}>

@@ -117,4 +117,8 @@ export const styles = StyleSheet.create({
     padding: 5,
     margin: 6,
   },
+  removeBtn: {
+    fontSize: 12,
+    color: '#F67280',
+  },
 });

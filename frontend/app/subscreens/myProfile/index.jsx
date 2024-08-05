@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TextInput,
   Pressable,
+  Alert,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
@@ -48,7 +49,41 @@ const MyProfile = () => {
   }, [userInfo]);
 
   const handleRemove = () => {
-    console.log('Remove Pressed');
+    Alert.alert(
+      'Изтриване на профил',
+      'Сигурни ли сте, че искате да изтриете профила си?',
+      [
+        {
+          text: 'Не, не съм',
+          onPress: () => console.log('Премахване'),
+          style: 'cancel',
+        },
+        {
+          text: 'Да, искам да го изтрия',
+          onPress: () => {
+            Alert.prompt(
+              'Въведете парола',
+              'Моля, въведете паролата си за потвърждение на изтриването:',
+              [
+                {
+                  text: 'Отказ',
+                  onPress: () => console.log('Изтриване отказано'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'Потвърди',
+                  onPress: (password) => {
+                    console.log('Изтриване с парола:', password);
+                    //TODO: add verification logic
+                  },
+                },
+              ],
+              'secure-text'
+            );
+          },
+        },
+      ]
+    );
   };
 
   const changePicture = async () => {
@@ -100,7 +135,9 @@ const MyProfile = () => {
                     onPressOut={() => setOpacity(1)}
                     onPress={handleRemove}
                   >
-                    <Text style={[styles.removeBtn, { opacity }]}>Remove</Text>
+                    <Text style={[styles.removeBtn, { opacity }]}>
+                      Изтриване на профил
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>

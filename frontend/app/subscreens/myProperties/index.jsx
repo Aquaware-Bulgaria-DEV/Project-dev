@@ -6,11 +6,13 @@ import AuthContext from '../../Context/AuthContext.jsx';
 import { styles } from './myPropertiesStyles.js';
 import SettingsButton from '../../globalComponents/settingsButton.jsx';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
 
 const MyProperties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const { token } = React.useContext(AuthContext);
+  const router = useRouter();
 
   const fetchProperties = async () => {
     try {
@@ -61,7 +63,12 @@ const MyProperties = () => {
               icon={'pencil'}
               iconColor={'#3F9FF4'}
               params={{ propertyId: property.value }}
-              onIconPress={() => console.log('edit')}
+              onIconPress={() =>
+                router.push({
+                  pathname: 'subscreens/editProperty',
+                  params: property,
+                })
+              }
             ></SettingsButton>
           ))}
         </View>

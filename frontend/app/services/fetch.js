@@ -27,7 +27,7 @@ export const getTips = async (token) => {
 export const getATip = async (tipId, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/${tipId}`,
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/${tipId}/`,
       {
         method: 'GET',
         headers: {
@@ -86,32 +86,81 @@ export const getPropertyRooms = async (id, token) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+
     const result = await response.json();
     return result;
   } catch (error) {
     throw error;
   }
 };
-export const getWaterMetters = async (token, value ) => {
+
+export const getAllPropertyDetails = async (id, token) => {
   try {
-        
-    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${value}/`, {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${id}/`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllCompanies = async (token) => {
+  try {
+    const response = await fetch(
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-companies/',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getWaterMetters = async (token, value) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${value}/`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     if (!response.ok) {
       // Here gets error because there is latency of useState hook for value.
-      throw new Error("Something went wrong waterMeters (Ignore for now).");
+      throw new Error('Something went wrong waterMeters (Ignore for now).');
     }
 
     const data = await response.json();
-    const metterArray = data["water_meters"].map((item) => ({
-      label: item["meter_number"],
-      value: item["meter_number"],
+    const metterArray = data['water_meters'].map((item) => ({
+      label: item['meter_number'],
+      value: item['meter_number'],
     }));
 
     return metterArray;

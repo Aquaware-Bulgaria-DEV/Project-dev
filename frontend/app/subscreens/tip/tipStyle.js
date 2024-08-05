@@ -29,9 +29,10 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   text: {
-    fontSize: 19,
+    fontSize: 17,
     marginHorizontal: 10,
     letterSpacing: 0.1,
     lineHeight: 25,
+    textAlign: 'justify',
   },
 });

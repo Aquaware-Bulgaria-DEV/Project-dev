@@ -8,14 +8,14 @@ import { useEffect, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 
 const Tip = () => {
-  // const { token } = React.useContext(AuthContext);
-  // console.log(token);
+  const { token } = React.useContext(AuthContext);
+
   const [tip, setTip] = useState([]);
   const { tipId } = useLocalSearchParams();
 
   const getTip = async () => {
     try {
-      const response = await tipsServices.getATip(tipId);
+      const response = await tipsServices.getATip(tipId, token);
 
       setTip(response);
     } catch (error) {

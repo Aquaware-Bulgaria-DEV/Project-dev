@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { styles } from "./homeStyles.js";
+import React, { useContext, useEffect, useState } from 'react';
+import { styles } from './homeStyles.js';
 import {
   View,
   Text,
@@ -7,30 +7,44 @@ import {
   ImageBackground,
   ScrollView,
   Pressable,
-} from "react-native";
+} from 'react-native';
 
-import { Header } from "../../globalComponents/header.jsx";
-import RNPickerSelect from "react-native-picker-select";
-import "../../../src/i18n/i18n.config";
-import { useTranslation } from "react-i18next";
-import * as services from "../../services/fetch.js";
-import KITCHEN_SOURCE from "../../../assets/kitchen-pic.jpg";
+import { Header } from '../../globalComponents/header.jsx';
+import RNPickerSelect from 'react-native-picker-select';
+import '../../../src/i18n/i18n.config';
+import { useTranslation } from 'react-i18next';
+import * as services from '../../services/fetch.js';
+import KITCHEN from '../../../assets/kitchen.png';
+import BATHROOM from '../../../assets/bathroom.png';
+import TOILET from '../../../assets/toilet.png';
+import LAUNDRY from '../../../assets/laundry.png';
+import GARDEN from '../../../assets/garden.png';
+import GARAGE from '../../../assets/garage.png';
 
-import AuthContext from "../../Context/AuthContext.jsx";
-import { router } from "expo-router";
+import AuthContext from '../../Context/AuthContext.jsx';
+import { router } from 'expo-router';
 const Home = () => {
   const { t, i18n } = useTranslation();
-  const { userInfo, token } = useContext(AuthContext);
-  const [selectedProp, setSelectedProperty] = useState("");
+  const { userInfo, token, removeToken } = useContext(AuthContext);
+  const [selectedProp, setSelectedProperty] = useState('');
   const [properties, setProperties] = useState([]);
   const [rooms, setRooms] = useState([]);
+
+  const roomImages = {
+    KITCHEN,
+    BATHROOM,
+    TOILET,
+    LAUNDRY,
+    GARDEN,
+    GARAGE,
+  };
 
   const fetchProperties = async () => {
     try {
       const response = await services.getAllProperties(token);
       const remoteProperties = response.map((obj) => ({
-        label: obj["type"]["type"],
-        value: obj["id"],
+        label: obj['type']['type'],
+        value: obj['id'],
       }));
       setProperties(remoteProperties);
       if (remoteProperties.length > 0) {
@@ -39,21 +53,23 @@ const Home = () => {
         await fetchPropertyRooms(defaultProperty);
       }
     } catch (error) {
-      router.push("/");
-      console.error("Error fetching properties:", error);
+      router.push('/');
+      console.error('Error fetching properties:', error);
     }
   };
 
   const fetchPropertyRooms = async (value) => {
     try {
       const response = await services.getPropertyRooms(value, token);
+
       const rooms = response.map((obj) => ({
-        label: obj["name"],
-        value: obj["id"],
+        label: obj['name'],
+        value: obj['id'],
+        type: obj['room_type'],
       }));
       setRooms(rooms);
     } catch (error) {
-      console.error("Error fetching property rooms:", error);
+      console.error('Error fetching property rooms:', error);
     }
   };
   useEffect(() => {
@@ -61,8 +77,8 @@ const Home = () => {
   }, []);
 
   const handlePropertyChange = (value) => {
-    if (value === null || value === "null") {
-      setSelectedProperty("");
+    if (value === null || value === 'null') {
+      setSelectedProperty('');
       setRooms([]);
       return;
     }
@@ -84,9 +100,9 @@ const Home = () => {
         <Header showProfilePic />
         <View style={styles.text}>
           <Text style={styles.headerTitle}>
-            {t("welcome")}, {userInfo?.first_name}!
+            {t('welcome')}, {userInfo?.first_name}!
           </Text>
-          <Text style={styles.description}>{t("welcomeQuestion")}</Text>
+          <Text style={styles.description}>{t('welcomeQuestion')}</Text>
         </View>
         {properties.length > 1 ? (
           <View style={styles.pickerContainer}>
@@ -108,12 +124,15 @@ const Home = () => {
             style={styles.paddingZero}
             onPress={() =>
               router.push({
-                pathname: "singleRoom",
+                pathname: 'singleRoom',
                 params: { propertyId: selectedProp, roomId: room.value },
               })
             }
           >
-            <ImageBackground style={styles.rooms} source={KITCHEN_SOURCE}>
+            <ImageBackground
+              style={styles.rooms}
+              source={roomImages[room.type]}
+            >
               <Text style={styles.roomText}>{room.label}</Text>
             </ImageBackground>
           </Pressable>

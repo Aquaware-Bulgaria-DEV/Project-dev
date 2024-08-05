@@ -5,13 +5,15 @@ import * as services from '../../services/fetch.js';
 import SettingsButton from '../../globalComponents/settingsButton.jsx';
 import React, { useEffect, useState } from 'react';
 import AuthContext from '../../Context/AuthContext.jsx';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 const ManageProperty = () => {
   const [rooms, setRooms] = useState([]);
 
   const params = useLocalSearchParams();
+  console.log(params);
   const propId = params.propertyId;
+  const router = useRouter();
 
   const { token } = React.useContext(AuthContext);
 
@@ -28,6 +30,10 @@ const ManageProperty = () => {
     } catch (error) {
       console.error('Error fetching property rooms:', error);
     }
+  };
+
+  const handleDelete = () => {
+    console.log('delete the room');
   };
 
   useEffect(() => {
@@ -58,8 +64,16 @@ const ManageProperty = () => {
               secondIcon={'trash'}
               secondIconColor={'black'}
               params={{ roomId: room.key }}
-              onIconPress={() => console.log('edit')}
-              onSecondIconPress={() => console.log('delete')}
+              onIconPress={() =>
+                router.push({
+                  pathname: 'subscreens/editRoom',
+                  params: {
+                    propertyId: params['propertyId'],
+                    roomId: room.key,
+                  },
+                })
+              }
+              onSecondIconPress={() => handleDelete()}
             ></SettingsButton>
           ))}
         </View>

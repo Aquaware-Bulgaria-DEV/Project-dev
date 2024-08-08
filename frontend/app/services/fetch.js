@@ -160,7 +160,7 @@ export const getWaterMetters = async (token, value) => {
     const data = await response.json();
     const metterArray = data['water_meters'].map((item) => ({
       label: item['meter_number'],
-      value: item['meter_number'],
+      value: item['id'],
     }));
 
     return metterArray;
@@ -265,3 +265,25 @@ export const addReport = async (setError, token, formValues) => {
     setError(e.message);
   }
 };
+
+export const addSelfReport = async (token, propertyID, bodyData) => {
+  try {
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyID}/water-meter-readings/`, {
+        method: "POST",
+        headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyData),
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    // const responseData = await response.json();
+    // console.log("Response data:", responseData);
+  } catch (e) {
+    throw e;
+  }
+}

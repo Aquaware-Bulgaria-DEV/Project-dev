@@ -244,8 +244,9 @@ const SelfReport = () => {
             onPress={addWaterMeter}
             onPressIn={() => setOpacity(0.5)}
             onPressOut={() => setOpacity(1)}
+            disabled={isLoading}
           >
-            <Text style={[styles.addWaterMeter, { opacity }]}>
+            <Text style={[styles.addWaterMeter, { opacity: isLoading ? 0.5 : 1 }]}>
               {getIcon("plus", "#3CA5D8", 15)}Добави водомер
             </Text>
           </Pressable>

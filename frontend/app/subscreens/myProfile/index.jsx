@@ -23,10 +23,12 @@ import CustomButton from '../../globalComponents/customButton.jsx';
 import { Header } from '../../globalComponents/header.jsx';
 import getIcon from '../../../utils/icons.js';
 import { styles } from './myProfileStyles.js';
+import { useTranslation } from 'react-i18next';
 
 const { height } = Dimensions.get('window');
 
 const MyProfile = () => {
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -50,28 +52,28 @@ const MyProfile = () => {
 
   const handleRemove = () => {
     Alert.alert(
-      'Изтриване на профил',
-      'Сигурни ли сте, че искате да изтриете профила си?',
+      `${t('alertDeleteProfile')}`,
+      `${t('alertDeleteProfileAssert')}`,
       [
         {
-          text: 'Не, не съм',
+          text: `${t('alertDeleteProfileNo')}`,
           onPress: () => console.log('Премахване'),
           style: 'cancel',
         },
         {
-          text: 'Да, искам да го изтрия',
+          text: `${t('alertDeleteProfileYes')}`,
           onPress: () => {
             Alert.prompt(
-              'Въведете парола',
-              'Моля, въведете паролата си за потвърждение на изтриването:',
+              `${t('alertDeleteProfileTypeYourPassword')}`,
+              `${t('alertDeleteProfileTypeYourPasswordForConfirmation')}`,
               [
                 {
-                  text: 'Отказ',
+                  text: `${t('alertDeleteProfileCancel')}`,
                   onPress: () => console.log('Изтриване отказано'),
                   style: 'cancel',
                 },
                 {
-                  text: 'Потвърди',
+                  text: `${t('alertDeleteProfileConfirm')}`,
                   onPress: (password) => {
                     console.log('Изтриване с парола:', password);
                     //TODO: add verification logic
@@ -109,9 +111,9 @@ const MyProfile = () => {
         >
           <Header showProfilePic={false}></Header>
           <View style={styles.content}>
-            <Text style={styles.screenLabel}>Моят профил</Text>
-            <Text style={styles.otherDetails}>Активен от {date}</Text>
-            <Text style={styles.otherDetails}>Клиент на Софийска вода</Text>
+            <Text style={styles.screenLabel}>{t('myProfile')}</Text>
+            <Text style={styles.otherDetails}>{t('myProfileActiveFrom')} {date}</Text>
+            <Text style={styles.otherDetails}>{t('myProfileClientOf')} Софийска вода</Text>
           </View>
 
           <View style={styles.reqContainer}>
@@ -128,7 +130,7 @@ const MyProfile = () => {
                     style={styles.clientName}
                   >{`${userInfo.first_name} ${userInfo.last_name}`}</Text>
                   <Text style={styles.clientNumber}>
-                    Клиентски номер: 119862
+                  {t('myProfileClientNumber')} 119862
                   </Text>
                   <TouchableOpacity
                     onPressIn={() => setOpacity(0.7)}
@@ -136,13 +138,13 @@ const MyProfile = () => {
                     onPress={handleRemove}
                   >
                     <Text style={[styles.removeBtn, { opacity }]}>
-                      Изтриване на профил
+                    {t('myProfileRemove')}
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.form}>
-                <Text style={styles.inputFieldName}>Име</Text>
+                <Text style={styles.inputFieldName}>{t('myProfileName')}</Text>
 
                 <Controller
                   control={control}
@@ -159,7 +161,7 @@ const MyProfile = () => {
                   )}
                 />
 
-                <Text style={styles.inputFieldName}>Телефон</Text>
+                <Text style={styles.inputFieldName}>{t('myProfilePhone')}</Text>
 
                 <Controller
                   control={control}
@@ -176,7 +178,7 @@ const MyProfile = () => {
                     />
                   )}
                 />
-                <Text style={styles.inputFieldName}>Имейл</Text>
+                <Text style={styles.inputFieldName}>{t('myProfileEmail')}</Text>
 
                 <TextInput
                   name='email'
@@ -188,7 +190,7 @@ const MyProfile = () => {
 
                 <CustomButton
                   handlePress={() => console.log(name, email, phone, picture)}
-                  title='Запази'
+                  title={t('customButtonSave')}
                   color={'#388FED'}
                   secondColor={'#4C62C7'}
                   additionalStyles={styles.saveButton}

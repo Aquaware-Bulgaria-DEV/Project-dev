@@ -12,7 +12,9 @@ import AuthContext from '../../Context/AuthContext.jsx';
 import picture from '../../../assets/defaultAvatar.png';
 import { Header } from '../../globalComponents/header.jsx';
 import CustomButton from '../../globalComponents/customButton.jsx';
+import { useTranslation } from 'react-i18next';
 const Users = () => {
+  const { t, i18n } = useTranslation();
   // const { userInfo } = useContext(AuthContext);
   // const [picture, setPicture] = useState(null);
 
@@ -24,9 +26,9 @@ const Users = () => {
       >
         <Header showProfilePic />
         <View style={styles.text}>
-          <Text style={styles.headerTitle}>Всички потребители</Text>
+          <Text style={styles.headerTitle}>{t('usersAll')}</Text>
           <Text style={styles.description}>
-            На кое място по потребление си в квартала?
+          {t('usersRanklist')}
           </Text>
         </View>
 
@@ -58,7 +60,7 @@ const Users = () => {
         </View>
 
         <CustomButton
-          title={'Как да спестиш'}
+          title={t('usersButtonHowToSave')}
           handlePress={() => console.log('redirect to tips screen')}
           color={'#388FED'}
           secondColor={'#4C62C7'}

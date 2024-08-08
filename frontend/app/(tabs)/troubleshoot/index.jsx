@@ -14,6 +14,7 @@ import { styles } from './troubleshootStyles.js'
 import { addReport } from '../../services/fetch.js';
 
 import DefaultAvatar from "../../../assets/defaultAvatar.png"
+import { useTranslation } from 'react-i18next';
 
 const FormField = ({
   inputName,
@@ -86,6 +87,7 @@ const FormField = ({
 };
 
 const Troubleshoot = () => {
+  const { t, i18n } = useTranslation();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const timeoutRef = useRef(null);
@@ -140,7 +142,7 @@ const Troubleshoot = () => {
       formValues.address === '' ||
       formValues.content === ''
     ) {
-      setError('Имате непопълнено поле');
+      setError(`${t('errorFieldNotFilled')}`);
     } else {
       await addReport(setError, token, formValues)
     }
@@ -160,7 +162,7 @@ const Troubleshoot = () => {
         >
           <Header />
           <View style={styles.reqContainer}>
-            <Text style={styles.screenLabel}>Заявки</Text>
+            <Text style={styles.screenLabel}>{t('troubleshoot')}</Text>
             <View style={styles.innerContainer}>
               <View style={styles.credentials}>
                 <Image
@@ -172,7 +174,7 @@ const Troubleshoot = () => {
                     style={styles.clientName}
                   >{`${userInfo.first_name} ${userInfo.last_name}`}</Text>
                   <Text style={styles.clientNumber}>
-                    Клиентски номер: 119862
+                    {t('myProfileClientNumber')} 119862
                   </Text>
                   {/* <TouchableOpacity
                     onPressIn={() => setOpacity(0.7)}
@@ -209,15 +211,15 @@ const Troubleshoot = () => {
                   style={styles.picker}
                 >
                   {value === '' && (
-                    <Picker.Item label='Изберете вид заявка..' value='' />
+                    <Picker.Item label={t('pickTroubleshootType')} value='' />
                   )}
-                  <Picker.Item label='Теч' value='leakage' />
-                  <Picker.Item label='Авария' value='breakdown' />
-                  <Picker.Item label='Кражба на вода' value='theft' />
+                  <Picker.Item label={t('pickTroubleshootTypeLeakage')} value='leakage' />
+                  <Picker.Item label={t('pickTroubleshootTypeBreakdown')} value='breakdown' />
+                  <Picker.Item label={t('pickTroubleshootTypeWaterTheft')} value='theft' />
                 </Picker>
               </View>
               <FormField
-                inputName={'Адрес'}
+                inputName={t('address')}
                 type={'address'}
                 additionalStyles={{ marginTop: 10 }}
                 onFormChange={handleFormChange}
@@ -225,7 +227,7 @@ const Troubleshoot = () => {
                 setFormValues={setFormValues}
               />
               <FormField
-                inputName={'Съобщение'}
+                inputName={t('message')}
                 type={'content'}
                 additionalStyles={{ marginTop: 10 }}
                 onFormChange={handleFormChange}
@@ -236,7 +238,7 @@ const Troubleshoot = () => {
               />
               <Text style={styles.errorcontent}>{error}</Text>
               <CustomButton
-                title={'Изпрати'}
+                title={t('buttonSend')}
                 isLoading={isLoading}
                 handlePress={onPressHandler}
                 additionalStyles={{

@@ -7,8 +7,10 @@ import { styles } from './myPropertiesStyles.js';
 import SettingsButton from '../../globalComponents/settingsButton.jsx';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 const MyProperties = () => {
+  const { t, i18n } = useTranslation();
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const { token } = React.useContext(AuthContext);
@@ -44,11 +46,11 @@ const MyProperties = () => {
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false}></Header>
         <View style={styles.content}>
-          <Text style={styles.title}>Моите имоти</Text>
+          <Text style={styles.title}>{t('myProperties')}</Text>
 
           <SettingsButton
             style={styles.settingsButton}
-            title={'Добави имот'}
+            title={t('myPropertiesAdd')}
             screen={'subscreens/addProperty'}
             icon={'plus'}
             iconColor={'#131313'}

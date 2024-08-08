@@ -10,18 +10,18 @@ import '../../../../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 
-const categories = ['МИВКА КУХНЯ', 'ПЕРАЛНЯ', 'ДУШ БАНЯ', 'ТОАЛЕТНА'];
+const categoryKeys = ['categoryKitchenSink', 'categoryWasher', 'categoryBathroomShower', 'categoryToilet'];
 
 export const List = () => {
   const { t, i18n } = useTranslation();
 
   const router = useRouter();
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState(categoryKeys[0]);
 
-  const pressHandler = (category) => {
-    setSelectedCategory(category);
+  const pressHandler = (categoryKey) => {
+    setSelectedCategory(categoryKey);
     //TODO: onPress to scroll to the selected section
-    console.log('Selected category:', category);
+    console.log('Selected category:', categoryKey);
   };
 
   return (
@@ -30,19 +30,19 @@ export const List = () => {
         <Text style={styles.title}>{t('highestConsumption')}</Text>
       </View>
       <View style={styles.listContainer}>
-        {categories.map((category, index) => (
+        {categoryKeys.map((categoryKey, index) => (
           <Pressable
             key={index}
-            onPress={() => pressHandler(category)}
+            onPress={() => pressHandler(categoryKey)}
             style={styles.item}
           >
             <Text
               style={[
                 styles.itemText,
-                selectedCategory === category && styles.selectedItemText,
+                selectedCategory === categoryKey && styles.selectedItemText,
               ]}
             >
-              {category}
+              {t(categoryKey)}
             </Text>
           </Pressable>
         ))}

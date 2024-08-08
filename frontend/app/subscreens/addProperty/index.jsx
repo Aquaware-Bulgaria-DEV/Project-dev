@@ -14,8 +14,10 @@ import React, { useState } from 'react';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
+import { useTranslation } from 'react-i18next';
 
 const AddProperty = () => {
+  const { t, i18n } = useTranslation();
   const [numberPeople, setNumberPeople] = useState('');
   const [property, setProperty] = useState('');
   const [companyName, setCompanyName] = useState('');
@@ -37,9 +39,9 @@ const AddProperty = () => {
     { id: '3', label: 'Дружество' },
   ];
   const propTypes = [
-    { id: '1', label: 'тип 1' },
-    { id: '2', label: 'тип 2' },
-    { id: '3', label: 'тип 3' },
+    { id: '1', label: `${t('addPropertyType1')}` },
+    { id: '2', label: `${t('addPropertyType2')}` },
+    { id: '3', label: `${t('addPropertyType3')}` },
   ];
   const companyOptions = options.map((key) => ({
     label: key.label,
@@ -71,12 +73,12 @@ const AddProperty = () => {
 
   const validateData = () => {
     const newErrors = {};
-    if (!numberPeople) newErrors.numberPeople = 'Моля, въведети брой хора';
-    if (!property) newErrors.property = 'Моля, въведете имот';
-    if (!companyName) newErrors.companyName = 'Моля, изберете дружество';
-    if (!clientNumber) newErrors.clientNumber = 'Моля, въведет клиентски номер';
+    if (!numberPeople) newErrors.numberPeople = `${t('addPropertyErrorNumOfPeople')}`;
+    if (!property) newErrors.property = `${t('addPropertyErrorProperty')}`;
+    if (!companyName) newErrors.companyName = `${t('addPropertyErrorCompanyName')}`;
+    if (!clientNumber) newErrors.clientNumber = `${t('addPropertyErrorClientNum')}`;
     if (!waterMeterNum)
-      newErrors.waterMeterNum = 'Моля, въведете номер на водомер';
+      newErrors.waterMeterNum = `${t('addPropertyErrorWaterMeterNum')}`;
     return newErrors;
   };
 
@@ -101,10 +103,10 @@ const AddProperty = () => {
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false}></Header>
         <View style={styles.content}>
-          <Text style={styles.title}>Добавяне на имот</Text>
+          <Text style={styles.title}>{t('addProperty')}</Text>
           <View style={styles.form}>
             <View style={styles.numPeople}>
-              <Text style={styles.text}>Брой хора в жилището</Text>
+              <Text style={styles.text}>{t('addPropertyNumOfPeople')}</Text>
               <TextInput
                 style={styles.inputNumPeople}
                 onChangeText={setNumberPeople}
@@ -117,7 +119,7 @@ const AddProperty = () => {
             )}
 
             <Text style={styles.text}>
-              Имот
+            {t('addPropertyProp')}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <View>
@@ -130,7 +132,7 @@ const AddProperty = () => {
                     inputAndroid: styles.pickerItem,
                   }}
                   placeholder={{
-                    label: 'Избери имот',
+                    label: `${t('addPropertyChoose')}`,
                     value: '',
                   }}
                   value={property}
@@ -142,7 +144,7 @@ const AddProperty = () => {
             )}
 
             <Text style={styles.text}>
-              Дружество
+            {t('addPropertyCompany')}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <View>
@@ -155,7 +157,7 @@ const AddProperty = () => {
                     inputAndroid: styles.pickerItem,
                   }}
                   placeholder={{
-                    label: 'Избери дружество',
+                    label: `${t('addPropertyChooseCompany')}`,
                     value: '',
                   }}
                   value={companyName}
@@ -164,7 +166,7 @@ const AddProperty = () => {
             </View>
 
             <Text style={styles.text}>
-              Клиентски номер{' '}
+            {t('addPropertyClientNum')}{' '}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <TextInput
@@ -179,7 +181,7 @@ const AddProperty = () => {
             {waterMeterNum.map((field) => (
               <View>
                 <Text style={styles.text}>
-                  Номер на водомер
+                {t('addPropertyWaterMeterNum')}
                   {field.id === 1 ? (
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       *
@@ -199,7 +201,7 @@ const AddProperty = () => {
             )}
           </View>
           <Pressable onPress={addWaterMeterField}>
-            <Text style={styles.plusText}> + Добави водомер</Text>
+            <Text style={styles.plusText}>{t('addPropertyAddNewWaterMeter')}</Text>
           </Pressable>
         </View>
 
@@ -208,7 +210,7 @@ const AddProperty = () => {
             style={styles.addButton}
             colors={['#388FED', '#205187']}
           >
-            <Text style={styles.addText}>Добави</Text>
+            <Text style={styles.addText}>{t('addPropertyButton')}</Text>
           </LinearGradient>
         </Pressable>
       </ScrollView>

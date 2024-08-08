@@ -15,6 +15,7 @@ const WaterMeter = ({
 }) => {
   const [meterId, setMeterId] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     if (waterMeters.length === 1) {
@@ -60,17 +61,25 @@ const WaterMeter = ({
 
   const availableMeters = waterMeters.filter((meter) => !selectedMeters.includes(meter.value));
 
+  const handlePickerChange = (value) => {
+    setMeterId(value)
+    if(value){
+      setIsDisabled(true)
+    }
+  }
+
   return (
     <View style={styles.waterMeterContainer}>
       <View>
         <Text style={styles.labels}>Номер на водомер</Text>
         <View style={styles.pickerContainer}>
           <RNPickerSelect
-            onValueChange={(value) => setMeterId(value)}
+            disabled={isDisabled ? true : false}
+            onValueChange={(value) => handlePickerChange(value)}
             items={availableMeters} 
             style={{
-              inputIOS: styles.pickerItem,
-              inputAndroid: styles.pickerItem,
+              inputIOS: [styles.pickerItem, {opacity: isDisabled? 0.4 : 1}],
+              inputAndroid: [styles.pickerItem, {opacity: isDisabled? 0.4 : 1}]
             }}
             placeholder={{
               label: "Избери водомер",

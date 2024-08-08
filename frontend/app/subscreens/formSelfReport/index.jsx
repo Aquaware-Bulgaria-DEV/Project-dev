@@ -8,7 +8,7 @@ import WaterMeter from "../../globalComponents/waterMeter.jsx";
 import getIcon from "../../../utils/icons.js";
 import CustomButton from "../../globalComponents/customButton.jsx";
 import AuthContext from "../../Context/AuthContext.jsx";
-import { getWaterMetters } from "../../services/fetch.js";
+import { addSelfReport, getWaterMetters } from "../../services/fetch.js";
 
 const SelfReport = () => {
   const [value, setValue] = useState("");
@@ -19,6 +19,8 @@ const SelfReport = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [waterItems, setWaterItems] = useState([]);
   const [propertyItems, setPropertyItems] = useState([]);
+
+  const [ buttonText, setButtonText ] = useState("Добави");
   // const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   const { token } = useContext(AuthContext);
@@ -166,46 +168,38 @@ const SelfReport = () => {
   };
 
   const handlePress = async () => {
-    try {
-      const response = await fetch('http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/', {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Something went wrong handlePress.");
-      }
-
-      const data = await response.json();
-      // console.log(data);
-    } catch (err) {
-      console.log(`Error: ${JSON.stringify(err)}`);
-    };
     const data = flattenData(formData);
-    console.log(data);
-  };
+    const payload = {
+        readings: data
+    };
+
+    addSelfReport(token, value, payload)
+    .then(res => {
+      setButtonText("Отчетът е добавен");
+      setIsLoading(true);
+    })
+    .catch(e => console.log(e))
+};
 
   const flattenData = (cleanData) => {
     const data = getCleanData(cleanData);
-    let flattenedData = {};
-    for (let property in data) {
-      for (let meter in data[property]) {
-          flattenedData[meter] = data[property][meter];
-      }
-    }
+    let flattenedData = [];
+    data.forEach(item => {
+        for (let meter in item.meters) {
+            flattenedData.push({ "water_meter_id": meter, "value": item.meters[meter] });
+        }
+    });
     return flattenedData;
-};
+  };
+
   const getCleanData = (data) => {
-    let cleanData = {};
+    let cleanData = [];
     for (let property in data) {
-      let cleanMeters = {};
-      for (let meter in data[property]) {
-        Object.assign(cleanMeters, data[property][meter]);
-      }
-      cleanData[property] = cleanMeters;
+        let cleanMeters = {};
+        for (let meter in data[property]) {
+            Object.assign(cleanMeters, data[property][meter]);
+        }
+        cleanData.push({ property, meters: cleanMeters });
     }
     return cleanData;
   };
@@ -255,7 +249,7 @@ const SelfReport = () => {
             isLoading={isLoading}
             color={"#388FED"}
             secondColor={"#205187"}
-            title={"Добави"}
+            title={buttonText}
             additionalStyles={{ width: "100%", height: 68, borderRadius: 20, padding: 0 }}
             additionalTextStyle={{ fontSize: 20, textAlign: "center" }}
             disabled={isLoading}

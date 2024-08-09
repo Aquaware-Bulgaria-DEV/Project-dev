@@ -25,10 +25,6 @@ const WaterMeter = ({
   }, [waterMeters]);
 
   useEffect(() => {
-    console.log("Selected Meters", selectedMeters);
-  }, [selectedMeters]);
-
-  useEffect(() => {
     const updatedFormData = {
       ...formData,
       [houseKey]: {
@@ -71,7 +67,6 @@ const WaterMeter = ({
     }
   };
 
-  // Modify the filtering logic to filter by label instead of value
   const availableMeters = waterMeters.filter(
   (meter) => !selectedMeters.some(selected => selected.label === meter.label)
   );

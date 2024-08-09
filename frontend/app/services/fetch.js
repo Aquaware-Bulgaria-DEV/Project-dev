@@ -190,6 +190,30 @@ export const getRoomDetails = async (propertyId, roomId, token) => {
   }
 };
 
+export const getSelfReports = async (token) => {
+  try {
+    const response = await fetch("http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/1/water-meter-readings/",  
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result;
+
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const login = async (data) => {
   try {
     const response = await fetch(`${server}/profile/login/`, {

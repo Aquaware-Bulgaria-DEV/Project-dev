@@ -1,73 +1,50 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Switch,
-  Alert,
-} from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { View, Text, ScrollView, Switch, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { styles } from "./notificationsStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
-
 import "../../../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 import { NotificationContext } from "../../../src/context/NotificationsContext.js";
 
-
-const notifications = () => {
-  const { t, i18n } = useTranslation();
-  const { pushNotifications, togglePushNotifications, expoPushToken } = useContext(NotificationContext);
-  
-  const [isPushNotificationsTurnedOn, turnOnNotifications] = useState(pushNotifications);
-  const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] = useState(false);
-  const [isScheduledDailyTurnedOn, setScheduledDailyTurnedOn] = useState(false);
-  const [isScheduledWeeklyTurnedOn, setScheduledWeeklyTurnedOn] = useState(false);
-  const [isScheduledMonthlyTurnedOn, setScheduledMonthlyTurnedOn] = useState(false);
+const Notifications = () => {
+  const { t } = useTranslation();
+  const {
+    pushNotifications,
+    togglePushNotifications,
+    expoPushToken,
+    isEmailNotificationsTurnedOn,
+    toggleEmailNotifications,
+    isScheduledDailyTurnedOn,
+    toggleScheduledDailyNotifications,
+    isScheduledWeeklyTurnedOn,
+    toggleScheduledWeeklyNotifications,
+    isScheduledMonthlyTurnedOn,
+    toggleScheduledMonthlyNotifications
+  } = useContext(NotificationContext);
 
   const handleTogglePushNotificationsBtn = () => {
     togglePushNotifications();
-    turnOnNotifications(prevState => !prevState);
-    if (!isPushNotificationsTurnedOn) {
+    if (!pushNotifications) {
       Alert.alert('Push Notifications', `Your push notification token is: ${expoPushToken}`);
     }
   };
 
   const handleToggleEmailNotificationsBtn = () => {
-    setEmailNotificationsTurnedOn(prevState => !prevState);
-
-    // if (!isEmailNotificationsTurnedOn) {
-    //   sendEmailNotification();
-    // }
+    toggleEmailNotifications();
   };
 
-  //! Email notifications - set it after getting the API from BE for sending email
-  // const sendEmailNotification = async () => {
-  //   try {
-  //     const response = await axios.post('http://your-backend-url/send-email', {
-  //       email: 'user-email@example.com', // Replace with the user's email
-  //       subject: 'Email Notification',
-  //       message: 'This is a test email notification.',
-  //     });
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const handleToggleScheduledDailyBtn = () => {
-    setScheduledDailyTurnedOn(prevState => !prevState);
+    toggleScheduledDailyNotifications();
   };
 
   const handleToggleScheduledWeeklyBtn = () => {
-    setScheduledWeeklyTurnedOn(prevState => !prevState);
+    toggleScheduledWeeklyNotifications();
   };
 
   const handleToggleScheduledMonthlyBtn = () => {
-    setScheduledMonthlyTurnedOn(prevState => !prevState);
+    toggleScheduledMonthlyNotifications();
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,7 +58,7 @@ const notifications = () => {
           <View style={[styles.settingsBtn, styles.switchContainer]}>
             <Text style={styles.buttonText}>{t("notificationsPushNotifications")}</Text>
             <Switch
-              value={isPushNotificationsTurnedOn}
+              value={pushNotifications}
               onValueChange={handleTogglePushNotificationsBtn}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
@@ -129,4 +106,4 @@ const notifications = () => {
   );
 };
 
-export default notifications;
+export default Notifications;

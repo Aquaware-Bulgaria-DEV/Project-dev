@@ -2,7 +2,6 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
-// Function to register for push notifications
 export async function registerForPushNotificationsAsync() {
   let token;
   if (Constants.isDevice) {
@@ -34,11 +33,49 @@ export async function registerForPushNotificationsAsync() {
   return token;
 }
 
-// Listener for handling received notifications
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+export async function scheduleDailyNotification() {
+  await Notifications.cancelAllScheduledNotificationsAsync(); // Optional: clear previous schedules
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Daily Reminder",
+      body: "Daily water consumption meters...",
+    },
+    trigger: {
+      hour: 9,
+      minute: 0,
+      repeats: true,
+    },
+  });
+}
+
+export async function scheduleWeeklyNotification() {
+  await Notifications.cancelAllScheduledNotificationsAsync();
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Weekly Reminder",
+      body: "Weekly water consumption meters...",
+    },
+    trigger: {
+      weekday: 1,  // monday
+      hour: 9,
+      minute: 0,
+      repeats: true,
+    },
+  });
+}
+
+export async function scheduleMonthlyNotification() {
+  await Notifications.cancelAllScheduledNotificationsAsync();
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Monthly Reminder",
+      body: "Monthly water consumption meters...",
+    },
+    trigger: {
+      day: 1,  // first day of the month
+      hour: 9,
+      minute: 0,
+      repeats: true,
+    },
+  });
+}

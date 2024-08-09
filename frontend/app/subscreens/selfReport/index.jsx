@@ -6,7 +6,7 @@ import {
   Dimensions,
   Pressable,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styles } from "./selfReportStyles.js";
@@ -17,8 +17,10 @@ import "../../../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 
 import getIcon from "../../../utils/icons.js";
+import { getSelfReports } from "../../services/fetch.js";
+import AuthContext from "../../Context/AuthContext.jsx";
 
-const DataComponent = ({ data }) => {
+const DataComponent = ({ date }) => {
   const IconsComp = () => {
     const [penOpacity, setPenOpacity] = React.useState(1);
     const [trashOpacity, setTrashOpacity] = React.useState(1);
@@ -71,7 +73,7 @@ const DataComponent = ({ data }) => {
         },
       ]}
     >
-      <Text style={{ color: "#999999", fontSize: 20 }}>{data}</Text>
+      <Text style={{ color: "#999999", fontSize: 20 }}>{date}</Text>
       <IconsComp />
     </View>
   );
@@ -79,9 +81,17 @@ const DataComponent = ({ data }) => {
 
 const selfReport = () => {
   const { t, i18n } = useTranslation();
+  const { token } = useContext(AuthContext);
+  const [ data, setData ] = useState([])
+
+  useEffect(() => {
+    getSelfReports(token)
+    .then(res => setData(res))
+    .catch(e => console.log(e.message))
+  }, [])
 
   // const { width, height } = Dimensions.get('window');
-  const data = "28.07.2024";
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -107,7 +117,11 @@ const selfReport = () => {
               marginBottom: 20,
             }}
           />
-          <DataComponent data={data} />
+            {data.map((report) => {
+              const date = new Date(report.date).toLocaleString('de-DE');
+              const dateString = date.substring(0, 8);
+              return <DataComponent date={dateString} />
+            })}
         </View>
       </ScrollView>
     </SafeAreaView>

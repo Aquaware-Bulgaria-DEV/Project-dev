@@ -38,18 +38,25 @@ const ChangePassword = () => {
       // return;
     }
 
+    if (!validationErrors) {
+      Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
+    } else {
+      Alert.alert(t("appSettingsChangePasswordErrorTitle"));
+    }
+    
+    console.log('Changing your password');
+
+    //! Connect to backend  
     // try {
-      console.log('Changing your password');
-      
       // const response = await axios.post('http://your-backend-url/change-password', {
       //   old_password: oldPassword,
       //   new_password: newPassword,
       // });
 
       // if (response.data.success) {
-        Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
+        // Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
       // } else {
-        Alert.alert(t("appSettingsChangePasswordErrorTitle"), response.data.error);
+        // Alert.alert(t("appSettingsChangePasswordErrorTitle"), response.data.error);
       // }
     // } catch (error) {
       // Alert.alert(t("appSettingsChangePasswordErrorTitle"));

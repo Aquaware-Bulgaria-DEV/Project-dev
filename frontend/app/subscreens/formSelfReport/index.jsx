@@ -20,6 +20,8 @@ const SelfReport = () => {
   const [waterItems, setWaterItems] = useState([]);
   const [propertyItems, setPropertyItems] = useState([]);
 
+  const [ selectedMeters, setSelectedMeters ] = useState([]);
+
   const [ buttonText, setButtonText ] = useState("Добави");
   // const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
@@ -88,7 +90,8 @@ const SelfReport = () => {
           houseKey={value}
           meterKey={meterKey}
           setIsLoading={setIsLoading}
-          selectedMeters={Object.values(formData[value] || {}).map((m) => Object.keys(m)[0])}
+          setSelectedMeters = {setSelectedMeters}
+          selectedMeters={selectedMeters}
         />,
       ]);
       setFormData({
@@ -153,7 +156,8 @@ const SelfReport = () => {
           houseKey={value}
           setIsLoading={setIsLoading}
           meterKey={meterKey}
-          selectedMeters={Object.values(formData[value] || {}).map((m) => Object.keys(m)[0])}
+          setSelectedMeters = {setSelectedMeters}
+          selectedMeters={selectedMeters}
         />,
       ]);
       setFormData((prevFormData) => ({

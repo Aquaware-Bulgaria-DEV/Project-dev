@@ -11,7 +11,8 @@ const WaterMeter = ({
   houseKey,
   meterKey,
   setIsLoading,
-  selectedMeters, 
+  setSelectedMeters,
+  selectedMeters,
 }) => {
   const [meterId, setMeterId] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -23,7 +24,9 @@ const WaterMeter = ({
     }
   }, [waterMeters]);
 
-
+  useEffect(() => {
+    console.log("Selected Meters", selectedMeters);
+  }, [selectedMeters]);
 
   useEffect(() => {
     const updatedFormData = {
@@ -59,14 +62,19 @@ const WaterMeter = ({
     return result;
   };
 
-  const availableMeters = waterMeters.filter((meter) => !selectedMeters.includes(meter.value));
-
   const handlePickerChange = (value) => {
-    setMeterId(value)
-    if(value){
-      setIsDisabled(true)
+    setMeterId(value);
+    if (value) {
+      setIsDisabled(true);
+      const item = availableMeters.find(item => item.value == value);
+      setSelectedMeters(prev => [...prev, item])
     }
-  }
+  };
+
+  // Modify the filtering logic to filter by label instead of value
+  const availableMeters = waterMeters.filter(
+  (meter) => !selectedMeters.some(selected => selected.label === meter.label)
+  );
 
   return (
     <View style={styles.waterMeterContainer}>
@@ -76,10 +84,10 @@ const WaterMeter = ({
           <RNPickerSelect
             disabled={isDisabled ? true : false}
             onValueChange={(value) => handlePickerChange(value)}
-            items={availableMeters} 
+            items={availableMeters}
             style={{
-              inputIOS: [styles.pickerItem, {opacity: isDisabled? 0.4 : 1}],
-              inputAndroid: [styles.pickerItem, {opacity: isDisabled? 0.4 : 1}]
+              inputIOS: [styles.pickerItem, { opacity: isDisabled ? 0.4 : 1 }],
+              inputAndroid: [styles.pickerItem, { opacity: isDisabled ? 0.4 : 1 }],
             }}
             placeholder={{
               label: "Избери водомер",

@@ -20,7 +20,7 @@ import getIcon from "../../../utils/icons.js";
 import { getSelfReports } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
 
-const DataComponent = ({ date }) => {
+const DataComponent = ({ date, id }) => {
   const IconsComp = () => {
     const [penOpacity, setPenOpacity] = React.useState(1);
     const [trashBinOpacity, setTrashBinOpacity] = React.useState(1);
@@ -37,6 +37,7 @@ const DataComponent = ({ date }) => {
         <Pressable
           onPressIn={() => setPenOpacity(0.5)}
           onPressOut={() => setPenOpacity(1)}
+          onPress={() => console.log(id)}
           style={{
             /* width: 35, height: 35, borderRadius: 35/2, */ alignItems:
               "center",
@@ -92,6 +93,16 @@ const selfReport = () => {
 
   // const { width, height } = Dimensions.get('window');
 
+  function transformDate(dateString) {
+    const dateObj = new Date(dateString);
+    
+    const day = String(dateObj.getUTCDate()).padStart(2, '0');
+    const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const year = dateObj.getUTCFullYear();
+    
+    return `${day}.${month}.${year}`;
+}
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -118,9 +129,8 @@ const selfReport = () => {
             }}
           />
             {data.map((report) => {
-              const date = new Date(report.date).toLocaleString('de-DE');
-              const dateString = date.substring(0, 8);
-              return <DataComponent key={data.id} date={dateString} />
+              const dateString = transformDate(report.date)
+              return <DataComponent key={report.id} id={report.id} date={dateString} />
             })}
         </View>
       </ScrollView>

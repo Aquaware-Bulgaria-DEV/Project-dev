@@ -23,7 +23,7 @@ import AuthContext from "../../Context/AuthContext.jsx";
 const DataComponent = ({ date }) => {
   const IconsComp = () => {
     const [penOpacity, setPenOpacity] = React.useState(1);
-    const [trashOpacity, setTrashOpacity] = React.useState(1);
+    const [trashBinOpacity, setTrashBinOpacity] = React.useState(1);
 
     return (
       <View
@@ -47,13 +47,13 @@ const DataComponent = ({ date }) => {
           {getIcon("pencil", "#131313")}
         </Pressable>
         <Pressable
-          onPressIn={() => setTrashOpacity(0.5)}
-          onPressOut={() => setTrashOpacity(1)}
+          onPressIn={() => setTrashBinOpacity(0.5)}
+          onPressOut={() => setTrashBinOpacity(1)}
           style={{
             /* width: 35, height: 35, borderRadius: 35/2, */ alignItems:
               "center",
             justifyContent: "center",
-            opacity: trashOpacity,
+            opacity: trashBinOpacity,
           }}
         >
           {getIcon("trash", "#131313")}
@@ -120,7 +120,7 @@ const selfReport = () => {
             {data.map((report) => {
               const date = new Date(report.date).toLocaleString('de-DE');
               const dateString = date.substring(0, 8);
-              return <DataComponent date={dateString} />
+              return <DataComponent key={data.id} date={dateString} />
             })}
         </View>
       </ScrollView>

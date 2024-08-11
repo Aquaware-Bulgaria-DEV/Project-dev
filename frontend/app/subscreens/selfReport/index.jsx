@@ -20,7 +20,7 @@ import getIcon from "../../../utils/icons.js";
 import { getSelfReports } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
 
-const DataComponent = ({ date, id }) => {
+const DataComponent = ({ date, id, isLast }) => {
   const IconsComp = () => {
     const [penOpacity, setPenOpacity] = React.useState(1);
     const [trashBinOpacity, setTrashBinOpacity] = React.useState(1);
@@ -34,7 +34,7 @@ const DataComponent = ({ date, id }) => {
           gap: 10,
         }}
       >
-        <Pressable
+        {isLast && (<Pressable
           onPressIn={() => setPenOpacity(0.5)}
           onPressOut={() => setPenOpacity(1)}
           onPress={() => console.log(id)}
@@ -46,7 +46,7 @@ const DataComponent = ({ date, id }) => {
           }}
         >
           {getIcon("pencil", "#131313")}
-        </Pressable>
+        </Pressable>)}
         <Pressable
           onPressIn={() => setTrashBinOpacity(0.5)}
           onPressOut={() => setTrashBinOpacity(1)}
@@ -101,7 +101,7 @@ const selfReport = () => {
     const year = dateObj.getUTCFullYear();
     
     return `${day}.${month}.${year}`;
-}
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -128,10 +128,18 @@ const selfReport = () => {
               marginBottom: 20,
             }}
           />
-            {data.map((report) => {
-              const dateString = transformDate(report.date)
-              return <DataComponent key={report.id} id={report.id} date={dateString} />
-            })}
+             {data.map((report, index) => {
+            const isLast = index === data.length - 1; 
+            const dateString = transformDate(report.date);
+            return (
+              <DataComponent
+                key={report.id}
+                id={report.id}
+                date={dateString}
+                isLast={isLast}
+              />
+            );
+          })}
         </View>
       </ScrollView>
     </SafeAreaView>

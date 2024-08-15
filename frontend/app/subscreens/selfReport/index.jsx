@@ -19,12 +19,12 @@ import { useTranslation } from "react-i18next";
 import getIcon from "../../../utils/icons.js";
 import { getSelfReports } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
+import { router } from 'expo-router';
 
 const DataComponent = ({ date, id, isLast }) => {
   const IconsComp = () => {
     const [penOpacity, setPenOpacity] = React.useState(1);
     const [trashBinOpacity, setTrashBinOpacity] = React.useState(1);
-
     return (
       <View
         style={{
@@ -37,7 +37,7 @@ const DataComponent = ({ date, id, isLast }) => {
         {isLast && (<Pressable
           onPressIn={() => setPenOpacity(0.5)}
           onPressOut={() => setPenOpacity(1)}
-          onPress={() => console.log(id)}
+          onPress={() => router.push({pathname: 'subscreens/editSelfReport', params: {id: id}})}
           style={{
             /* width: 35, height: 35, borderRadius: 35/2, */ alignItems:
               "center",

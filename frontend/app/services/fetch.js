@@ -214,6 +214,30 @@ export const getSelfReports = async (token) => {
   }
 }
 
+export const getSingleSelfReport = async (token, id) =>{
+  try {
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`,  
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result;
+
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const login = async (data) => {
   try {
     const response = await fetch(`${server}/profile/login/`, {

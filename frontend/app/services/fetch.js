@@ -335,3 +335,25 @@ export const addSelfReport = async (token, propertyID, bodyData) => {
     throw e;
   }
 }
+
+export const editSelfReport = async (token, value, waterMeterId) => {
+  try {
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${waterMeterId}/`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"value" : value}),
+    });
+
+    const responseData = await response.json();
+    console.log("Response data:", responseData);
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+  } catch (e) {
+    throw e;
+  }
+}

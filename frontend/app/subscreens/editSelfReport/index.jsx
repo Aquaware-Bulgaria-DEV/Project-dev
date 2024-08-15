@@ -13,28 +13,53 @@ import { useLocalSearchParams } from 'expo-router'
 import { Header } from "../../globalComponents/header.jsx";
 
 import {styles} from "./editSelfReportStyles.js";
-import { getSingleSelfReport } from "../../services/fetch.js";
+import { editSelfReport, getSingleSelfReport } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
+import CustomButton from "../../globalComponents/customButton.jsx";
+
+
 
 const EditSelfReport = () => {
     const { id } = useLocalSearchParams();
     const [ selfReport, setSelfReport ] = useState();
     const [ quantity, setQuantity ] = useState(0);
-    const [ isQuantityFetched, setIsQuantityFetched ] = useState(false);
+    const [ prevQuantity, setPrevQuantity ] = useState(0);
+    const [ isLoading, setIsLoading ] = useState(true);
+    const [ disableFetch, setDisableFetch ] = useState(true);
+    const [ buttonText, setButtonText ] = useState('Запази');
 
     const { token } = useContext(AuthContext);
 
     useEffect(() => {
         getSingleSelfReport(token, id)
-        .then(res => setSelfReport(res))
+        .then(res => {
+          setSelfReport(res);
+          setPrevQuantity(res.value);
+        })
         .catch(err => console.log(err));
     }, [id]);
 
     useEffect(() => {
       if (selfReport?.value) {
         setQuantity(selfReport.value.toString()); // Ensure the quantity is a string
+        setPrevQuantity(selfReport.value.toString()); // Ensure the quantity is a string
       }
     }, [selfReport]);
+
+    useEffect(() => {
+      console.log("Quantity", quantity);
+      quantityChangeCheck(quantity, prevQuantity);
+    }, [quantity, prevQuantity]);
+
+    const quantityChangeCheck = (quantity, prevQuantity) => {
+      if(quantity == prevQuantity || quantity == 0 || quantity == ""){
+        setIsLoading(true)
+      }else{
+        setIsLoading(false)
+      }
+    }
+
+
 
     useEffect(()=>{
       console.log("Quantity", quantity)
@@ -59,7 +84,23 @@ const EditSelfReport = () => {
   
       // Update the quantity state with the cleaned input
       setQuantity(result);
+      
     };
+
+    const handlePress = async () => {
+      const payload = {
+        "value": quantity
+      }
+      editSelfReport(token, quantity, id)
+      .then(res => {
+        setButtonText("Запазено");
+        setDisableFetch(false);
+      })
+      .catch(e => console.log(e))
+      // setButtonText("Запазено");
+      // setIsLoading(true);
+      // setDisableFetch(false);
+  };
 
     function transformDate(dateString) {
       const dateObj = new Date(dateString);
@@ -115,6 +156,7 @@ const EditSelfReport = () => {
               alignItems: "center",
             }}
             keyboardType="numeric"
+            editable={disableFetch}
             onChangeText={handleTextInputChange}
             value={quantity}
             placeholder="Въведи стойност"
@@ -135,6 +177,14 @@ const EditSelfReport = () => {
             <Text style={styles.date}>{transformDate(selfReport?.date)}</Text>
           </View>
         </View>
+        <CustomButton handlePress={handlePress}
+            isLoading={isLoading}
+            color={"#388FED"}
+            secondColor={"#205187"}
+            title={buttonText}
+            additionalStyles={{ width: "80%", height: 68, borderRadius: 20, padding: 0, alignSelf: 'center' }}
+            additionalTextStyle={{ fontSize: 20, textAlign: "center" }}
+            disabled={isLoading}/>
       </ScrollView>
     </SafeAreaView>
   );

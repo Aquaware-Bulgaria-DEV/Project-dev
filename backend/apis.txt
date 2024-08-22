@@ -264,27 +264,43 @@ Method: DELETE
 
 
 
-API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/< property_id >/water-meter-readings/
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/
 
 Method: GET
-Връща всички данни за самоотчет на дадения имот
+Връща последните 5 самоотчета като може да са на различни имопти 
 
 пример:
 
 [
     {
-        "id": 1,
-        "water_meter": 1,
-        "user": 1,
-        "value": 55,
-        "date": "2024-06-28T14:28:08.955242Z"
+        "id": 3,
+        "water_meter_id": 2,
+        "water_meter_number": "090909",
+        "user": 2,
+        "value": 43.123,
+        "date": "2024-08-22T14:10:59.316716Z",
+        "property_id": 2,
+        "property_type": "House"
     },
     {
         "id": 2,
-        "water_meter": 2,
-        "user": 1,
-        "value": 10,
-        "date": "2024-06-28T14:28:08.959928Z"
+        "water_meter_id": 1,
+        "water_meter_number": "5555",
+        "user": 2,
+        "value": 124.321,
+        "date": "2024-08-22T14:09:16.315758Z",
+        "property_id": 1,
+        "property_type": "Apartment"
+    },
+    {
+        "id": 1,
+        "water_meter_id": 1,
+        "water_meter_number": "5555",
+        "user": 2,
+        "value": 123.456,
+        "date": "2024-08-22T10:00:22.050155Z",
+        "property_id": 1,
+        "property_type": "Apartment"
     }
 ]
 
@@ -369,53 +385,6 @@ Takes:
     }
 
 
-~~~~~~~~~~~~~~~~~~
-
-API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/<int:property_id>/water-meter-readings/
-
-GET: 
-
-Returns all water meter readings to the given property. It may contain reading from all the water meters related to the property. 
-
-Example:
-
-[
-    {
-        "id": 13,
-        "water_meter_id": 1,
-        "user": 1,
-        "value": 124,
-        "date": "2024-07-29T10:29:29.566911Z"
-    },
-    {
-        "id": 14,
-        "water_meter_id": 1,
-        "user": 1,
-        "value": 126,
-        "date": "2024-07-30T14:49:33.672878Z"
-    }
-]
-
-POST :
-
-Takes a list with readings with the water meter id and the new value. Can take multiple readings at a time.
-
-Example 
-
-{
-    "readings": [
-        {
-            "water_meter_id": 1,
-            "value": 125.5
-        },
-        {
-            "water_meter_id": 2,
-            "value": 130.7
-        }
-    ]
-}
-
-
 ~~~~~~~~~~~~~~~~~~~~~~
 
 API : http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/<int:water-meter-reading-id>/
@@ -469,6 +438,42 @@ Returns
     "approximate": false,
     "average_monthly_consumption": 60.0
 }
+
+~~~~~~~~~~~~~~~~~~~~~~
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/property-types/
+
+GET: returns all available property types
+
+example:
+
+[
+    {
+        "id": 1,
+        "type": "Apartment",
+        "image": "http://ec2-18-234-44-48.compute-1.amazonaws.com/media/profile_pics/4b3157594b51401abf8e7877b4bf0b2d.jpeg"
+    },
+    {
+        "id": 2,
+        "type": "House",
+        "image": "http://ec2-18-234-44-48.compute-1.amazonaws.com/media/profile_pics/6c6b8f277b0f4d04945e3b125d3501b2.jpeg"
+    }
+]
+
+~~~~~~~~~~~~~~~~~~~~
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/deactivate/
+
+POST: Deletes the account 
+
+Takes 
+
+{
+    "password": "<password>",
+}
+
+
+
 
 
 

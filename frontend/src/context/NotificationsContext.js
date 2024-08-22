@@ -1,6 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
-import { registerForPushNotificationsAsync, scheduleDailyNotification, scheduleWeeklyNotification, scheduleMonthlyNotification } from "../../app/subscreens/notifications/notificationsHandler";
 import axios from 'axios';
+import { 
+  registerForPushNotificationsAsync, 
+  scheduleDailyNotification, 
+  scheduleWeeklyNotification, 
+  scheduleMonthlyNotification 
+} from "../../app/subscreens/notifications/notificationsHandler";
 
 export const NotificationContext = createContext();
 
@@ -12,44 +17,9 @@ export const NotificationProvider = ({ children }) => {
   const [isScheduledWeeklyTurnedOn, setScheduledWeeklyTurnedOn] = useState(false);
   const [isScheduledMonthlyTurnedOn, setScheduledMonthlyTurnedOn] = useState(false);
 
-  const togglePushNotifications = async () => {
-    const newState = !pushNotifications;
-    setPushNotifications(newState);
-    if (newState) {
-      const token = await registerForPushNotificationsAsync();
-      setExpoPushToken(token);
-    }
-    updateNotificationSettings();
-  };
-
-  const toggleEmailNotifications = () => {
-    setEmailNotificationsTurnedOn(prevState => !prevState);
-    updateNotificationSettings();
-  };
-
-  const toggleScheduledDailyNotifications = () => {
-    const newState = !isScheduledDailyTurnedOn;
-    setScheduledDailyTurnedOn(newState);
-    if (newState) scheduleDailyNotification();
-    updateNotificationSettings();
-  };
-
-  const toggleScheduledWeeklyNotifications = () => {
-    const newState = !isScheduledWeeklyTurnedOn;
-    setScheduledWeeklyTurnedOn(newState);
-    if (newState) scheduleWeeklyNotification();
-    updateNotificationSettings();
-  };
-
-  const toggleScheduledMonthlyNotifications = () => {
-    const newState = !isScheduledMonthlyTurnedOn;
-    setScheduledMonthlyTurnedOn(newState);
-    if (newState) scheduleMonthlyNotification();
-    updateNotificationSettings();
-  };
-
+  // Function to update backend notification settings
   const updateNotificationSettings = async () => {
-    try { //change the url with an actual backend url
+    try { //endpoint change
       const response = await axios.post('http://192.168.1.2:8000/update-settings', {
         expoPushToken,
         emailNotifications: isEmailNotificationsTurnedOn,
@@ -60,7 +30,62 @@ export const NotificationProvider = ({ children }) => {
       console.log('Settings updated:', response.data);
     } catch (error) {
       console.error('Error updating settings:', error);
+      // Optional: revert the state or notify the user
     }
+  };
+
+  // Function to handle push notification toggle
+  const togglePushNotifications = async () => {
+    const newState = !pushNotifications;
+    setPushNotifications(newState);
+
+    if (newState) {
+      const token = await registerForPushNotificationsAsync();
+      setExpoPushToken(token);
+    } else {
+      setExpoPushToken(''); // Reset token if push notifications are turned off
+    }
+    updateNotificationSettings();
+  };
+
+  // Function to handle email notification toggle
+  const toggleEmailNotifications = async () => {
+    const newState = !isEmailNotificationsTurnedOn;
+    setEmailNotificationsTurnedOn(newState);
+    updateNotificationSettings();
+  };
+
+  // Function to handle daily notification toggle
+  const toggleScheduledDailyNotifications = async () => {
+    const newState = !isScheduledDailyTurnedOn;
+    setScheduledDailyTurnedOn(newState);
+    
+    if (newState) {
+      await scheduleDailyNotification();
+    }
+    updateNotificationSettings();
+  };
+
+  // Function to handle weekly notification toggle
+  const toggleScheduledWeeklyNotifications = async () => {
+    const newState = !isScheduledWeeklyTurnedOn;
+    setScheduledWeeklyTurnedOn(newState);
+    
+    if (newState) {
+      await scheduleWeeklyNotification();
+    }
+    updateNotificationSettings();
+  };
+
+  // Function to handle monthly notification toggle
+  const toggleScheduledMonthlyNotifications = async () => {
+    const newState = !isScheduledMonthlyTurnedOn;
+    setScheduledMonthlyTurnedOn(newState);
+    
+    if (newState) {
+      await scheduleMonthlyNotification();
+    }
+    updateNotificationSettings();
   };
 
   return (

@@ -23,27 +23,37 @@ const Notifications = () => {
     toggleScheduledMonthlyNotifications
   } = useContext(NotificationContext);
 
-  const handleTogglePushNotificationsBtn = () => {
-    togglePushNotifications();
-    if (!pushNotifications) {
+  const handleTogglePushNotificationsBtn = async () => {
+    console.log('Push notifications');
+
+    await togglePushNotifications();
+    if (!pushNotifications && expoPushToken) {
       Alert.alert('Push Notifications', `Your push notification token is: ${expoPushToken}`);
     }
   };
 
-  const handleToggleEmailNotificationsBtn = () => {
-    toggleEmailNotifications();
+  const handleToggleEmailNotificationsBtn = async () => {
+    console.log('Email notifications');
+    
+    await toggleEmailNotifications();
   };
 
-  const handleToggleScheduledDailyBtn = () => {
-    toggleScheduledDailyNotifications();
+  const handleToggleScheduledDailyBtn = async () => {
+    console.log('Daily notifications');
+
+    await toggleScheduledDailyNotifications();
   };
 
-  const handleToggleScheduledWeeklyBtn = () => {
-    toggleScheduledWeeklyNotifications();
+  const handleToggleScheduledWeeklyBtn = async () => {
+    console.log('Weekly notifications');
+
+    await toggleScheduledWeeklyNotifications();
   };
 
-  const handleToggleScheduledMonthlyBtn = () => {
-    toggleScheduledMonthlyNotifications();
+  const handleToggleScheduledMonthlyBtn = async () => {
+    console.log('Monthly notifications');
+
+    await toggleScheduledMonthlyNotifications();
   };
 
   return (

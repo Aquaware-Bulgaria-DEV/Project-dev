@@ -35,31 +35,22 @@ const ChangePassword = () => {
     const validationErrors = validateData();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      // return;
+      return;
     }
 
-    if (!validationErrors) {
-      Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
-    } else {
-      Alert.alert(t("appSettingsChangePasswordErrorTitle"));
-    }
-    
-    console.log('Changing your password');
+    // try { //endpoint change
+    //   const response = await axios.post('http://192.168.1.2:8000/profile/change-password/', {
+    //     old_password: oldPassword,
+    //     new_password: newPassword,
+    //   });
 
-    //! Connect to backend  
-    // try {
-      // const response = await axios.post('http://your-backend-url/change-password', {
-      //   old_password: oldPassword,
-      //   new_password: newPassword,
-      // });
-
-      // if (response.data.success) {
-        // Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
-      // } else {
-        // Alert.alert(t("appSettingsChangePasswordErrorTitle"), response.data.error);
-      // }
+    //   if (response.data.success) {
+    //     Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
+    //   } else {
+    //     Alert.alert(t("appSettingsChangePasswordErrorTitle"), response.data.error);
+    //   }
     // } catch (error) {
-      // Alert.alert(t("appSettingsChangePasswordErrorTitle"));
+    //   Alert.alert(t("appSettingsChangePasswordErrorTitle"));
     // }
   };
 

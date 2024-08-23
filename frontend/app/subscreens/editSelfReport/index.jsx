@@ -30,6 +30,8 @@ const EditSelfReport = () => {
 
     const { token } = useContext(AuthContext);
 
+    
+
     useEffect(() => {
         getSingleSelfReport(token, id)
         .then(res => {
@@ -66,26 +68,17 @@ const EditSelfReport = () => {
     }, [quantity])
 
     const handleTextInputChange = (text) => {
-      // Clean the input and format it to only allow one decimal point
-      let numericText = text.replace(/[^0-9.]/g, "");
-      let result = "";
-      let dotAdded = false;
-  
-      for (let i = 0; i < numericText.length; i++) {
-        if (numericText[i] === ".") {
-          if (!dotAdded && result.length > 0 && /\d/.test(result[result.length - 1])) {
-            result += numericText[i];
-            dotAdded = true;
-          }
-        } else {
-          result += numericText[i];
-        }
-      }
-  
+      // Clean the input and format it to only allow one decimal point and up to 3 digits after it
+      let numericText = text
+        .replace(/[^0-9.]/g, "")    // Remove any non-numeric characters except for "."
+        .replace(/(\..*)\./g, "$1") // Allow only the first decimal point, remove subsequent ones
+        .replace(/(\.\d{3})\d+/g, "$1"); // Limit to 3 digits after the decimal point
+    
       // Update the quantity state with the cleaned input
-      setQuantity(result);
-      
+      setQuantity(numericText);
     };
+    
+    
 
     const handlePress = async () => {
       const payload = {
@@ -95,8 +88,13 @@ const EditSelfReport = () => {
       .then(res => {
         setButtonText("Запазено");
         setDisableFetch(false);
+        setIsLoading(true);
+
       })
-      .catch(e => console.log(e))
+      .catch(e => {
+        console.log(e)
+      })
+
       // setButtonText("Запазено");
       // setIsLoading(true);
       // setDisableFetch(false);

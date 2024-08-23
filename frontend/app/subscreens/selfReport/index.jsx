@@ -129,7 +129,7 @@ const selfReport = () => {
             }}
           />
              {data.map((report, index) => {
-            const isLast = index === data.length - 1; 
+            const isLast = index === 0; 
             const dateString = transformDate(report.date);
             return (
               <DataComponent

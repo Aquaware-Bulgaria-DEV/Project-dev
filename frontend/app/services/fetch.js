@@ -192,7 +192,7 @@ export const getRoomDetails = async (propertyId, roomId, token) => {
 
 export const getSelfReports = async (token) => {
   try {
-    const response = await fetch("http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/1/water-meter-readings/",  
+    const response = await fetch("http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/",  
       {
         method: 'GET',
         headers: {
@@ -207,7 +207,11 @@ export const getSelfReports = async (token) => {
     }
 
     const result = await response.json();
-    return result;
+
+    //Sorting in case the reports are not by the correct order and then reversing so the last report be in top of all in the frontend.
+    const sortedResult = result.sort((a, b) => a.id - b.id);
+    const reversedResult = sortedResult.reverse();
+    return reversedResult;
 
   } catch (error) {
     throw error;

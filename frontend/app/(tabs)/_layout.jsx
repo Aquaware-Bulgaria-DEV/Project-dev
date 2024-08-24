@@ -120,6 +120,7 @@ const TabsLayout = () => {
               focused={focused}
             />
           ),
+          href: null,
         }}
       />
       <Tabs.Screen

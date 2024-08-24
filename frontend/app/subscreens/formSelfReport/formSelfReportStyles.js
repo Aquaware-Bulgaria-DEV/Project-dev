@@ -21,6 +21,9 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     marginBottom: 28,
+    textShadowColor: '#000', // Shadow color
+    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+    textShadowRadius: 5,
   },
   labels: {
     fontSize: 20,

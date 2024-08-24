@@ -192,7 +192,35 @@ export const getRoomDetails = async (propertyId, roomId, token) => {
 
 export const getSelfReports = async (token) => {
   try {
-    const response = await fetch("http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/1/water-meter-readings/",  
+    const response = await fetch("http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/",  
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    //Sorting in case the reports are not by the correct order and then reversing so the last report be in top of all in the frontend.
+    const sortedResult = result.sort((a, b) => a.id - b.id);
+    const reversedResult = sortedResult.reverse();
+    return reversedResult;
+
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const getSingleSelfReport = async (token, id) =>{
+  try {
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`,  
       {
         method: 'GET',
         headers: {
@@ -292,7 +320,7 @@ export const addReport = async (setError, token, formValues) => {
 
 export const addSelfReport = async (token, propertyID, bodyData) => {
   try {
-    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyID}/water-meter-readings/`, {
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/`, {
         method: "POST",
         headers: {
             Authorization: `Token ${token}`,
@@ -307,6 +335,28 @@ export const addSelfReport = async (token, propertyID, bodyData) => {
     
     // const responseData = await response.json();
     // console.log("Response data:", responseData);
+  } catch (e) {
+    throw e;
+  }
+}
+
+export const editSelfReport = async (token, value, waterMeterId) => {
+  try {
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${waterMeterId}/`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"value" : value}),
+    });
+
+    const responseData = await response.json();
+    console.log("Response data:", responseData);
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
   } catch (e) {
     throw e;
   }

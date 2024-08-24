@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   Pressable,
+  RefreshControl
 } from "react-native";
 import React, { useEffect, useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,7 +20,7 @@ import { useTranslation } from "react-i18next";
 import getIcon from "../../../utils/icons.js";
 import { getSelfReports } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
-import { router } from 'expo-router';
+import { router } from "expo-router";
 
 const DataComponent = ({ date, id, isLast }) => {
   const IconsComp = () => {
@@ -31,22 +32,27 @@ const DataComponent = ({ date, id, isLast }) => {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          gap: 10,
+          gap: 10
         }}
       >
-        {isLast && (<Pressable
-          onPressIn={() => setPenOpacity(0.5)}
-          onPressOut={() => setPenOpacity(1)}
-          onPress={() => router.push({pathname: 'subscreens/editSelfReport', params: {id: id}})}
-          style={{
-            /* width: 35, height: 35, borderRadius: 35/2, */ alignItems:
-              "center",
-            justifyContent: "center",
-            opacity: penOpacity,
-          }}
-        >
-          {getIcon("pencil", "#131313")}
-        </Pressable>)}
+        {isLast &&
+          <Pressable
+            onPressIn={() => setPenOpacity(0.5)}
+            onPressOut={() => setPenOpacity(1)}
+            onPress={() =>
+              router.push({
+                pathname: "subscreens/editSelfReport",
+                params: { id: id }
+              })}
+            style={{
+              /* width: 35, height: 35, borderRadius: 35/2, */ alignItems:
+                "center",
+              justifyContent: "center",
+              opacity: penOpacity
+            }}
+          >
+            {getIcon("pencil", "#131313")}
+          </Pressable>}
         <Pressable
           onPressIn={() => setTrashBinOpacity(0.5)}
           onPressOut={() => setTrashBinOpacity(1)}
@@ -54,7 +60,7 @@ const DataComponent = ({ date, id, isLast }) => {
             /* width: 35, height: 35, borderRadius: 35/2, */ alignItems:
               "center",
             justifyContent: "center",
-            opacity: trashBinOpacity,
+            opacity: trashBinOpacity
           }}
         >
           {getIcon("trash", "#131313")}
@@ -70,11 +76,13 @@ const DataComponent = ({ date, id, isLast }) => {
         {
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
-        },
+          alignItems: "center"
+        }
       ]}
     >
-      <Text style={{ color: "#999999", fontSize: 20 }}>{date}</Text>
+      <Text style={{ color: "#999999", fontSize: 20 }}>
+        {date}
+      </Text>
       <IconsComp />
     </View>
   );
@@ -83,23 +91,33 @@ const DataComponent = ({ date, id, isLast }) => {
 const selfReport = () => {
   const { t, i18n } = useTranslation();
   const { token } = useContext(AuthContext);
-  const [ data, setData ] = useState([])
+  const [data, setData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     getSelfReports(token)
-    .then(res => setData(res))
-    .catch(e => console.log(e.message))
-  }, [])
+      .then(res => setData(res))
+      .catch(e => console.log(e.message));
+  }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    // Simulate a network request or any async task
+    getSelfReports(token)
+      .then(res => setData(res))
+      .catch(e => console.log(e.message))
+      .finally(() => setRefreshing(false));
+  };
 
   // const { width, height } = Dimensions.get('window');
 
   function transformDate(dateString) {
     const dateObj = new Date(dateString);
-    
-    const day = String(dateObj.getUTCDate()).padStart(2, '0');
-    const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0'); 
+
+    const day = String(dateObj.getUTCDate()).padStart(2, "0");
+    const month = String(dateObj.getUTCMonth() + 1).padStart(2, "0");
     const year = dateObj.getUTCFullYear();
-    
+
     return `${day}.${month}.${year}`;
   }
 
@@ -109,10 +127,15 @@ const selfReport = () => {
         style={{ flexGrow: 1 }}
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>{t("subscreenSelfReport")}</Text>
+          <Text style={styles.title}>
+            {t("subscreenSelfReport")}
+          </Text>
           <SettingsButton
             title={t("subscreenAddData")}
             style={[styles.settingsBtn, { marginBottom: 20 }]}
@@ -125,11 +148,11 @@ const selfReport = () => {
               borderBottomColor: "#131313",
               borderBottomWidth: 1,
               opacity: 0.1,
-              marginBottom: 20,
+              marginBottom: 20
             }}
           />
-             {data.map((report, index) => {
-            const isLast = index === 0; 
+          {data.map((report, index) => {
+            const isLast = index === 0;
             const dateString = transformDate(report.date);
             return (
               <DataComponent

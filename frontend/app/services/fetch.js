@@ -320,7 +320,7 @@ export const addReport = async (setError, token, formValues) => {
 
 export const addSelfReport = async (token, propertyID, bodyData) => {
   try {
-    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyID}/water-meter-readings/`, {
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/`, {
         method: "POST",
         headers: {
             Authorization: `Token ${token}`,

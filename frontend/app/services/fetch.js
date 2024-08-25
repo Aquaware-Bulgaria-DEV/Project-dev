@@ -318,7 +318,7 @@ export const addReport = async (setError, token, formValues) => {
   }
 };
 
-export const addSelfReport = async (token, propertyID, bodyData) => {
+export const addSelfReport = async (token, bodyData) => {
   try {
     const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/`, {
         method: "POST",
@@ -348,16 +348,27 @@ export const editSelfReport = async (token, value, waterMeterId) => {
             Authorization: `Token ${token}`,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({"value" : value}),
+        body: JSON.stringify({ "value": value }),
     });
 
-    const responseData = await response.json();
-    console.log("Response data:", responseData);
-    if (!response.ok) {
+    // Check if the response content is JSON
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+      if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return responseData; // Return the parsed JSON response
+    } else {
+      // Log the text response (likely HTML) for debugging
+      const responseText = await response.text();
+      console.log("Non-JSON response (likely an error):", responseText);
+      throw new Error(`Unexpected response format. Status: ${response.status}`);
     }
-    
+
   } catch (e) {
+    console.error("Error in editSelfReport:", e);
     throw e;
   }
-}
+};

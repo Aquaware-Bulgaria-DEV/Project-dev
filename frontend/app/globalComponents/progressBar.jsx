@@ -4,7 +4,7 @@ import Svg, { Circle } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
 
-const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
+const CircularProgressBar = ({ progress, quantity = 0, size = 100, imageSource }) => {
   const dotsVisible = progress < 100 ? true : false;
   const progressColor = progress >= 95 ? progress >=100 ? "#E4003A" : "#EB5B00"  : "#339DFA";
   const strokeWidthBackground = 20;
@@ -89,7 +89,7 @@ const CircularProgressBar = ({ progress, size = 100, imageSource }) => {
       ) : (
         <View style={styles.textContainer}>
           <View style={styles.quantityContainer}>
-            <Text style={styles.textQuantity}>0,28 m</Text>
+            <Text style={styles.textQuantity}>{quantity} m</Text>
             <Text style={styles.superScript}>3</Text>
           </View>
             <Text style={styles.textLabel}>Дневен разход</Text>

@@ -18,11 +18,11 @@ import "../../../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 
 import getIcon from "../../../utils/icons.js";
-import { getSelfReports } from "../../services/fetch.js";
+import { deleteSelfReport, getSelfReports } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
 import { router } from "expo-router";
 
-const DataComponent = ({ date, id, isLast }) => {
+const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
   const IconsComp = () => {
     const [penOpacity, setPenOpacity] = React.useState(1);
     const [trashBinOpacity, setTrashBinOpacity] = React.useState(1);
@@ -45,8 +45,8 @@ const DataComponent = ({ date, id, isLast }) => {
                 params: { id: id }
               })}
             style={{
-              /* width: 35, height: 35, borderRadius: 35/2, */ alignItems:
-                "center",
+              /* width: 35, height: 35, borderRadius: 35/2, */ 
+              alignItems: "center",
               justifyContent: "center",
               opacity: penOpacity
             }}
@@ -56,9 +56,16 @@ const DataComponent = ({ date, id, isLast }) => {
         <Pressable
           onPressIn={() => setTrashBinOpacity(0.5)}
           onPressOut={() => setTrashBinOpacity(1)}
+          onPress={() => {
+            deleteSelfReport(token, id)
+            .then()
+            .catch(err => console.log(err))
+
+            onRefresh();
+          }}
           style={{
-            /* width: 35, height: 35, borderRadius: 35/2, */ alignItems:
-              "center",
+            /* width: 35, height: 35, borderRadius: 35/2, */ 
+            alignItems:"center",
             justifyContent: "center",
             opacity: trashBinOpacity
           }}
@@ -160,6 +167,8 @@ const selfReport = () => {
                 id={report.id}
                 date={dateString}
                 isLast={isLast}
+                onRefresh={onRefresh}
+                token={token}
               />
             );
           })}

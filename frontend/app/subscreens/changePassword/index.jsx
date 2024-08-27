@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -12,45 +12,64 @@ import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "./changePasswordStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
 import { useTranslation } from "react-i18next";
-import axios from "axios"; 
+import axios from "axios";
+import AuthContext from "../../Context/AuthContext.jsx";
 
 const ChangePassword = () => {
   const { t } = useTranslation();
+  const { token } = useContext(AuthContext);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const validateData = () => {
-    const newErrors = {};
-    if (!oldPassword) newErrors.oldPassword = t("appSettingsChangePasswordOldPassError");
-    if (!newPassword) newErrors.newPassword = t("appSettingsChangePasswordNewPassError");
-    if (newPassword.length < 6) newErrors.newPassword = t("appSettingsChangePasswordLengthError");
-    if (!confirmNewPassword) newErrors.confirmNewPassword = t("appSettingsChangePasswordConfirmError");
-    if (newPassword !== confirmNewPassword) newErrors.confirmNewPassword = t("appSettingsChangePasswordMismatchError");
-    return newErrors;
-  };
+  // const validateData = () => {
+  //   const newErrors = {};
+  //   if (!oldPassword) newErrors.oldPassword = t("appSettingsChangePasswordOldPassError");
+  //   if (!newPassword) newErrors.newPassword = t("appSettingsChangePasswordNewPassError");
+  //   if (newPassword.length < 6) newErrors.newPassword = t("appSettingsChangePasswordLengthError");
+  //   if (!confirmNewPassword) newErrors.confirmNewPassword = t("appSettingsChangePasswordConfirmError");
+  //   if (newPassword !== confirmNewPassword) newErrors.confirmNewPassword = t("appSettingsChangePasswordMismatchError");
+  //   return newErrors;
+  // };
 
   const handleChangePassword = async () => {
-    const validationErrors = validateData();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+    // const validationErrors = validateData();
+    // console.log(validationErrors);
+    // if (Object.keys(validationErrors).length > 0) {
+      
+    //   setErrors(validationErrors);
+    //   return;
+    // }
 
-    try { //! Еndpoint change
-      const response = await axios.post('http://192.168.1.2:8000/profile/change-password/', {
-        old_password: oldPassword,
-        new_password: newPassword,
-      });
+    try {
+      console.log("trying to change the password");
+      const response = await fetch(
+        "http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/change-password/",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Token ${token}`, // Use the token retrieved from context
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            old_password: oldPassword,
+            new_password: newPassword,
+          }),
+        }
+      );
 
-      if (response.data.success) {
-        Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
-      } else {
-        Alert.alert(t("appSettingsChangePasswordErrorTitle"), response.data.error);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("Error Response Data:", errorData);
+        throw new Error(errorData.error || t("appSettingsChangePasswordErrorTitle"));
       }
+
+      const data = await response.json();
+      Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
     } catch (error) {
-      Alert.alert(t("appSettingsChangePasswordErrorTitle"));
+      console.error("Error:", error.message);
+      Alert.alert(t("appSettingsChangePasswordErrorTitle"), error.message);
     }
   };
 

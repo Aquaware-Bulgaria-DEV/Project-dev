@@ -32,9 +32,11 @@ const SignIn = () => {
   const handleLogin = async () => {
     if (formValues.email === '' || formValues.password === '') {
       setError('Всички полета са задължителни');
+      return;
     }
     if (formValues.password.length < 5) {
       setError('Паролата трябва да съдържа минимум 6 символа');
+      return;
     }
 
     try {
@@ -67,7 +69,7 @@ const SignIn = () => {
       router.push("/home");
     } catch (e) {
       setError(e.message);
-      console.error(e);
+      // console.error(e);
     }
   };
 

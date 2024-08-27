@@ -177,7 +177,9 @@ const SelfReport = () => {
         readings: data
     };
 
-    addSelfReport(token, value, payload)
+    // console.log(payload)
+
+    addSelfReport(token, payload)
     .then(res => {
       setButtonText("Отчетът е добавен");
       setIsLoading(true);

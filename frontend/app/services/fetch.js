@@ -265,6 +265,35 @@ export const getSingleSelfReport = async (token, id) =>{
   }
 }
 
+
+export const deleteSelfReport = async (token, id) => {
+  try {
+    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // If the response status is 204 (No Content), return null or some default value
+    if (response.status === 204) {
+      return null; // Or some indication that the deletion was successful
+    }
+
+    // Only attempt to parse JSON if there's a response body
+    const result = await response.text(); // Use text() instead of json() to avoid errors on empty responses
+    return result ? JSON.parse(result) : null;
+
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const login = async (data) => {
   try {
     const response = await fetch(`${server}/profile/login/`, {

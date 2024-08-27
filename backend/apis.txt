@@ -426,7 +426,7 @@ Deletes the reading from the DB
 
 ~~~~~~~~~~~~~~~~~~~~~
 
-API : http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/client-numbers/1/average-consumption/
+API : http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/client-numbers/<client_num-id>/average-consumption/
 
 GET
 
@@ -471,6 +471,20 @@ Takes
 {
     "password": "<password>",
 }
+~~~~~~~~~~~~~~~~~~~~
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/change-password/
+
+POST:  
+
+Takes 
+
+{
+    "old_password": "<password>",
+    "new_password": "<new password>"
+}
+
+
 
 
 

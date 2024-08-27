@@ -38,20 +38,20 @@ const ChangePassword = () => {
       return;
     }
 
-    // try { //endpoint change
-    //   const response = await axios.post('http://192.168.1.2:8000/profile/change-password/', {
-    //     old_password: oldPassword,
-    //     new_password: newPassword,
-    //   });
+    try { //! Еndpoint change
+      const response = await axios.post('http://192.168.1.2:8000/profile/change-password/', {
+        old_password: oldPassword,
+        new_password: newPassword,
+      });
 
-    //   if (response.data.success) {
-    //     Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
-    //   } else {
-    //     Alert.alert(t("appSettingsChangePasswordErrorTitle"), response.data.error);
-    //   }
-    // } catch (error) {
-    //   Alert.alert(t("appSettingsChangePasswordErrorTitle"));
-    // }
+      if (response.data.success) {
+        Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
+      } else {
+        Alert.alert(t("appSettingsChangePasswordErrorTitle"), response.data.error);
+      }
+    } catch (error) {
+      Alert.alert(t("appSettingsChangePasswordErrorTitle"));
+    }
   };
 
   return (

@@ -21,24 +21,14 @@ export async function registerForPushNotificationsAsync() {
     alert('Must use physical device for Push Notifications');
   }
 
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
-
   return token;
 }
 
 export async function scheduleDailyNotification() {
-  await Notifications.cancelAllScheduledNotificationsAsync(); // Optional: clear previous schedules
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Daily Reminder",
-      body: "Daily water consumption meters...",
+      body: "This is your daily notification.",
     },
     trigger: {
       hour: 9,
@@ -49,14 +39,13 @@ export async function scheduleDailyNotification() {
 }
 
 export async function scheduleWeeklyNotification() {
-  await Notifications.cancelAllScheduledNotificationsAsync();
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Weekly Reminder",
-      body: "Weekly water consumption meters...",
+      body: "This is your weekly notification.",
     },
     trigger: {
-      weekday: 1,  // monday
+      weekday: 1,  // Monday
       hour: 9,
       minute: 0,
       repeats: true,
@@ -65,14 +54,13 @@ export async function scheduleWeeklyNotification() {
 }
 
 export async function scheduleMonthlyNotification() {
-  await Notifications.cancelAllScheduledNotificationsAsync();
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Monthly Reminder",
-      body: "Monthly water consumption meters...",
+      body: "This is your monthly notification.",
     },
     trigger: {
-      day: 1,  // first day of the month
+      day: 1,  // First day of the month
       hour: 9,
       minute: 0,
       repeats: true,

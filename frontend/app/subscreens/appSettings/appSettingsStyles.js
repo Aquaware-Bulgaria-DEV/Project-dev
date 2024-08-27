@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   scrollViewContent: {
     paddingBottom: 125,
     // marginHorizontal: 24,
-    marginTop: -15,
+    marginTop: 35,
   },
   content: {
     margin: 26,

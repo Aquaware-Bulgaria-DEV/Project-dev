@@ -9,23 +9,34 @@ import {
 } from "react-native";
 import React, { useEffect, useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { styles } from "./selfReportStyles.js";
 import SettingsButton from "../../globalComponents/settingsButton";
 import { Header } from "../../globalComponents/header.jsx";
-
 import "../../../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
-
 import getIcon from "../../../utils/icons.js";
 import { deleteSelfReport, getSelfReports } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
 import { router } from "expo-router";
 
+import CustomModal from "../../globalComponents/CustomModal.jsx";
+
 const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
+  const [modalVisible, setModalVisible] = useState(false); // Modal visibility state
+
   const IconsComp = () => {
     const [penOpacity, setPenOpacity] = React.useState(1);
     const [trashBinOpacity, setTrashBinOpacity] = React.useState(1);
+
+    const handleDelete = () => {
+      deleteSelfReport(token, id)
+        .then(() => {
+          onRefresh();
+          setModalVisible(false); // Close modal after deletion
+        })
+        .catch(err => console.log(err));
+    };
+
     return (
       <View
         style={{
@@ -35,7 +46,7 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
           gap: 10
         }}
       >
-        {isLast &&
+        {isLast && (
           <Pressable
             onPressIn={() => setPenOpacity(0.5)}
             onPressOut={() => setPenOpacity(1)}
@@ -43,35 +54,35 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
               router.push({
                 pathname: "subscreens/editSelfReport",
                 params: { id: id }
-              })}
+              })
+            }
             style={{
-              /* width: 35, height: 35, borderRadius: 35/2, */ 
               alignItems: "center",
               justifyContent: "center",
               opacity: penOpacity
             }}
           >
             {getIcon("pencil", "#3F9FF4")}
-          </Pressable>}
+          </Pressable>
+        )}
         <Pressable
           onPressIn={() => setTrashBinOpacity(0.5)}
           onPressOut={() => setTrashBinOpacity(1)}
-          onPress={() => {
-            deleteSelfReport(token, id)
-            .then()
-            .catch(err => console.log(err))
-
-            onRefresh();
-          }}
+          onPress={() => setModalVisible(true)} // Open modal
           style={{
-            /* width: 35, height: 35, borderRadius: 35/2, */ 
-            alignItems:"center",
+            alignItems: "center",
             justifyContent: "center",
             opacity: trashBinOpacity
           }}
         >
           {getIcon("trash", "#131313")}
         </Pressable>
+        <CustomModal 
+          isVisible={modalVisible}
+          setIsVisible={setModalVisible}
+          questionTxt={"Сигурен ли сте че искате да изтриете самоотчетът?"}
+          actionHandler={handleDelete}
+        />
       </View>
     );
   };
@@ -87,9 +98,7 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
         }
       ]}
     >
-      <Text style={{ color: "#999999", fontSize: 20 }}>
-        {date}
-      </Text>
+      <Text style={{ color: "#999999", fontSize: 20 }}>{date}</Text>
       <IconsComp />
     </View>
   );
@@ -109,14 +118,11 @@ const selfReport = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    // Simulate a network request or any async task
     getSelfReports(token)
       .then(res => setData(res))
       .catch(e => console.log(e.message))
       .finally(() => setRefreshing(false));
   };
-
-  // const { width, height } = Dimensions.get('window');
 
   function transformDate(dateString) {
     const dateObj = new Date(dateString);
@@ -140,9 +146,7 @@ const selfReport = () => {
       >
         <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>
-            {t("subscreenSelfReport")}
-          </Text>
+          <Text style={styles.title}>{t("subscreenSelfReport")}</Text>
           <SettingsButton
             title={t("subscreenAddData")}
             style={[styles.settingsBtn, { marginBottom: 20 }]}

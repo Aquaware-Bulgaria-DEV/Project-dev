@@ -51,7 +51,7 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
               opacity: penOpacity
             }}
           >
-            {getIcon("pencil", "#131313")}
+            {getIcon("pencil", "#3F9FF4")}
           </Pressable>}
         <Pressable
           onPressIn={() => setTrashBinOpacity(0.5)}

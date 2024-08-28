@@ -4,7 +4,7 @@ import Svg, { Circle } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
 
-const CircularProgressBar = ({ progress, quantity = 0, size = 100, imageSource }) => {
+const CircularProgressBar = ({ progress, quantity = 0, errMsg,size = 100, imageSource }) => {
   const dotsVisible = progress < 100 ? true : false;
   const progressColor = progress >= 95 ? progress >=100 ? "#E4003A" : "#EB5B00"  : "#339DFA";
   const strokeWidthBackground = 20;
@@ -80,21 +80,29 @@ const CircularProgressBar = ({ progress, quantity = 0, size = 100, imageSource }
       }
         
       </Svg>
-      {imageSource ? (
+      
+      { errMsg ? (
+        <View style={styles.textContainer}>
+          <View style={styles.quantityContainer}>
+            {errMsg 
+            ? <Text style={styles.errorMessage}>{errMsg}</Text> 
+            : <>
+                <Text style={styles.textQuantity}>{quantity} m</Text>
+                <Text style={styles.superScript}>3</Text>
+              </>
+            }
+            
+          </View>
+            <Text style={styles.textLabel}>Дневен разход</Text>
+        </View>
+      )
+      :(
         <Image
           source={imageSource}
           style={[styles.image, { width: size - strokeWidthBackground - 12, height: size - strokeWidthBackground - 12 }]}
           resizeMode="cover"
         />
-      ) : (
-        <View style={styles.textContainer}>
-          <View style={styles.quantityContainer}>
-            <Text style={styles.textQuantity}>{quantity} m</Text>
-            <Text style={styles.superScript}>3</Text>
-          </View>
-            <Text style={styles.textLabel}>Дневен разход</Text>
-        </View>
-      )}
+      )} 
     </View>
   );
 };
@@ -119,6 +127,10 @@ const styles = StyleSheet.create({
   textQuantity: {
     fontSize: 28,
     fontWeight: 'bold',
+  },
+  errorMessage: {
+    fontSize: 18,
+    color: 'red',
   },
   superScript: {
     fontSize: 14,

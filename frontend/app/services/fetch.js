@@ -202,14 +202,17 @@ export const getAverageConsumption = async (propertyId, token) => {
         },
       }
     );
+    const result = await response.json();
+    if(response.status === 400 || response.status === 500){
+      throw new Error(result.error);
+    }
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const result = await response.json();
     console.log("Result consumption API :",result)
     return result;
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };
 
@@ -236,8 +239,8 @@ export const getSelfReports = async (token) => {
     const reversedResult = sortedResult.reverse();
     return reversedResult;
 
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    throw err;
   }
 }
 
@@ -407,7 +410,7 @@ export const editSelfReport = async (token, value, waterMeterId) => {
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
       const responseData = await response.json();
-      console.log("Response data:", responseData);
+      // console.log("Response data:", responseData);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

@@ -11,7 +11,7 @@ import FishTank from "../../../assets/Fish.png"
 import BathTub from "../../../assets/Bathtub.png"
 
 const DoubleProgressBar = () => {
-  const { progressPercent, currentQuantity } = useLocalSearchParams();
+  const { progressPercent, currentQuantity, errMsg } = useLocalSearchParams();
   const litersQuantity = currentQuantity * 1000;
   return (
     <SafeAreaView style={styles.container}>
@@ -27,7 +27,7 @@ const DoubleProgressBar = () => {
             <Text style={styles.quantity}>{litersQuantity} литра</Text>
             <Text style={styles.tip}>колкото един аквариум в хотел</Text>
           </View>
-          <CircularProgressBar progress={progressPercent} size={300} imageSource={FishTank}/>
+          <CircularProgressBar progress={progressPercent} size={300} quantity={currentQuantity} errMsg={errMsg} imageSource={FishTank} />
         </View>
         <Text style={styles.quantity}>или</Text>
         <View style={styles.subContainer}>
@@ -35,7 +35,7 @@ const DoubleProgressBar = () => {
             <Text style={styles.quantity}>{litersQuantity} литра</Text>
             <Text style={styles.tip}>колкото една почти пълна вана</Text>
           </View>
-          <CircularProgressBar progress={progressPercent} size={300} imageSource={BathTub}/>
+          <CircularProgressBar progress={progressPercent} size={300} quantity={currentQuantity} errMsg={errMsg} imageSource={BathTub}/>
         </View>
       </View>
   </ScrollView>

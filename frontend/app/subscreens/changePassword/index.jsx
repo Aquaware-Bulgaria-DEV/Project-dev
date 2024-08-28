@@ -12,8 +12,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "./changePasswordStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
 import AuthContext from "../../Context/AuthContext.jsx";
+import { router } from "expo-router";
 
 const ChangePassword = () => {
   const { t } = useTranslation();
@@ -21,27 +21,9 @@ const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [errors, setErrors] = useState({});
-
-  // const validateData = () => {
-  //   const newErrors = {};
-  //   if (!oldPassword) newErrors.oldPassword = t("appSettingsChangePasswordOldPassError");
-  //   if (!newPassword) newErrors.newPassword = t("appSettingsChangePasswordNewPassError");
-  //   if (newPassword.length < 6) newErrors.newPassword = t("appSettingsChangePasswordLengthError");
-  //   if (!confirmNewPassword) newErrors.confirmNewPassword = t("appSettingsChangePasswordConfirmError");
-  //   if (newPassword !== confirmNewPassword) newErrors.confirmNewPassword = t("appSettingsChangePasswordMismatchError");
-  //   return newErrors;
-  // };
+  const [errors] = useState({});
 
   const handleChangePassword = async () => {
-    // const validationErrors = validateData();
-    // console.log(validationErrors);
-    // if (Object.keys(validationErrors).length > 0) {
-      
-    //   setErrors(validationErrors);
-    //   return;
-    // }
-
     try {
       console.log("trying to change the password");
       const response = await fetch(
@@ -67,6 +49,7 @@ const ChangePassword = () => {
 
       const data = await response.json();
       Alert.alert(t("appSettingsChangePasswordSuccessTitle"), t("appSettingsChangePasswordSuccessMessage"));
+      router.push("/settings");
     } catch (error) {
       console.error("Error:", error.message);
       Alert.alert(t("appSettingsChangePasswordErrorTitle"), error.message);

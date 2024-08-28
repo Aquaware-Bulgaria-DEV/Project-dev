@@ -28,9 +28,8 @@ const EditSelfReport = () => {
     const [ disableFetch, setDisableFetch ] = useState(true);
     const [ buttonText, setButtonText ] = useState('Запази');
 
-    const { token } = useContext(AuthContext);
 
-    
+    const { token } = useContext(AuthContext);
 
     useEffect(() => {
         getSingleSelfReport(token, id)
@@ -38,18 +37,21 @@ const EditSelfReport = () => {
           setSelfReport(res);
           setPrevQuantity(res.value);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log("getSingleSelfReport error: ", err));
     }, [id]);
+    
 
     useEffect(() => {
       if (selfReport?.value) {
         setQuantity(selfReport.value.toString()); // Ensure the quantity is a string
         setPrevQuantity(selfReport.value.toString()); // Ensure the quantity is a string
+        // console.log("Water Meter Number", selfReport.water_meter_number)
+        // console.log(selfReport)
       }
     }, [selfReport]);
 
     useEffect(() => {
-      console.log("Quantity", quantity);
+      // console.log("Quantity", quantity);
       quantityChangeCheck(quantity, prevQuantity);
     }, [quantity, prevQuantity]);
 
@@ -60,12 +62,6 @@ const EditSelfReport = () => {
         setIsLoading(false)
       }
     }
-
-
-
-    useEffect(()=>{
-      console.log("Quantity", quantity)
-    }, [quantity])
 
     const handleTextInputChange = (text) => {
       // Clean the input and format it to only allow one decimal point and up to 3 digits after it
@@ -83,22 +79,18 @@ const EditSelfReport = () => {
     const handlePress = async () => {
       const payload = {
         "value": quantity
-      }
-      editSelfReport(token, quantity, id)
-      .then(res => {
+      };
+      
+      try {
+        const res = await editSelfReport(token, quantity, id);
+        // console.log("Response from editSelfReport:", res);  // Log the response for debugging
         setButtonText("Запазено");
         setDisableFetch(false);
         setIsLoading(true);
-
-      })
-      .catch(e => {
-        console.log(e)
-      })
-
-      // setButtonText("Запазено");
-      // setIsLoading(true);
-      // setDisableFetch(false);
-  };
+      } catch (e) {
+        console.error('Edit request failed:', e);
+      }
+    };
 
     function transformDate(dateString) {
       const dateObj = new Date(dateString);
@@ -129,7 +121,7 @@ const EditSelfReport = () => {
           <View style={styles.dataContainer}>
             <Text style={styles.dataLabel}>Номер на водомер</Text>
             <View style={styles.dataNameWrapper}>
-                <Text style={styles.dataName}>{selfReport?.water_meter_id}</Text>
+                <Text style={styles.dataName}>{selfReport?.water_meter_number}</Text>
             </View>
           </View>
           <Text style={[styles.dataLabel, {marginBottom: 10}]}>Стойност</Text>

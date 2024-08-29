@@ -188,22 +188,20 @@ Method: POST:
 Създава нов имот със съответните данни:
 
 {
-  "property_type": {
-    "id": <id на типа имот (апартамент, къща, гараж, др.>
+  "type": {
+    "id": 1
   },
   "water_company": {
-    "id": <ID на ВИК дружеството>
+    "id": 1
   },
   "client_number": {
-    "client_number": "<клиентски номер>",
-    "users": [<id на потребителя>]
+    "client_number": "9990000"
   },
   "property": {
-    "num_people": <брой на живущите в имота>
+    "num_people": 11
   },
-  "water_meters": ["<номер водомер 1>", "<номер водомер 2(ако има)>"]
+  "water_meters": ["0000099"]
 }
-
 
 API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/< property_id >/rooms/
 
@@ -435,8 +433,17 @@ Returns the average consumption of the client, based on the client-number (other
 Returns 
 
 {
-    "approximate": false,
-    "average_monthly_consumption": 60.0
+    "approximate": true,
+    "average_monthly_consumption": 12.18,
+    "num_people": 4,
+    "average_usage_per_person_per_week": 0.761,
+    "average_usage_per_room": {
+        "main kitchen": 4.06,
+        "Summer Kitchen": 4.06,
+        "New added kitc": 4.06
+    },
+    "max_water_usage_for_property_per_month": 10400.0,
+    "current_water_usage_for_person_per_room": 1.015
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
   },
   scrollViewContent: {
     paddingBottom: 125,
-    // marginHorizontal: 24,
     marginTop: 35,
   },
   contentContainer: {
@@ -18,8 +17,8 @@ export const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 28,
     marginLeft: 15,
-    textShadowColor: '#000', // Shadow color
-    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
   },
   settingsBtn: {
@@ -31,15 +30,38 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
-  switchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
+  gradientButton: {
+    flexDirection: 'row',
+    height: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: 20,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  gradient: {
+    flexDirection: 'row',
+    height: '100%',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textGradient: {
+    color: 'white',
+    fontSize: 18,
+    marginLeft: 20,
   },
   buttonText: {
     fontSize: 18,
-    color: '#999999'
-  }
+    color: '#999999',
+  },
+  icons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
 });

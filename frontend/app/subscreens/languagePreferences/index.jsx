@@ -1,33 +1,24 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
-  Pressable,
-  Switch,
-} from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, ScrollView, SafeAreaView, Pressable } from "react-native";
 import { styles } from "./languagePreferencesStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
-
-import "../../../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 import LanguageContext from "../../../src/context/LanguageContext.js";
+import { LinearGradient } from 'expo-linear-gradient';
 
-const languagePreferences = () => {
-  const { t, i18n } = useTranslation();
+const LanguagePreferences = () => {
+  const { t } = useTranslation();
   const { language, toggleLanguage } = useContext(LanguageContext);
-  const [isLanguageEnglish, setEnglishLanguage] = useState(language !== 'en');
+  const [isLanguageEnglish, setEnglishLanguage] = useState(language === 'en');
 
   useEffect(() => {
     setEnglishLanguage(language === 'en');
   }, [language]);
 
-  const handleToggleLanguage = () => {
-    toggleLanguage();
-    setEnglishLanguage(prevState => !prevState);
+  const handleSetLanguage = (lang) => {
+    if ((lang === 'en' && !isLanguageEnglish) || (lang === 'bg' && isLanguageEnglish)) {
+      toggleLanguage();
+    }
   };
 
   return (
@@ -39,33 +30,52 @@ const languagePreferences = () => {
         <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{t("settingsLanguage")}</Text>
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("settingsChangeLanguageEN")}
-            </Text>
-            <Switch
-              value={isLanguageEnglish}
-              onValueChange={handleToggleLanguage}
-              trackColor={{ false: "#999999", true: "#388FED" }}
-              thumbColor={"#F9F9F9"}
-            />
-          </View>
-          {/* Change language button - for removal after successful translation implementation */}
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
-            <Text style={styles.buttonText}>
-              {t("settingsChangeLanguageBG")}
-            </Text>
-            <Switch
-              value={!isLanguageEnglish}
-              onValueChange={handleToggleLanguage}
-              trackColor={{ false: "#999999", true: "#388FED" }}
-              thumbColor={"#F9F9F9"}
-            />
-          </View>
+
+          {/* Button for English Language */}
+          <Pressable
+            style={styles.settingsBtn}
+            onPress={() => handleSetLanguage('en')}
+          >
+            {isLanguageEnglish ? (
+              <LinearGradient
+                colors={['#388FED', '#4C62C7']}
+                style={styles.gradientButton}
+              >
+                <Text style={styles.textGradient}>
+                  {t("settingsChangeLanguageEN")}
+                </Text>
+              </LinearGradient>
+            ) : (
+              <Text style={styles.buttonText}>
+                {t("settingsChangeLanguageEN")}
+              </Text>
+            )}
+          </Pressable>
+
+          {/* Button for Bulgarian Language */}
+          <Pressable
+            style={styles.settingsBtn}
+            onPress={() => handleSetLanguage('bg')}
+          >
+            {!isLanguageEnglish ? (
+              <LinearGradient
+                colors={['#388FED', '#4C62C7']}
+                style={styles.gradientButton}
+              >
+                <Text style={styles.textGradient}>
+                  {t("settingsChangeLanguageBG")}
+                </Text>
+              </LinearGradient>
+            ) : (
+              <Text style={styles.buttonText}>
+                {t("settingsChangeLanguageBG")}
+              </Text>
+            )}
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default languagePreferences;
+export default LanguagePreferences;

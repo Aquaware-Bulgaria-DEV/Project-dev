@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     backgroundColor: '#F5F5F5',
   },
   scrollViewContent: {
@@ -11,6 +12,7 @@ export const styles = StyleSheet.create({
   content: {
     margin: 26,
     justifyContent: 'center',
+    flex: 1,
   },
   title: {
     fontSize: 28,

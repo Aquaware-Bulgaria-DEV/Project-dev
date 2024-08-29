@@ -1,46 +1,73 @@
-import {
-  ScrollView,
-  Text,
-  View,
-  SafeAreaView,
-  TextInput,
-  Pressable,
-} from 'react-native';
+import { ScrollView, Text, View, SafeAreaView, TextInput } from 'react-native';
 import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './addRoomStyles.js';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
-import { LinearGradient } from 'expo-linear-gradient';
+import AuthContext from '../../Context/AuthContext.jsx';
 import CustomButton from '../../globalComponents/customButton.jsx';
+import * as services from '../../services/fetch.js';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+
 const AddRoom = () => {
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
   const [errors, setErrors] = useState({});
+
+  const params = useLocalSearchParams();
+  const propId = params[0];
+
+  const router = useRouter();
+
+  const { token } = useContext(AuthContext);
+
   const roomTypes = [
-    { id: '1', label: 'тип 1' },
-    { id: '2', label: 'тип 2' },
-    { id: '3', label: 'тип 3' },
+    { id: 1, label: 'KITCHEN' },
+    { id: 2, label: 'BATHROOM' },
+    { id: 3, label: 'TOILET' },
+    { id: 4, label: 'LAUNDRY' },
+    { id: 5, label: 'GARDEN' },
+    { id: 6, label: 'GARAGE' },
   ];
   const roomOptions = roomTypes.map((key) => ({
     label: key.label,
     value: key.label,
+    id: key.id,
   }));
 
-  const handleRoomChange = (value) => {
+  const handleRoomSelection = (value) => {
     setRoom(value);
+    console.log(value, 'room type');
   };
 
   const validateData = () => {
     const newErrors = {};
     if (!room) newErrors.room = 'Моля, изберете помещение';
     if (!name) newErrors.name = 'Моля, въведете име';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
-    console.log(name);
-    console.log(room);
-    // POST method to be added
+  const handleSubmit = async (token, propId, { name, room_type: room }) => {
+    console.log('Room to be submitted:', room);
+    if (!validateData()) return;
+    try {
+      const response = await services.createARoom(token, propId, {
+        name,
+        room_type: room,
+      });
+      console.log(response);
+
+      if (response) {
+        router.push({
+          pathname: 'subscreens/manageProperty',
+          params: { propertyId: propId },
+        });
+      }
+    } catch (error) {
+      console.error('Error creating room:', error);
+    }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
@@ -48,11 +75,14 @@ const AddRoom = () => {
         <View style={styles.content}>
           <Text style={styles.title}>Добавяне на помещение</Text>
           <View style={styles.form}>
-            <Text style={styles.text}>Вид помещение</Text>
+            <Text style={styles.text}>
+              Вид помещение
+              <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
+            </Text>
             <View style={{ marginVertical: 5 }}>
               <View style={styles.pickerContainer}>
                 <RNPickerSelect
-                  onValueChange={handleRoomChange}
+                  onValueChange={(room) => handleRoomSelection(room)}
                   items={roomOptions}
                   style={{
                     inputIOS: styles.pickerItem,
@@ -66,10 +96,7 @@ const AddRoom = () => {
                 />
               </View>
             </View>
-            <Text style={styles.text}>
-              Име
-              <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
-            </Text>
+            <Text style={styles.text}>Име</Text>
             <TextInput
               style={styles.inputField}
               onChangeText={setName}
@@ -79,7 +106,9 @@ const AddRoom = () => {
           </View>
         </View>
         <CustomButton
-          handlePress={handleSubmit}
+          handlePress={() =>
+            handleSubmit(token, propId, { name, room_type: room })
+          }
           title='Запази'
           color={'#388FED'}
           secondColor={'#4C62C7'}

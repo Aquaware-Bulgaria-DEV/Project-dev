@@ -1,7 +1,14 @@
 import { useEffect, useState, useContext } from 'react';
-import { ScrollView, Text, View, SafeAreaView, TextInput } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  View,
+  SafeAreaView,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import { styles } from '../addRoom/addRoomStyles.js';
 import { Header } from '../../globalComponents/header.jsx';
@@ -15,6 +22,7 @@ const EditRoom = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
   const params = useLocalSearchParams();
+  const router = useRouter();
 
   const propertyId = params.propertyId;
   const roomId = params.roomId;
@@ -25,12 +33,13 @@ const EditRoom = () => {
       const response = await services.getRoomDetails(propertyId, roomId, token);
       setRoomType(response.room_type);
       setName(response.name);
-      //end loader
+      setLoading(false);
     } catch (error) {
-      //end loader
       console.error('Error fetching property rooms:', error);
+      setLoading(false);
     }
   };
+
   const roomTypes = [
     { id: 1, label: 'KITCHEN' },
     { id: 2, label: 'BATHROOM' },
@@ -39,6 +48,7 @@ const EditRoom = () => {
     { id: 5, label: 'GARDEN' },
     { id: 6, label: 'GARAGE' },
   ];
+
   const roomOptions = roomTypes.map((key) => ({
     label: key.label,
     value: key.label,
@@ -50,26 +60,40 @@ const EditRoom = () => {
 
   const validateData = () => {
     const newErrors = {};
-    if (!roomType) newErrors.room = 'Моля, изберете помещение';
+    if (!roomType) newErrors.roomType = 'Моля, изберете помещение';
     if (!name) newErrors.name = 'Моля, въведете име';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   useEffect(() => {
     fetchRoomDetails(propertyId, roomId);
   }, [propertyId, roomId]);
 
-  const handleSubmit = () => {
-    console.log(name);
-    console.log(roomType);
-    // POST method to be added
+  const handleSubmit = async () => {
+    if (!validateData()) return;
+
+    try {
+      await services.updateRoomDetails(propertyId, roomId, token, {
+        name: name,
+        room_type: roomType,
+      });
+      router.push({
+        pathname: 'subscreens/manageProperty',
+        params: { propertyId: propertyId },
+      });
+    } catch (err) {
+      console.error('Error:', err);
+    }
   };
 
-  /**
-   * if(loading){
-   * return Loader
-   * }
-   *
-   */
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size='large' color='#0000ff' />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,11 +112,13 @@ const EditRoom = () => {
                     inputIOS: styles.pickerItem,
                     inputAndroid: styles.pickerItem,
                   }}
-                  itemKey={roomId}
-                  value={roomType} //this should be fixed because it does not work
+                  value={roomType}
                 />
               </View>
             </View>
+            {errors.roomType && (
+              <Text style={styles.errorText}>{errors.roomType}</Text>
+            )}
             <Text style={styles.text}>
               Име
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
@@ -112,7 +138,7 @@ const EditRoom = () => {
           secondColor={'#4C62C7'}
           additionalStyles={styles.saveButton}
           additionalTextStyle={styles.buttonText}
-        ></CustomButton>
+        />
       </ScrollView>
     </SafeAreaView>
   );

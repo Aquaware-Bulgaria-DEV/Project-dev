@@ -45,7 +45,8 @@ const WaterMeter = ({
       .replace(/(\.\d{3})\d+/g, "$1"); // Limit to 3 digits after the decimal point
   
     // Update the quantity state with the cleaned input
-    setQuantity(numericText);
+    let quantityNum = Number(numericText)
+    setQuantity(quantityNum);
   };
 
   const handlePickerChange = (value) => {

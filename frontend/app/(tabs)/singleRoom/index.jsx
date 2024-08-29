@@ -53,7 +53,7 @@ const SingleRoom = () => {
       .catch(e => {
         const msg = e;
         setErrMsg(msg)
-        console.log("Message ", msg);
+        console.log("Message averageConsumption", msg);
       })
       .finally(() => setRefreshing(false));
   };

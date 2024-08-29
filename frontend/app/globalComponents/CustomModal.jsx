@@ -2,8 +2,8 @@ import {
     View,
     Text,
     Modal,
-    Button,
-    StyleSheet,
+
+    TouchableOpacity
   } from "react-native";
 import React from 'react'
 
@@ -27,9 +27,19 @@ const CustomModal = ({
         <View style={styles.centeredView}>
         <View style={styles.modalView}>
             <Text style={styles.modalText}>{questionTxt}</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 20, marginTop: 20 }}>
-            <Button title="Да" onPress={actionHandler} color={"red"}/>
-            <Button title="Не" onPress={() => setIsVisible(false)} />
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 50, marginTop: 20 }}>
+             <TouchableOpacity
+                  style={styles.yesButton} 
+                  onPress={actionHandler}
+                >
+                  <Text style={styles.buttonTextYes}>Да</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.noButton}
+                  onPress={() => setIsVisible(false)}
+                >
+                  <Text style={styles.buttonTextNo}>Не</Text>
+                </TouchableOpacity>
             </View>
         </View>
         </View>

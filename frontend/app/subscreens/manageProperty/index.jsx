@@ -11,8 +11,9 @@ const ManageProperty = () => {
   const [rooms, setRooms] = useState([]);
 
   const params = useLocalSearchParams();
-  console.log(params);
-  const propId = params.propertyId;
+
+  const propId = params['propertyId'];
+
   const router = useRouter();
 
   const { token } = React.useContext(AuthContext);
@@ -32,11 +33,14 @@ const ManageProperty = () => {
     }
   };
 
-  const handleDelete = () => {
-    console.log('delete the room');
+  const handleDelete = async (token, roomId, propId) => {
+    console.log(roomId, propId);
+    const response = await services.deleteRoom(token, roomId, propId);
+    setRooms((rooms) => rooms.filter((room) => room.key !== roomId));
   };
 
   useEffect(() => {
+    console.log(propId);
     fetchPropertyRooms(propId);
   }, []);
 
@@ -53,6 +57,7 @@ const ManageProperty = () => {
             screen={'subscreens/addRoom'}
             icon={'plus'}
             iconColor={'black'}
+            params={propId}
           ></SettingsButton>
           {rooms.map((room) => (
             <SettingsButton
@@ -73,7 +78,7 @@ const ManageProperty = () => {
                   },
                 })
               }
-              onSecondIconPress={() => handleDelete()}
+              onSecondIconPress={() => handleDelete(token, room.key, propId)}
             ></SettingsButton>
           ))}
         </View>

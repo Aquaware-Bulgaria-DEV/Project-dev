@@ -24,6 +24,30 @@ export const getTips = async (token) => {
   }
 };
 
+export const getWaterMetterDetails = async (id, token) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${id}/water-meter-readings/`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    console.log('water-meters details test', result);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getATip = async (tipId, token) => {
   try {
     const response = await fetch(
@@ -42,7 +66,6 @@ export const getATip = async (tipId, token) => {
     }
     const result = await response.json();
 
-    console.log('result test', result);
     return result;
   } catch (error) {
     throw error;
@@ -83,11 +106,13 @@ export const getPropertyRooms = async (id, token) => {
         },
       }
     );
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const result = await response.json();
+    console.log(result);
     return result;
   } catch (error) {
     throw error;
@@ -110,6 +135,7 @@ export const getAllPropertyDetails = async (id, token) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const result = await response.json();
+    console.log(result);
     return result;
   } catch (error) {
     throw error;
@@ -135,6 +161,172 @@ export const getAllCompanies = async (token) => {
 
     return result;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllPropertyTypes = async (token) => {
+  try {
+    const response = await fetch(
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/property-types/',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateProfileDetails = async (token, data) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
+//doublecheck
+export const createProperty = async (token, data) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+
+        //to check this
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
+export const createARoom = async (token, propertyId, { name, room_type }) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyId}/rooms/`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, room_type }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
+export const updateRoomDetails = async (
+  propertyId,
+  roomId,
+  token,
+  { name, room_type }
+) => {
+  try {
+    console.log(` ${(roomId, propertyId)}`);
+    console.log('Token:', token);
+    console.log('Request Body:', { name, room_type });
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyId}/rooms/${roomId}/`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, room_type }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
+export const deleteRoom = async (token, roomId, propId) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propId}/rooms/${roomId}/`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // If the response status is 204, return null or a success message
+    if (response.status === 204) {
+      return null; // No content to return
+    }
+
+    // Otherwise, attempt to parse the response
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
     throw error;
   }
 };
@@ -203,13 +395,13 @@ export const getAverageConsumption = async (propertyId, token) => {
       }
     );
     const result = await response.json();
-    if(response.status === 400 || response.status === 500){
+    if (response.status === 400 || response.status === 500) {
       throw new Error(result.error);
     }
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    console.log("Result consumption API :",result)
+    console.log('Result consumption API :', result);
     return result;
   } catch (error) {
     throw error.message;
@@ -218,7 +410,8 @@ export const getAverageConsumption = async (propertyId, token) => {
 
 export const getSelfReports = async (token) => {
   try {
-    const response = await fetch("http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/",  
+    const response = await fetch(
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/',
       {
         method: 'GET',
         headers: {
@@ -238,15 +431,15 @@ export const getSelfReports = async (token) => {
     const sortedResult = result.sort((a, b) => a.id - b.id);
     const reversedResult = sortedResult.reverse();
     return reversedResult;
-
   } catch (err) {
     throw err;
   }
-}
+};
 
-export const getSingleSelfReport = async (token, id) =>{
+export const getSingleSelfReport = async (token, id) => {
   try {
-    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`,  
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`,
       {
         method: 'GET',
         headers: {
@@ -262,22 +455,23 @@ export const getSingleSelfReport = async (token, id) =>{
 
     const result = await response.json();
     return result;
-
   } catch (error) {
     throw error;
   }
-}
-
+};
 
 export const deleteSelfReport = async (token, id) => {
   try {
-    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Token ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -291,7 +485,6 @@ export const deleteSelfReport = async (token, id) => {
     // Only attempt to parse JSON if there's a response body
     const result = await response.text(); // Use text() instead of json() to avoid errors on empty responses
     return result ? JSON.parse(result) : null;
-
   } catch (error) {
     throw error;
   }
@@ -375,36 +568,42 @@ export const addReport = async (setError, token, formValues) => {
 
 export const addSelfReport = async (token, bodyData) => {
   try {
-    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/`, {
-        method: "POST",
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/`,
+      {
+        method: 'POST',
         headers: {
-            Authorization: `Token ${token}`,
-            'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(bodyData),
-    });
+      }
+    );
 
     if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    
+
     // const responseData = await response.json();
     // console.log("Response data:", responseData);
   } catch (e) {
     throw e;
   }
-}
+};
 
 export const editSelfReport = async (token, value, waterMeterId) => {
   try {
-    const response = await fetch(`http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${waterMeterId}/`, {
-        method: "PUT",
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${waterMeterId}/`,
+      {
+        method: 'PUT',
         headers: {
-            Authorization: `Token ${token}`,
-            'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ "value": value }),
-    });
+        body: JSON.stringify({ value: value }),
+      }
+    );
 
     // Check if the response content is JSON
     const contentType = response.headers.get('content-type');
@@ -418,12 +617,13 @@ export const editSelfReport = async (token, value, waterMeterId) => {
     } else {
       // Log the text response (likely HTML) for debugging
       const responseText = await response.text();
-      console.log("Non-JSON response (likely an error):", responseText);
+      console.log('Non-JSON response (likely an error):', responseText);
       throw new Error(`Unexpected response format. Status: ${response.status}`);
     }
-
   } catch (e) {
-    console.error("Error in editSelfReport:", e);
+    console.error('Error in editSelfReport:', e);
     throw e;
   }
 };
+
+///

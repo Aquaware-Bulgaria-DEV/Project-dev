@@ -11,16 +11,19 @@
   "dependencies": {
     "@expo-google-fonts/muli": "^0.1.0",
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-navigation/native": "^6.1.18",
     "@types/react": "~18.2.79",
     "axios": "^1.7.3",
     "date-fns": "^3.6.0",
     "expo": "^51.0.26",
     "expo-constants": "~16.0.2",
     "expo-device": "~6.0.2",
+    "expo-file-system": "^17.0.1",
     "expo-image": "~1.12.12",
     "expo-image-picker": "^15.0.7",
     "expo-linear-gradient": "^13.0.2",
     "expo-linking": "~6.3.1",
+    "expo-local-authentication": "~14.0.1",
     "expo-notifications": "^0.28.15",
     "expo-permissions": "^14.4.0",
     "expo-router": "~3.5.16",
@@ -40,8 +43,7 @@
     "react-native-svg": "^15.2.0",
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "^0.19.12",
-    "typescript": "~5.3.3",
-    "expo-local-authentication": "~14.0.1"
+    "typescript": "~5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2"

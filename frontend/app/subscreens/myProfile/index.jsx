@@ -24,6 +24,7 @@ import { Header } from '../../globalComponents/header.jsx';
 import getIcon from '../../../utils/icons.js';
 import { styles } from './myProfileStyles.js';
 import { useTranslation } from 'react-i18next';
+import * as service from '../../services/fetch.js';
 
 const { height } = Dimensions.get('window');
 
@@ -36,7 +37,7 @@ const MyProfile = () => {
   const [picture, setPicture] = useState(null);
   const [opacity, setOpacity] = useState(1);
 
-  const { userInfo } = useContext(AuthContext);
+  const { userInfo, token } = useContext(AuthContext);
   const { control } = useForm();
 
   const pencil = getIcon('pencil', 'white', 13);
@@ -88,6 +89,64 @@ const MyProfile = () => {
     );
   };
 
+  const dataSubmissionHandler = async () => {
+    const profileData = {
+      first_name: name.split(' ')[0],
+      last_name: name.split(' ')[1],
+      phone_number: phone,
+      email: email,
+    };
+
+    const formData = new FormData();
+
+    // Append text fields to form data
+    for (const key in profileData) {
+      formData.append(key, profileData[key]);
+    }
+
+    // Append picture if available
+    if (picture) {
+      const filename = picture.split('/').pop();
+      const match = /\.(\w+)$/.exec(filename);
+      const type = match ? `image/${match[1]}` : `image`;
+
+      formData.append('profile_picture', {
+        uri: picture,
+        name: filename,
+        type,
+      });
+    }
+
+    try {
+      const response = await fetch(
+        'http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Token ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Profile updated successfully:', data);
+        Alert.alert('Success', 'Your profile has been updated successfully.');
+      } else {
+        console.error('Failed to update profile:', data);
+        Alert.alert(
+          'Error',
+          'Failed to update your profile. Please try again.'
+        );
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      Alert.alert('Error', 'Failed to update your profile. Please try again.');
+    }
+  };
+
   const changePicture = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -95,9 +154,10 @@ const MyProfile = () => {
       aspect: [1, 1],
       quality: 1,
     });
-    console.log(result.assets[0].uri);
-    if (result.canceled === false) {
-      setPicture(result.assets[0].uri);
+
+    if (!result.canceled) {
+      const localUri = result.assets[0].uri;
+      setPicture(localUri); // Update the picture state
     }
   };
 
@@ -112,8 +172,12 @@ const MyProfile = () => {
           <Header showProfilePic={false}></Header>
           <View style={styles.content}>
             <Text style={styles.screenLabel}>{t('myProfile')}</Text>
-            <Text style={styles.otherDetails}>{t('myProfileActiveFrom')} {date}</Text>
-            <Text style={styles.otherDetails}>{t('myProfileClientOf')} Софийска вода</Text>
+            <Text style={styles.otherDetails}>
+              {t('myProfileActiveFrom')} {date}
+            </Text>
+            <Text style={styles.otherDetails}>
+              {t('myProfileClientOf')} Софийска вода
+            </Text>
           </View>
 
           <View style={styles.reqContainer}>
@@ -130,7 +194,7 @@ const MyProfile = () => {
                     style={styles.clientName}
                   >{`${userInfo.first_name} ${userInfo.last_name}`}</Text>
                   <Text style={styles.clientNumber}>
-                  {t('myProfileClientNumber')} 119862
+                    {t('myProfileClientNumber')} 119862
                   </Text>
                   <TouchableOpacity
                     onPressIn={() => setOpacity(0.7)}
@@ -138,7 +202,7 @@ const MyProfile = () => {
                     onPress={handleRemove}
                   >
                     <Text style={[styles.removeBtn, { opacity }]}>
-                    {t('myProfileRemove')}
+                      {t('myProfileRemove')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -189,13 +253,13 @@ const MyProfile = () => {
                 />
 
                 <CustomButton
-                  handlePress={() => console.log(name, email, phone, picture)}
+                  handlePress={dataSubmissionHandler}
                   title={t('customButtonSave')}
                   color={'#388FED'}
                   secondColor={'#4C62C7'}
                   additionalStyles={styles.saveButton}
                   additionalTextStyle={styles.buttonText}
-                ></CustomButton>
+                />
               </View>
             </View>
           </View>

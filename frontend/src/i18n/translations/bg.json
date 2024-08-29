@@ -44,6 +44,8 @@
     "subscreenAddData": "Добавяне на данни",
     "notificationsPushNotifications": "Известия на екрана",
     "notificationsEmailNotifications": "Известия по имейл",
+    "notificationsScheduleFrequency": "Период на известяване",
+    "notificationsSelectFrequency": "Изберете период на известяване",
     "notificationsScheduledDaily": "Всеки ден",
     "notificationsScheduledWeekly": "Всяка седмица",
     "notificationsScheduledMonthly": "Всеки месец",
@@ -61,7 +63,6 @@
     "appSettingsChangePasswordSuccessTitle": "Смяна на паролата",
     "appSettingsChangePasswordSuccessMessage": "Паролата беше сменена успешно.",
     "appSettingsChangePasswordErrorTitle": "Грешка при смяна на паролата",
-
     "myProfile": "Моят профил",
     "myProfileActiveFrom": "Активен от ",
     "myProfileClientOf": "Клиент на ",

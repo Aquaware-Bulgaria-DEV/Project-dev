@@ -44,6 +44,8 @@
     "subscreenAddData": "Add data",
     "notificationsPushNotifications": "Push notifications",
     "notificationsEmailNotifications": "Email notifications",
+    "notificationsScheduleFrequency": "Notifications schedule frequency",
+    "notificationsSelectFrequency": "Select notifications frequency",
     "notificationsScheduledDaily": "Every day",
     "notificationsScheduledWeekly": "Every week",
     "notificationsScheduledMonthly": "Every month",

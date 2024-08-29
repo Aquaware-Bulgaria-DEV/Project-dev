@@ -10,6 +10,7 @@ import { styles } from './usersStyles.js';
 import { useContext } from 'react';
 import AuthContext from '../../Context/AuthContext.jsx';
 import picture from '../../../assets/defaultAvatar.png';
+import { useRouter } from 'expo-router';
 import { Header } from '../../globalComponents/header.jsx';
 import CustomButton from '../../globalComponents/customButton.jsx';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,7 @@ const Users = () => {
   // const { userInfo } = useContext(AuthContext);
   // const [picture, setPicture] = useState(null);
 
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -27,9 +29,7 @@ const Users = () => {
         <Header showProfilePic />
         <View style={styles.text}>
           <Text style={styles.headerTitle}>{t('usersAll')}</Text>
-          <Text style={styles.description}>
-          {t('usersRanklist')}
-          </Text>
+          <Text style={styles.description}>{t('usersRanklist')}</Text>
         </View>
 
         <View style={styles.credentials}>
@@ -61,7 +61,11 @@ const Users = () => {
 
         <CustomButton
           title={t('usersButtonHowToSave')}
-          handlePress={() => console.log('redirect to tips screen')}
+          handlePress={() =>
+            router.push({
+              pathname: 'tips',
+            })
+          }
           color={'#388FED'}
           secondColor={'#4C62C7'}
           additionalStyles={styles.saveButton}

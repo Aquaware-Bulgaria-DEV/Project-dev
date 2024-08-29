@@ -32,7 +32,7 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
       deleteSelfReport(token, id)
         .then(() => {
           onRefresh();
-          setModalVisible(false); // Close modal after deletion
+          setModalVisible(false); 
         })
         .catch(err => console.log(err));
     };
@@ -68,7 +68,7 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
         <Pressable
           onPressIn={() => setTrashBinOpacity(0.5)}
           onPressOut={() => setTrashBinOpacity(1)}
-          onPress={() => setModalVisible(true)} // Open modal
+          onPress={() => setModalVisible(true)} 
           style={{
             alignItems: "center",
             justifyContent: "center",

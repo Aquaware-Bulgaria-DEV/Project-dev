@@ -53,25 +53,29 @@ export const TipsByCategory = () => {
     <ScrollView>
       <Text style={styles.categories}>{t('categories')}</Text>
 
-      {tips.map((tip) => (
-        <View key={tip.id}>
-          <Pressable
-            onPress={() =>
-              router.push({
-                pathname: 'subscreens/tip',
-                params: { tipId: tip.id },
-              })
-            }
-          >
-            <ImageBackground
-              style={styles.background}
-              source={{ uri: tip.background_image }}
+      {tips.length ? (
+        tips.map((tip) => (
+          <View key={tip.id}>
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: 'subscreens/tip',
+                  params: { tipId: tip.id },
+                })
+              }
             >
-              <Text style={styles.tipText}>{tip.title}</Text>
-            </ImageBackground>
-          </Pressable>
-        </View>
-      ))}
+              <ImageBackground
+                style={styles.background}
+                source={{ uri: tip.background_image }}
+              >
+                <Text style={styles.tipText}>{tip.title}</Text>
+              </ImageBackground>
+            </Pressable>
+          </View>
+        ))
+      ) : (
+        <Text style={styles.noTips}>В момента няма налични съвети</Text>
+      )}
     </ScrollView>
   );
 };

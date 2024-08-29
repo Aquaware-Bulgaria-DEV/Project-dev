@@ -10,26 +10,26 @@ import '../../../../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 
-const categoryKeys = ['categoryKitchenSink', 'categoryWasher', 'categoryBathroomShower', 'categoryToilet'];
+// const categoryKeys = ['categoryKitchenSink', 'categoryWasher', 'categoryBathroomShower', 'categoryToilet'];
 
 export const List = () => {
   const { t, i18n } = useTranslation();
 
   const router = useRouter();
-  const [selectedCategory, setSelectedCategory] = useState(categoryKeys[0]);
+  // const [selectedCategory, setSelectedCategory] = useState(categoryKeys[0]);
 
-  const pressHandler = (categoryKey) => {
-    setSelectedCategory(categoryKey);
-    //TODO: onPress to scroll to the selected section
-    console.log('Selected category:', categoryKey);
-  };
+  // const pressHandler = (categoryKey) => {
+  //   setSelectedCategory(categoryKey);
+  //   //TODO: onPress to scroll to the selected section
+  //   console.log('Selected category:', categoryKey);
+  // };
 
   return (
     <ScrollView>
-      <View style={styles.titleContainer}>
+      {/* <View style={styles.titleContainer}>
         <Text style={styles.title}>{t('highestConsumption')}</Text>
-      </View>
-      <View style={styles.listContainer}>
+      </View> */}
+      {/* <View style={styles.listContainer}>
         {categoryKeys.map((categoryKey, index) => (
           <Pressable
             key={index}
@@ -46,7 +46,7 @@ export const List = () => {
             </Text>
           </Pressable>
         ))}
-      </View>
+      </View> */}
 
       <Pressable
         style={styles.accountContainer}

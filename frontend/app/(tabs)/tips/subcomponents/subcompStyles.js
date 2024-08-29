@@ -89,6 +89,14 @@ export const styles = StyleSheet.create({
     paddingBottom: 20,
     textAlign: 'center',
   },
+  noTips: {
+    color: 'black',
+    fontSize: 18,
+    fontFamily: 'Muli_700Bold',
+    paddingVertical: 20,
+    paddingHorizontal: 5,
+    textAlign: 'center',
+  },
   arrow: {
     justifyContent: 'flex-end',
     color: '#9DC0F4',

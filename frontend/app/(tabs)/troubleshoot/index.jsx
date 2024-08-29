@@ -3,7 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingVi
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
-import { Picker } from '@react-native-picker/picker';
+// Import RNPickerSelect
+import RNPickerSelect from 'react-native-picker-select';
 
 import { Header } from '../../globalComponents/header.jsx';
 import AuthContext from '../../Context/AuthContext';
@@ -132,10 +133,6 @@ const Troubleshoot = () => {
     setFormValues(newValues);
   };
 
-  // const handleRemove = () => {
-  //   console.log('Remove Pressed');
-  // };
-
   const onPressHandler = async () => {
     if (
       value === '' ||
@@ -176,27 +173,11 @@ const Troubleshoot = () => {
                   <Text style={styles.clientNumber}>
                     {t('myProfileClientNumber')} 119862
                   </Text>
-                  {/* <TouchableOpacity
-                    onPressIn={() => setOpacity(0.7)}
-                    onPressOut={() => setOpacity(1)}
-                    onPress={handleRemove}
-                  >
-                    <TouchableOpacity
-                      onPressIn={() => setOpacity(0.7)}
-                      onPressOut={() => setOpacity(1)}
-                      onPress={handleRemove}
-                    >
-                      <Text style={[styles.removeBtn, { opacity }]}>
-                        Remove
-                      </Text>
-                    </TouchableOpacity>
-                  </TouchableOpacity> */}
                 </View>
               </View>
               <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={value}
-                  onValueChange={(itemValue, itemIndex) => {
+                <RNPickerSelect
+                  onValueChange={(itemValue) => {
                     formValues.issue = itemValue;
                     setValue(itemValue);
 
@@ -208,15 +189,15 @@ const Troubleshoot = () => {
                       setError('');
                     }
                   }}
+                  value={value}
+                  items={[
+                    { label: t('pickTroubleshootTypeLeakage'), value: 'leakage' },
+                    { label: t('pickTroubleshootTypeBreakdown'), value: 'breakdown' },
+                    { label: t('pickTroubleshootTypeWaterTheft'), value: 'theft' },
+                  ]}
+                  placeholder={{ label: t('pickTroubleshootType'), value: '' }}
                   style={styles.picker}
-                >
-                  {value === '' && (
-                    <Picker.Item label={t('pickTroubleshootType')} value='' />
-                  )}
-                  <Picker.Item label={t('pickTroubleshootTypeLeakage')} value='leakage' />
-                  <Picker.Item label={t('pickTroubleshootTypeBreakdown')} value='breakdown' />
-                  <Picker.Item label={t('pickTroubleshootTypeWaterTheft')} value='theft' />
-                </Picker>
+                />
               </View>
               <FormField
                 inputName={t('address')}

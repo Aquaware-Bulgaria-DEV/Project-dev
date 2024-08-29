@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { styles } from './homeStyles.js';
 import {
   View,
@@ -9,6 +9,7 @@ import {
   Pressable,
 } from 'react-native';
 
+import { useIsFocused } from '@react-navigation/native';
 import { Header } from '../../globalComponents/header.jsx';
 import RNPickerSelect from 'react-native-picker-select';
 import '../../../src/i18n/i18n.config';
@@ -23,12 +24,19 @@ import GARAGE from '../../../assets/garage.png';
 
 import AuthContext from '../../Context/AuthContext.jsx';
 import { router } from 'expo-router';
+import { remove } from '../../../utils/request.js';
+
 const Home = () => {
-  const { t, i18n } = useTranslation();
-  const { userInfo, token, removeToken } = useContext(AuthContext);
+  const { t } = useTranslation();
+  const { userInfo, token } = useContext(AuthContext);
   const [selectedProp, setSelectedProperty] = useState('');
   const [properties, setProperties] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const focused = useIsFocused();
+  const [fetching, setFetching] = useState(false);
+  // console.log(focused);
+
+  const hasMountedRef = useRef(false);
 
   const roomImages = {
     KITCHEN,
@@ -40,6 +48,7 @@ const Home = () => {
   };
 
   const fetchProperties = async () => {
+    setFetching(true);
     try {
       const response = await services.getAllProperties(token);
       const remoteProperties = response.map((obj) => ({
@@ -52,7 +61,9 @@ const Home = () => {
         setSelectedProperty(defaultProperty);
         await fetchPropertyRooms(defaultProperty);
       }
+      setFetching(false);
     } catch (error) {
+      setFetching(false);
       router.push('/');
       console.error('Error fetching properties:', error);
     }
@@ -61,7 +72,6 @@ const Home = () => {
   const fetchPropertyRooms = async (value) => {
     try {
       const response = await services.getPropertyRooms(value, token);
-
       const rooms = response.map((obj) => ({
         label: obj['name'],
         value: obj['id'],
@@ -72,9 +82,21 @@ const Home = () => {
       console.error('Error fetching property rooms:', error);
     }
   };
+
   useEffect(() => {
     fetchProperties();
   }, []);
+
+  useEffect(() => {
+    if (hasMountedRef.current) {
+      if (focused && !fetching) {
+        fetchProperties();
+        console.log('fetching');
+      }
+    } else {
+      hasMountedRef.current = true;
+    }
+  }, [focused]);
 
   const handlePropertyChange = (value) => {
     if (value === null || value === 'null') {

@@ -274,13 +274,16 @@ const Troubleshoot = () => {
                   width: '90%',
                   alignSelf: 'center',
                   height: 64,
-                  borderRadius: 10,
+                  borderRadius: 20,
+                  padding: 0,
                   shadowColor: '#000',
                   shadowOffset: { width: 0, height: 6 },
                   shadowOpacity: 0.5,
                   shadowRadius: 7.3,
                   elevation: 4,
                 }}
+                color={"#388FED"}
+                secondColor={"#205187"}
                 additionalTextStyle={{ fontSize: 18 }}
               />
             </View>

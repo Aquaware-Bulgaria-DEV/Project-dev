@@ -65,6 +65,10 @@ const getIcon = (name,color, size) => {
         return (
           <SimpleLineIcons name={name} size={size? size : 20} color={color} />
         );
+      case 'refresh':
+        return (
+          <EvilIcons name={name} size={size? size : 20} color={color} />
+        );
       default:
         break;
     }

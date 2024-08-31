@@ -543,7 +543,7 @@ export const register = async (email, password) => {
   }
 };
 
-export const addReport = async (setError, token, formValues) => {
+export const addReport = async ( token, formValues ) => {
   try {
     const response = await fetch(
       'http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/',
@@ -560,9 +560,8 @@ export const addReport = async (setError, token, formValues) => {
     if (!response.ok) {
       throw new Error('Something went wrong.');
     }
-    setError('');
   } catch (e) {
-    setError(e.message);
+    throw e.message;
   }
 };
 
@@ -580,6 +579,10 @@ export const addSelfReport = async (token, bodyData) => {
       }
     );
 
+    if(response.status === 400){
+      throw new Error("Моля, въведете стойност, по-голяма от предишния самоотчет.")
+    }
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -587,7 +590,7 @@ export const addSelfReport = async (token, bodyData) => {
     // const responseData = await response.json();
     // console.log("Response data:", responseData);
   } catch (e) {
-    throw e;
+    throw e.message;
   }
 };
 

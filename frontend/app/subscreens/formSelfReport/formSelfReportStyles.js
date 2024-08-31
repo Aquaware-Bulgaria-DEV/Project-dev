@@ -49,5 +49,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#3CA5D8',
     textDecorationLine: 'underline'
+  },
+  errorMessage: {
+    color: 'red',
+    textAlign: 'center',
+    fontSize: 18,
   }
 });

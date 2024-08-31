@@ -580,7 +580,7 @@ export const addSelfReport = async (token, bodyData) => {
     );
 
     if(response.status === 400){
-      throw new Error("Моля, въведете стойност, по-голяма от предишния самоотчет.")
+      throw new Error("Моля, въведете стойност, по-голяма от въведената при предишния самоотчет.")
     }
 
     if (!response.ok) {

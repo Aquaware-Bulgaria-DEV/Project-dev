@@ -16,6 +16,7 @@ import { addReport } from '../../services/fetch.js';
 
 import DefaultAvatar from "../../../assets/defaultAvatar.png"
 import { useTranslation } from 'react-i18next';
+import getIcon from '../../../utils/icons.js';
 
 const FormField = ({
   inputName,
@@ -27,6 +28,7 @@ const FormField = ({
   formValues,
   setFormValues,
   multiline,
+  isEditable
 }) => {
   const handleChange = (name, value) => {
     const updatedValues = { ...formValues, [name]: value };
@@ -45,6 +47,7 @@ const FormField = ({
           value={formValues[type]}
           placeholder='...'
           multiline
+          editable={isEditable}
           style={[
             {
               justifyContent: 'center',
@@ -66,6 +69,7 @@ const FormField = ({
           onChangeText={(text) => handleChange(type, text)}
           value={formValues[type]}
           placeholder='...'
+          editable={isEditable}
           style={[
             {
               justifyContent: 'center',
@@ -94,6 +98,8 @@ const Troubleshoot = () => {
   const timeoutRef = useRef(null);
   const { width, height } = Dimensions.get('window');
   const [opacity, setOpacity] = useState(1);
+  const [ newFormOpacity, setNewFormOpacity ]  = useState(1);
+  const [ showNewFormBtn, setShowNewBtn  ]  = useState(false);
   const [error, setError] = useState('');
   const [formValues, setFormValues] = useState({
     issue: '',
@@ -103,6 +109,9 @@ const Troubleshoot = () => {
   });
   const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [ buttonTitle, setButtonTitle ] = useState("Изпрати");
+  const [ isEditable, setIsEditable ] = useState(true);
+  const [ isDisabled, setIsDisabled ] = useState(false);
 
   const { token, userInfo, } = React.useContext(AuthContext);
 
@@ -141,8 +150,33 @@ const Troubleshoot = () => {
     ) {
       setError(`${t('errorFieldNotFilled')}`);
     } else {
-      await addReport(setError, token, formValues)
+      addReport(token, formValues)
+      .then(res => {
+        setButtonTitle("Изпратено")
+        setShowNewBtn(true);
+        setError('');
+        setIsEditable(false);
+        setIsDisabled(true);
+        setIsLoading(true);
+      })
+      .catch(e => setError(e));
     }
+  };
+
+  const handleNewForm = () => {
+    // Reset formValues to their initial state
+    setFormValues({
+      issue: '',
+      address: '',
+      water_company_id: 1,
+      content: '',
+    });
+    setValue(''); // Reset the picker select value
+    setIsEditable(true); // Let typing in the fields
+    setIsDisabled(false);
+    setButtonTitle('Изпрати'); // Reset the button title
+    setShowNewBtn(false); // Hide the New Form button after resetting
+    setIsLoading(false);
   };
 
   return (
@@ -190,6 +224,7 @@ const Troubleshoot = () => {
                     }
                   }}
                   value={value}
+                  disabled={isDisabled}
                   items={[
                     { label: t('pickTroubleshootTypeLeakage'), value: 'leakage' },
                     { label: t('pickTroubleshootTypeBreakdown'), value: 'breakdown' },
@@ -205,6 +240,7 @@ const Troubleshoot = () => {
                 additionalStyles={{ marginTop: 10 }}
                 onFormChange={handleFormChange}
                 formValues={formValues}
+                isEditable={isEditable}
                 setFormValues={setFormValues}
               />
               <FormField
@@ -215,11 +251,23 @@ const Troubleshoot = () => {
                 formValues={formValues}
                 setFormValues={setFormValues}
                 multiline={true}
+                isEditable={isEditable}
                 additionalInputStyles={{ height: 70 }}
               />
               <Text style={styles.errorcontent}>{error}</Text>
+              {showNewFormBtn && (
+                  <TouchableOpacity
+                  style={[styles.button, { newFormOpacity }]}
+                  onPressIn={() => setNewFormOpacity(0.5)}
+                  onPressOut={() => setNewFormOpacity(1)}
+                  onPress={handleNewForm}
+                  >
+                    <Text style={styles.buttonText}>Нова форма</Text>
+                    <Text style={styles.buttonText}>{getIcon("refresh", "green", 40)}</Text>
+                  </TouchableOpacity>
+              )}
               <CustomButton
-                title={t('buttonSend')}
+                title={buttonTitle}
                 isLoading={isLoading}
                 handlePress={onPressHandler}
                 additionalStyles={{

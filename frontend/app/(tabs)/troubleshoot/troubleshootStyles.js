@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   },
   innerContainer: {
     backgroundColor: "#FFFFFF",
-    height: "87%",
+    // height: "87%",
     marginTop: 30,
     paddingTop: 30,
     paddingBottom: 20,
@@ -68,5 +68,15 @@ export const styles = StyleSheet.create({
   picker: {
     height: Platform.OS === "ios" ? 200 : 50,
     fontSize: 16
-  }
+  },
+  button: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'green',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });

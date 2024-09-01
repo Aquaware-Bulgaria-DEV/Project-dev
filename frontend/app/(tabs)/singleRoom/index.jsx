@@ -38,7 +38,6 @@ const SingleRoom = () => {
       .then(data => setConsumptionDetails(data))
       .catch(e => setErrMsg(e));
 
-      // console.log("RoomID", errMsg)
   }, [roomId]);
 
   const onRefresh = () => {
@@ -77,8 +76,11 @@ const SingleRoom = () => {
       setCurrentQuantity(absUsage.toFixed(3));
   
       const currentUsage = avgUsageRoom;
-      const maxUsage = consumptionDetails["max_water_usage_for_property_per_month"] / 1000;
-      console.log("Current Usage",currentUsage)
+      const numberOfRooms = Object.keys(consumptionDetails["average_usage_per_room"]).length;
+      const maxUsage = (consumptionDetails["max_water_usage_for_property_per_month"] / 1000) /  numberOfRooms;
+      console.log("MaxUsage",maxUsage)
+      console.log("length",numberOfRooms)
+      // console.log("Current Usage",currentUsage)
       if (maxUsage > 0) {
         // Remove math abs later(when backend logic is fixed and there wont be a negative values)
         const percent = Math.abs((currentUsage / maxUsage) * 100);
@@ -88,7 +90,7 @@ const SingleRoom = () => {
         }else{
           const percentToShow = Math.round(percent)
           setProgressPercent(percentToShow)
-          console.log("Percent", percentToShow);
+          // console.log("Percent", percentToShow);
         }
 
       }
@@ -114,7 +116,7 @@ const SingleRoom = () => {
             <Text style={styles.activeDevices}>4 активни уреда</Text>
           </View>
           <View style={styles.progressContainer}>
-            <ProgressBar progress={progressPercent} size={300} quantity={currentQuantity} errMsg={errMsg}/* imageSource={ProgressBarImage} */ />
+            <ProgressBar progress={progressPercent} size={300} quantity={currentQuantity} errMsg={errMsg} />
           </View>
             <CustomButton title={"Разбери какво значи"} 
             handlePress={() => router.push({

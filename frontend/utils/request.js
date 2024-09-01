@@ -1,6 +1,6 @@
 import { getData } from "./storage";
 
-const buildOptions = (data) => {
+const buildOptions = async (data) => {
     const options = {};
 
     if (data) {
@@ -10,39 +10,46 @@ const buildOptions = (data) => {
         };
     }
 
-    const token = getData('@auth_token');
+    const token = await getData('@auth_token');
+    console.log("Requester token", token);
 
-    if (token){
+    if (token) {
         options.headers = {
-            'Authorization': token,
+            Authorization: `Token ${token}`,
             ...options.headers,
-        }
+        };
     }
 
     return options;
 };
 
-const request = async (method, url, data) => {
-    const response = await fetch(url, {
-        ...buildOptions(data),
-        method,
-    });
+const request = async (method, url, data = null) => {
+    try {
+        const options = await buildOptions(data);
+        const response = await fetch(url, {
+            ...options,
+            method,
+        });
 
-    if(response.status === 204){
-        return {};
+        if (response.status === 204) {
+            return {};
+        }
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw result;
+        }
+
+        return result;
+    } catch (e) {
+        // console.error("Fetch error requester:", e);
+        throw new Error(e.message || e.error || "An unexpected error occurred");
     }
-
-    const result = await response.json();
-
-    if(!response.ok){
-        throw result;
-    }
-
-    return result;
 };
 
-export const get = request.bind(null, 'GET');
-export const post = request.bind(null, 'POST');
-export const put = request.bind(null, 'PUT');
-export const remove = request.bind(null, 'DELETE');
-export const patch = request.bind(null, 'PATCH');
+export const get = (url) => request('GET', url);
+export const post = (url, data) => request('POST', url, data);
+export const put = (url, data) => request('PUT', url, data);
+export const remove = (url) => request('DELETE', url);
+export const patch = (url, data) => request('PATCH', url, data);

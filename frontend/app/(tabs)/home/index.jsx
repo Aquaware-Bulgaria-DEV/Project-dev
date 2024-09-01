@@ -24,7 +24,6 @@ import GARAGE from '../../../assets/garage.png';
 
 import AuthContext from '../../Context/AuthContext.jsx';
 import { router } from 'expo-router';
-import { remove } from '../../../utils/request.js';
 
 const Home = () => {
   const { t } = useTranslation();

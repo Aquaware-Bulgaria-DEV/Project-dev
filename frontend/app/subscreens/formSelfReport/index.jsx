@@ -180,7 +180,7 @@ const SelfReport = () => {
 
     // console.log(payload)
 
-    addSelfReport(token, payload)
+    addSelfReport(payload)
     .then(res => {
       setButtonText("Отчетът е добавен");
       setIsLoading(true);

@@ -25,6 +25,7 @@ import getIcon from '../../../utils/icons.js';
 import { styles } from './myProfileStyles.js';
 import { useTranslation } from 'react-i18next';
 import * as service from '../../services/fetch.js';
+import { useRouter } from 'expo-router';
 
 const { height } = Dimensions.get('window');
 
@@ -37,7 +38,8 @@ const MyProfile = () => {
   const [picture, setPicture] = useState(null);
   const [opacity, setOpacity] = useState(1);
 
-  const { userInfo, token } = useContext(AuthContext);
+  const router = useRouter();
+  const { userInfo, token, saveUserInfo } = useContext(AuthContext);
   const { control } = useForm();
 
   const pencil = getIcon('pencil', 'white', 13);
@@ -97,53 +99,25 @@ const MyProfile = () => {
       email: email,
     };
 
-    const formData = new FormData();
-
-    // Append text fields to form data
-    for (const key in profileData) {
-      formData.append(key, profileData[key]);
-    }
-
-    // Append picture if available
-    if (picture) {
-      const filename = picture.split('/').pop();
-      const match = /\.(\w+)$/.exec(filename);
-      const type = match ? `image/${match[1]}` : `image`;
-
-      formData.append('profile_picture', {
-        uri: picture,
-        name: filename,
-        type,
-      });
-    }
-
     try {
-      const response = await fetch(
-        'http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/',
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Token ${token}`,
-          },
-          body: formData,
-        }
+      const { data, response } = await service.updateProfile(
+        profileData,
+        picture,
+        token
       );
 
-      const data = await response.json();
       if (response.ok) {
         console.log('Profile updated successfully:', data);
-        Alert.alert('Success', 'Your profile has been updated successfully.');
+        saveUserInfo(data);
+        Alert.alert('Профилът Ви бе успешно променен.');
+
+        router.push('home');
       } else {
-        console.error('Failed to update profile:', data);
-        Alert.alert(
-          'Error',
-          'Failed to update your profile. Please try again.'
-        );
+        Alert.alert('Неуспешна промяна. Моля, опитайте отново.');
       }
     } catch (error) {
       console.error('Error updating profile:', error);
-      Alert.alert('Error', 'Failed to update your profile. Please try again.');
+      Alert.alert('Неуспешна промяна. Моля, опитайте отново.');
     }
   };
 

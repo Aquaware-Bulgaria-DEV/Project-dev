@@ -1,7 +1,6 @@
-import { get, post } from "../../utils/request";
+import { get, post } from '../../utils/request';
 
 const server = 'http://ec2-18-234-44-48.compute-1.amazonaws.com';
-
 
 export const getTips = async (token) => {
   try {
@@ -191,32 +190,46 @@ export const getAllPropertyTypes = async (token) => {
   }
 };
 
-export const updateProfileDetails = async (token, data) => {
+export const updateProfile = async (profileData, picture, token) => {
+  const formData = new FormData();
+
+  for (const key in profileData) {
+    formData.append(key, profileData[key]);
+  }
+
+  if (picture) {
+    const filename = picture.split('/').pop();
+    const match = /\.(\w+)$/.exec(filename);
+    const type = match ? `image/${match[1]}` : `image`;
+
+    formData.append('profile_picture', {
+      uri: picture,
+      name: filename,
+      type,
+    });
+  }
+
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/`,
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/',
       {
         method: 'PATCH',
         headers: {
+          'Content-Type': 'multipart/form-data',
           Authorization: `Token ${token}`,
-          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: formData,
       }
     );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const result = await response.json();
 
-    return result;
+    const data = await response.json();
+    return { data, response };
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error updating profile:', error);
     throw error;
   }
 };
 
-//doublecheck
 export const createProperty = async (token, data) => {
   try {
     const response = await fetch(
@@ -228,8 +241,6 @@ export const createProperty = async (token, data) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-
-        //to check this
       }
     );
     if (!response.ok) {
@@ -315,17 +326,13 @@ export const deleteRoom = async (token, roomId, propId) => {
       }
     );
 
-    // Check if the response is successful
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    // If the response status is 204, return null or a success message
     if (response.status === 204) {
-      return null; // No content to return
+      return null;
     }
-
-    // Otherwise, attempt to parse the response
     const result = await response.json();
     return result;
   } catch (error) {
@@ -546,7 +553,7 @@ export const register = async (email, password) => {
   }
 };
 
-export const addReport = async ( token, formValues ) => {
+export const addReport = async (token, formValues) => {
   try {
     const response = await fetch(
       'http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/',
@@ -568,18 +575,19 @@ export const addReport = async ( token, formValues ) => {
   }
 };
 
-
-
 export const addSelfReport = async (bodyData) => {
-  const url = 'http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/';
-  
+  const url =
+    'http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/';
+
   try {
     const response = await post(url, bodyData);
 
     // Handle specific case for status 400
     if (response.status === 400) {
       const result = await response.json();
-      const errorMessage = result.error || "Моля, въведете стойност, по-голяма от въведената при предишния самоотчет.";
+      const errorMessage =
+        result.error ||
+        'Моля, въведете стойност, по-голяма от въведената при предишния самоотчет.';
       throw new Error(errorMessage);
     }
 
@@ -587,10 +595,9 @@ export const addSelfReport = async (bodyData) => {
   } catch (e) {
     // Log and rethrow the error with a message
     // console.error("Fetch error addSelfReportService:", e);
-    throw e.message || e.error || "An unexpected error occurred";
+    throw e.message || e.error || 'An unexpected error occurred';
   }
 };
-
 
 export const editSelfReport = async (token, value, waterMeterId) => {
   try {

@@ -6,16 +6,16 @@ import SettingsButton from '../../globalComponents/settingsButton.jsx';
 import React, { useEffect, useState } from 'react';
 import AuthContext from '../../Context/AuthContext.jsx';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import CustomModal from '../../globalComponents/CustomModal.jsx';
 
 const ManageProperty = () => {
   const [rooms, setRooms] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [roomToDelete, setRoomToDelete] = useState(null);
 
   const params = useLocalSearchParams();
-
   const propId = params['propertyId'];
-
   const router = useRouter();
-
   const { token } = React.useContext(AuthContext);
 
   const fetchPropertyRooms = async (propId) => {
@@ -33,21 +33,27 @@ const ManageProperty = () => {
     }
   };
 
-  const handleDelete = async (token, roomId, propId) => {
-    console.log(roomId, propId);
-    const response = await services.deleteRoom(token, roomId, propId);
-    setRooms((rooms) => rooms.filter((room) => room.key !== roomId));
+  const confirmDeleteRoom = async () => {
+    if (roomToDelete) {
+      try {
+        const response = await services.deleteRoom(token, roomToDelete, propId);
+        setRooms((rooms) => rooms.filter((room) => room.key !== roomToDelete));
+        setRoomToDelete(null);
+      } catch (error) {
+        console.error('Error deleting room:', error);
+      }
+    }
+    setModalVisible(false);
   };
 
   useEffect(() => {
-    console.log(propId);
     fetchPropertyRooms(propId);
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
-        <Header showProfilePic={false}></Header>
+        <Header showProfilePic={false} />
         <View style={styles.content}>
           <Text style={styles.title}>Управление на апартамент</Text>
 
@@ -58,17 +64,24 @@ const ManageProperty = () => {
             icon={'plus'}
             iconColor={'black'}
             params={propId}
-          ></SettingsButton>
+            onIconPress={() =>
+              router.push({
+                pathname: 'subscreens/addRoom',
+              })
+            }
+            isInnerPressable={false}
+          />
           {rooms.map((room) => (
             <SettingsButton
               key={room.key}
               style={styles.settingsButton}
               title={room.label}
+              screen={'subscreens/editRoom'}
               icon={'pencil'}
               iconColor={'#3F9FF4'}
               secondIcon={'trash'}
               secondIconColor={'black'}
-              params={{ roomId: room.key }}
+              params={{ propertyId: params['propertyId'], roomId: room.key }}
               onIconPress={() =>
                 router.push({
                   pathname: 'subscreens/editRoom',
@@ -78,10 +91,20 @@ const ManageProperty = () => {
                   },
                 })
               }
-              onSecondIconPress={() => handleDelete(token, room.key, propId)}
-            ></SettingsButton>
+              isInnerPressable={false}
+              onSecondIconPress={() => {
+                setRoomToDelete(room.key);
+                setModalVisible(true);
+              }}
+            />
           ))}
         </View>
+        <CustomModal
+          isVisible={modalVisible}
+          setIsVisible={setModalVisible}
+          questionTxt={'Сигурен ли сте че искате да изтриете стаята?'}
+          actionHandler={confirmDeleteRoom}
+        />
       </ScrollView>
     </SafeAreaView>
   );

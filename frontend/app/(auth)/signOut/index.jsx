@@ -2,17 +2,14 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import React, { useEffect, useContext } from 'react';
 import { useRouter } from 'expo-router';
 
-import AuthContext from '../../Context/AuthContext';
+import AuthContext, {useAuth} from '../../Context/AuthContext';
 
 const SignOut = () => {
-  const { removeToken, removeUserInfo } = useContext(AuthContext);
+  const { logout } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    removeToken();
-    removeUserInfo();
-    router.dismissAll();
-    router.push("(auth)/signIn");
+    logout();
   }, []);
 
   return (

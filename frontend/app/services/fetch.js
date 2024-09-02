@@ -1,4 +1,7 @@
+import { get, post } from "../../utils/request";
+
 const server = 'http://ec2-18-234-44-48.compute-1.amazonaws.com';
+
 
 export const getTips = async (token) => {
   try {
@@ -543,7 +546,7 @@ export const register = async (email, password) => {
   }
 };
 
-export const addReport = async (setError, token, formValues) => {
+export const addReport = async ( token, formValues ) => {
   try {
     const response = await fetch(
       'http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/',
@@ -560,36 +563,34 @@ export const addReport = async (setError, token, formValues) => {
     if (!response.ok) {
       throw new Error('Something went wrong.');
     }
-    setError('');
   } catch (e) {
-    setError(e.message);
+    throw e.message;
   }
 };
 
-export const addSelfReport = async (token, bodyData) => {
-  try {
-    const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Token ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bodyData),
-      }
-    );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+
+export const addSelfReport = async (bodyData) => {
+  const url = 'http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/';
+  
+  try {
+    const response = await post(url, bodyData);
+
+    // Handle specific case for status 400
+    if (response.status === 400) {
+      const result = await response.json();
+      const errorMessage = result.error || "Моля, въведете стойност, по-голяма от въведената при предишния самоотчет.";
+      throw new Error(errorMessage);
     }
 
-    // const responseData = await response.json();
-    // console.log("Response data:", responseData);
+    return response;
   } catch (e) {
-    throw e;
+    // Log and rethrow the error with a message
+    // console.error("Fetch error addSelfReportService:", e);
+    throw e.message || e.error || "An unexpected error occurred";
   }
 };
+
 
 export const editSelfReport = async (token, value, waterMeterId) => {
   try {

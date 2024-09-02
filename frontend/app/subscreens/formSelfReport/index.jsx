@@ -19,6 +19,7 @@ const SelfReport = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [waterItems, setWaterItems] = useState([]);
   const [propertyItems, setPropertyItems] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [ selectedMeters, setSelectedMeters ] = useState([]);
 
@@ -179,12 +180,13 @@ const SelfReport = () => {
 
     // console.log(payload)
 
-    addSelfReport(token, payload)
+    addSelfReport(payload)
     .then(res => {
       setButtonText("Отчетът е добавен");
       setIsLoading(true);
+      setErrorMessage('');
     })
-    .catch(e => console.log(e))
+    .catch(e => setErrorMessage(e))
 };
 
   const flattenData = (cleanData) => {
@@ -250,6 +252,7 @@ const SelfReport = () => {
               {getIcon("plus", "#3CA5D8", 15)}Добави водомер
             </Text>
           </Pressable>
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
           <CustomButton
             handlePress={handlePress}
             isLoading={isLoading}

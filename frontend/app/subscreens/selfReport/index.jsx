@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import getIcon from "../../../utils/icons.js";
 import { deleteSelfReport, getSelfReports } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 
 import CustomModal from "../../globalComponents/CustomModal.jsx";
 
@@ -124,6 +124,12 @@ const selfReport = () => {
       .finally(() => setRefreshing(false));
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      onRefresh(); 
+    }, [])
+    );
+
   function transformDate(dateString) {
     const dateObj = new Date(dateString);
 
@@ -153,6 +159,7 @@ const selfReport = () => {
             screen={"subscreens/formSelfReport"}
             icon={"plus"}
             iconColor={"#131313"}
+            isInnerPressable={false}
           />
           <View
             style={{

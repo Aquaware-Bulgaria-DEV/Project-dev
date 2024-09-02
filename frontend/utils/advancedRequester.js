@@ -1,4 +1,5 @@
 import { getData } from "./storage";
+import { EventRegister } from 'react-native-event-listeners';
 
 const buildOptions = async (data) => {
     const options = {};
@@ -31,6 +32,11 @@ const request = async (method, url, data = null) => {
             method,
         });
 
+        if (response.status === 401) {
+            EventRegister.emit('unauthorized');
+            return;
+        }
+
         if (response.status === 204) {
             return {};
         }
@@ -43,7 +49,7 @@ const request = async (method, url, data = null) => {
 
         return result;
     } catch (e) {
-        // console.error("Fetch error requester:", e);
+        EventRegister.emit('error', e);
         throw new Error(e.message || e.error || "An unexpected error occurred");
     }
 };

@@ -4,7 +4,7 @@ import Svg, { Circle } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
 
-const CircularProgressBar = ({ progress, quantity = 0, errMsg,size = 100, imageSource }) => {
+const CircularProgressBar = ({ progress, quantity = 0, errMsg, size = 100, imageSource }) => {
   const dotsVisible = progress < 100 ? true : false;
   const progressColor = progress >= 95 ? progress >=100 ? "#E4003A" : "#EB5B00"  : "#339DFA";
   const strokeWidthBackground = 20;
@@ -50,59 +50,57 @@ const CircularProgressBar = ({ progress, quantity = 0, errMsg,size = 100, imageS
           rotation="-90"
           origin={`${size / 2}, ${size / 2}`}
         />
-        {dotsVisible && 
-        <>
+        {dotsVisible && (
+          <>
+            <Circle
+            cx={startDotPosition.x}
+            cy={startDotPosition.y}
+            r={dotRadius}
+            fill="#FEFEFE"
+          />
           <Circle
-          cx={startDotPosition.x}
-          cy={startDotPosition.y}
-          r={dotRadius}
-          fill="#FEFEFE"
-        />
-        <Circle
-          cx={endDotPosition.x}
-          cy={endDotPosition.y}
-          r={dotRadius}
-          fill="#FEFEFE"
-        />
-        <Circle
-          cx={startDotPosition.x}
-          cy={startDotPosition.y}
-          r={innerDotRadius}
-          fill="#000000"
-        />
-        <Circle
-          cx={endDotPosition.x}
-          cy={endDotPosition.y}
-          r={innerDotRadius}
-          fill="#000000"
-        />
-      </>
-      }
+            cx={endDotPosition.x}
+            cy={endDotPosition.y}
+            r={dotRadius}
+            fill="#FEFEFE"
+          />
+          <Circle
+            cx={startDotPosition.x}
+            cy={startDotPosition.y}
+            r={innerDotRadius}
+            fill="#000000"
+          />
+          <Circle
+            cx={endDotPosition.x}
+            cy={endDotPosition.y}
+            r={innerDotRadius}
+            fill="#000000"
+          />
+        </>
+      )}
         
       </Svg>
       
-      { errMsg ? (
-        <View style={styles.textContainer}>
-          <View style={styles.quantityContainer}>
-            {errMsg 
-            ? <Text style={styles.errorMessage}>{errMsg}</Text> 
-            : <>
-                <Text style={styles.textQuantity}>{quantity} m</Text>
-                <Text style={styles.superScript}>3</Text>
-              </>
-            }
-            
-          </View>
-            <Text style={styles.textLabel}>Дневен разход</Text>
+      <View style={styles.textContainer}>
+  <View style={styles.quantityContainer}>
+    {errMsg ? (
+      <Text style={styles.errorMessage}>{errMsg}</Text>
+          ) : (
+            <>
+              <Text style={styles.textQuantity}>{quantity} m</Text>
+              <Text style={styles.superScript}>3</Text>
+            </>
+          )}
         </View>
-      )
-      :(
+        <Text style={styles.textLabel}>Месечен разход</Text>
+      </View>
+      {!errMsg && (
         <Image
           source={imageSource}
           style={[styles.image, { width: size - strokeWidthBackground - 12, height: size - strokeWidthBackground - 12 }]}
           resizeMode="cover"
         />
-      )} 
+      )}
     </View>
   );
 };

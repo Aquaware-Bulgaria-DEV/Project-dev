@@ -28,7 +28,7 @@ const Users = () => {
       >
         <Header showProfilePic />
         <View style={styles.text}>
-          <Text style={styles.headerTitle}>{t('usersAll')}</Text>
+          <Text style={styles.headerTitle}>Моите резултати</Text>
           <Text style={styles.description}>{t('usersRanklist')}</Text>
         </View>
 
@@ -50,13 +50,12 @@ const Users = () => {
               onPressOut={() => setOpacity(1)}
               // onPress={handleRemove}
             >
-              <Text style={styles.removeBtn}>Remove</Text>
+              {/* <Text style={styles.removeBtn}>Remove</Text> */}
               {/* <Text style={[styles.removeBtn, { opacity }]}>Remove</Text> */}
             </TouchableOpacity>
           </View>
-          <View>
-            <Text style={styles.numPosition}>1</Text>
-          </View>
+
+          <Text style={styles.numPosition}>1</Text>
         </View>
 
         <CustomButton

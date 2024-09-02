@@ -88,6 +88,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 25,
     marginVertical: 5,
     alignContent: 'center',
+    position: 'relative',
   },
   avatar: {
     width: 95,
@@ -97,6 +98,7 @@ export const styles = StyleSheet.create({
   clientInfo: {
     paddingTop: 15,
     gap: 10,
+    justifyContent: 'space-between',
   },
   clientName: {
     fontSize: 14,
@@ -105,8 +107,8 @@ export const styles = StyleSheet.create({
   numPosition: {
     color: 'blue',
     fontSize: 20,
-    marginTop: 15,
-    // alignContent: 'flex-end',
-    marginLeft: 'auto',
+    position: 'absolute',
+    top: 10,
+    right: 20,
   },
 });

@@ -53,9 +53,10 @@ export const styles = StyleSheet.create({
     height: 34,
     width: 36,
     paddingHorizontal: 5,
-    backgroundColor: '#F9F9F9',
-    color: 'gray',
+    backgroundColor: '#C0C0C0',
+    color: 'black',
     textAlign: 'center',
+    borderRadius: 3,
   },
   errorText: {
     color: 'red',

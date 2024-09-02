@@ -198,12 +198,12 @@ const Troubleshoot = () => {
               <View style={styles.credentials}>
                 <Image
                   style={styles.avatar}
-                  source={userInfo.profile_picture ? { uri: userInfo.profile_picture } : DefaultAvatar}
+                  source={userInfo?.profile_picture ? { uri: userInfo?.profile_picture } : DefaultAvatar}
                 />
                 <View style={styles.clientInfo}>
                   <Text
                     style={styles.clientName}
-                  >{`${userInfo.first_name} ${userInfo.last_name}`}</Text>
+                  >{`${userInfo?.first_name} ${userInfo?.last_name}`}</Text>
                   <Text style={styles.clientNumber}>
                     {t('myProfileClientNumber')} 119862
                   </Text>

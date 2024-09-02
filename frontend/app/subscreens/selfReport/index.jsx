@@ -153,6 +153,7 @@ const selfReport = () => {
             screen={"subscreens/formSelfReport"}
             icon={"plus"}
             iconColor={"#131313"}
+            isInnerPressable={false}
           />
           <View
             style={{

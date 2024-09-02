@@ -16,6 +16,7 @@ const SettingsButton = ({
   params,
   onIconPress, // New prop for icon press handler
   onSecondIconPress, // New prop for second icon press handler
+  isInnerPressable = true,
 }) => {
   const router = useRouter();
   const [isPressed, setIsPressed] = useState(false);
@@ -51,16 +52,16 @@ const SettingsButton = ({
         <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
           <Text style={styles.text}>{title}</Text>
           <View style={styles.icons}>
-            {icon && (
+            {isInnerPressable ? (icon && (
               <Pressable onPress={onIconPress}>
                 {getIcon(icon, iconColor)}
               </Pressable>
-            )}
-            {secondIcon && (
+            )) : (icon && getIcon(icon, iconColor))}
+            {isInnerPressable ? (secondIcon && (
               <Pressable onPress={onSecondIconPress}>
                 {getIcon(secondIcon, secondIconColor)}
               </Pressable>
-            )}
+            )) : (secondIcon && getIcon(secondIcon, secondIconColor))}
           </View>
         </View>
       )}

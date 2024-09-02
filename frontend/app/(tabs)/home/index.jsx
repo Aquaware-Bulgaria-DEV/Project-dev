@@ -33,7 +33,6 @@ const Home = () => {
   const [rooms, setRooms] = useState([]);
   const focused = useIsFocused();
   const [fetching, setFetching] = useState(false);
-  // console.log(focused);
 
   const hasMountedRef = useRef(false);
 
@@ -128,6 +127,7 @@ const Home = () => {
         {properties.length > 1 ? (
           <View style={styles.pickerContainer}>
             <RNPickerSelect
+              key={properties.value}
               onValueChange={handlePropertyChange}
               items={properties}
               style={{

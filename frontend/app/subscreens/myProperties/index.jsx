@@ -54,6 +54,12 @@ const MyProperties = () => {
             screen={'subscreens/addProperty'}
             icon={'plus'}
             iconColor={'#131313'}
+            onIconPress={() =>
+              router.push({
+                pathname: 'subscreens/addProperty',
+              })
+            }
+            isInnerPressable={false}
           ></SettingsButton>
 
           {properties.map((property) => (

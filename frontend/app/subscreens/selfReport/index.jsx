@@ -23,6 +23,7 @@ import CustomModal from "../../globalComponents/CustomModal.jsx";
 
 const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
   const [modalVisible, setModalVisible] = useState(false); // Modal visibility state
+  const [containerOpacity, setContainerOpacity] = useState(1); 
 
   const IconsComp = () => {
     const [penOpacity, setPenOpacity] = React.useState(1);
@@ -88,19 +89,28 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
   };
 
   return (
-    <View
+    <Pressable
+    onPressIn={() => setContainerOpacity(0.5)}
+    onPressOut={() => setContainerOpacity(1)}
+    onPress={() =>
+      router.push({
+        pathname: "subscreens/selfReportDetails",
+        params: { id: id }
+      })
+    }
       style={[
         styles.settingsBtn,
         {
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center"
+          alignItems: "center",
+          opacity: containerOpacity,
         }
       ]}
     >
       <Text style={{ color: "#999999", fontSize: 20 }}>{date}</Text>
       <IconsComp />
-    </View>
+    </Pressable>
   );
 };
 

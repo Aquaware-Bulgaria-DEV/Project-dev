@@ -63,11 +63,6 @@ const AuthLayout = () => {
         title={t('loginButton')}
         handlePress={() => router.push('signIn')}
       />
-      <CustomButton
-        title={t('home')}
-        handlePress={() => router.push('/home')}
-      />
-      {/* <CustomButton title={'Начало'} handlePress={() => console.log("Mario Auth") }/> */}
     </SafeAreaView>
   );
 };

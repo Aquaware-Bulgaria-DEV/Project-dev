@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 68,
     // marginTop: 20,
-    // marginLeft: 15,
+    marginLeft: 15,
   },
   // devices: {
   //   color: "white",

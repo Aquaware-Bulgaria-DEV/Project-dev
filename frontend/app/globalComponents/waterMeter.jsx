@@ -38,16 +38,15 @@ const WaterMeter = ({
   }, [meterId, quantity, houseKey, meterKey, setFormData]);
 
   const handleTextInputChange = (text) => {
-    // Clean the input and format it to only allow one decimal point and up to 3 digits after it
-    let numericText = text
-      .replace(/[^0-9.]/g, "")    // Remove any non-numeric characters except for "."
-      .replace(/(\..*)\./g, "$1") // Allow only the first decimal point, remove subsequent ones
-      .replace(/(\.\d{3})\d+/g, "$1"); // Limit to 3 digits after the decimal point
-  
-    // Update the quantity state with the cleaned input
-    let quantityNum = Number(numericText)
-    setQuantity(quantityNum);
-  };
+      // Clean the input and format it to only allow one decimal point and up to 3 digits after it
+      let numericText = text
+        .replace(/[^0-9.]/g, "")    // Remove any non-numeric characters except for "."
+        .replace(/(\..*)\./g, "$1") // Allow only the first decimal point, remove subsequent ones
+        .replace(/(\.\d{3})\d+/g, "$1"); // Limit to 3 digits after the decimal point
+    
+      // Update the quantity state with the cleaned input
+      setQuantity(numericText);
+    };
 
   const handlePickerChange = (value) => {
     setMeterId(value);

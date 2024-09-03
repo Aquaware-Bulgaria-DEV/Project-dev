@@ -77,12 +77,13 @@ const EditSelfReport = () => {
     
 
     const handlePress = async () => {
+      const quantityNumber = Number(quantity);
       const payload = {
-        "value": quantity
+        "value": quantityNumber
       };
       
       try {
-        const res = await editSelfReport(token, quantity, id);
+        const res = await editSelfReport(token, quantityNumber, id);
         // console.log("Response from editSelfReport:", res);  // Log the response for debugging
         setButtonText("Запазено");
         setDisableFetch(false);

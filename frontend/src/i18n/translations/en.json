@@ -57,8 +57,12 @@
     "appSettingsChangePasswordOldPass": "Old password",
     "appSettingsChangePasswordOldPassError": "Enter your old password",
     "appSettingsChangePasswordNewPassError": "Enter your new password",
-    "appSettingsChangePasswordLengthError": "The password must be at least 6 characters",
+    "appSettingsChangePasswordLengthError": "The password must be at least 8 characters",
+    "appSettingsChangePasswordSymbolsError": "Password must contain both digits and letters",
+
     "appSettingsChangePasswordConfirmError": "Please, confirm your new password",
+    "appSettingsChangePasswordDifferentPass": "The new password must be different from the old password",
+
     "appSettingsChangePasswordMismatchError": "Password mismatch",
     "appSettingsChangePasswordSuccessTitle": "Password change",
     "appSettingsChangePasswordSuccessMessage": "Your password was changed successfully.",

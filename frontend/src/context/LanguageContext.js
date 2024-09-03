@@ -11,10 +11,9 @@ export const LanguageProvider = ({ children }) => {
 
   useEffect(() => {
     if (preferences && preferences.language && preferences.language !== language) {
-      setLanguage(preferences.language);
       i18n.changeLanguage(preferences.language);
     }
-  }, [preferences, i18n, language]);
+  }, [preferences, i18n]);
 
   useEffect(() => {
     i18n.changeLanguage(language);

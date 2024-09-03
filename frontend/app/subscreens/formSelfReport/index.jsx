@@ -194,7 +194,7 @@ const SelfReport = () => {
     let flattenedData = [];
     data.forEach(item => {
         for (let meter in item.meters) {
-            flattenedData.push({ "water_meter_id": meter, "value": item.meters[meter] });
+            flattenedData.push({ "water_meter_id": meter, "value": Number(item.meters[meter]) });
         }
     });
     return flattenedData;

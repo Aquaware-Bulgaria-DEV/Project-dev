@@ -9,13 +9,12 @@ export const LanguageProvider = ({ children }) => {
   const { preferences, savePreferences } = useContext(AuthContext);
   const [language, setLanguage] = useState(i18n.language);
 
-  //new
   useEffect(() => {
-    if (preferences && preferences.language) {
+    if (preferences && preferences.language && preferences.language !== language) {
       setLanguage(preferences.language);
       i18n.changeLanguage(preferences.language);
     }
-  }, [preferences, i18n]);
+  }, [preferences, i18n, language]);
 
   useEffect(() => {
     i18n.changeLanguage(language);
@@ -25,17 +24,13 @@ export const LanguageProvider = ({ children }) => {
     const newLanguage = language === 'bg' ? 'en' : 'bg';
     setLanguage(newLanguage);
 
-  // Update user's language preference in the context and local storage
-      const newPreferences = { ...preferences, language: newLanguage };
-      await savePreferences(newPreferences);
-    };
-
-  const getLanguage = () => {
-    return language;
+    // Update user's language preference in the context and local storage
+    const newPreferences = { ...preferences, language: newLanguage };
+    await savePreferences(newPreferences);
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, getLanguage }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

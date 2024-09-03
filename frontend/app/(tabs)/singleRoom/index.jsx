@@ -12,9 +12,6 @@ import AuthContext from '../../Context/AuthContext.jsx';
 import ProgressBar from '../../globalComponents/progressBar.jsx';
 import CustomButton from '../../globalComponents/customButton.jsx';
 
-
-////////////////////////// TODO: when you get the data from the server and calculate the percentage of the progressbar make if percentage is above 100 to equal 100;
-
 const SingleRoom = () => {
   const [ roomData, setRoomData ] = React.useState('');
   const [ consumptionDetails, setConsumptionDetails ] = React.useState('');
@@ -81,7 +78,7 @@ const SingleRoom = () => {
     setConsumptionDetails('');
     setErrMsg('');
     setProgressPercent(0);
-    // Simulate a network request or any async task
+
     getRoomDetails(propertyId, roomId, token)
       .then(data => setRoomData(data))
       .catch(e => console.error(e));

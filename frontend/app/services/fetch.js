@@ -406,12 +406,13 @@ export const getAverageConsumption = async (propertyId, token) => {
     );
     const result = await response.json();
     if (response.status === 400 || response.status === 500) {
+      console.log('Error inside getAverageAPI:', result);
       throw new Error(result.error);
     }
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    console.log('Result consumption API :', result);
+    // console.log('Result consumption API :', result);
     return result;
   } catch (error) {
     throw error.message;

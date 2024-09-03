@@ -62,8 +62,11 @@ export const styles = StyleSheet.create({
   pickerItem: {
     fontSize: 18,
     color: '#000',
-    marginTop: 20,
-    marginLeft: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 68,
+    // marginTop: 20,
+    // marginLeft: 15,
   },
   // devices: {
   //   color: "white",

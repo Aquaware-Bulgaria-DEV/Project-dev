@@ -1,17 +1,15 @@
 import React from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, Button, ScrollView, RefreshControl } from 'react-native';
-import { router, useLocalSearchParams } from 'expo-router';
-import { Header } from '../../globalComponents/header.jsx'
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 
 import { getAverageConsumption, getRoomDetails } from '../../services/fetch.js'
 
 import { styles } from './singleRoomStyles'
 
+import { Header } from '../../globalComponents/header.jsx'
 import AuthContext from '../../Context/AuthContext.jsx';
 import ProgressBar from '../../globalComponents/progressBar.jsx';
-
-import ProgressBarImage from '../../../assets/CatyProfile.png'
 import CustomButton from '../../globalComponents/customButton.jsx';
 
 
@@ -21,7 +19,7 @@ const SingleRoom = () => {
   const [ roomData, setRoomData ] = React.useState('');
   const [ consumptionDetails, setConsumptionDetails ] = React.useState('');
   const [ currentQuantity, setCurrentQuantity ] = React.useState('');
-  const [ errMsg, setErrMsg ] = React.useState('');
+  const [ errMsg, setErrMsg ] = React.useState(null);
   const [ progressPercent, setProgressPercent ] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -32,35 +30,16 @@ const SingleRoom = () => {
     // Fetch room details and average consumption data
     getRoomDetails(propertyId, roomId, token)
       .then(data => setRoomData(data))
-      .catch(e => console.error(e));
-  
-    getAverageConsumption(propertyId, token)
-      .then(data => setConsumptionDetails(data))
-      .catch(e => setErrMsg(e));
-
-  }, [roomId]);
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    // Simulate a network request or any async task
-    getRoomDetails(propertyId, roomId, token)
-      .then(data => setRoomData(data))
-      .catch(e => console.error(e));
+      .catch(e => console.log("Get room details first err", e));
   
     getAverageConsumption(propertyId, token)
       .then(data => setConsumptionDetails(data))
       .catch(e => {
-        const msg = e;
-        setErrMsg(msg)
-        console.log("Message averageConsumption", msg);
-      })
-      .finally(() => setRefreshing(false));
-  };
+        console.log("Get average consumption first err", e);
+        setErrMsg(e)
+      });
 
-  React.useEffect(() =>{
-    console.log("ConsumtionDetails: " , consumptionDetails)
-    console.log("RoomData: ", roomData)
-  }, [roomData, consumptionDetails])
+  }, [roomId]);
   
   React.useEffect(() => {
 
@@ -78,8 +57,8 @@ const SingleRoom = () => {
       const currentUsage = avgUsageRoom;
       const numberOfRooms = Object.keys(consumptionDetails["average_usage_per_room"]).length;
       const maxUsage = (consumptionDetails["max_water_usage_for_property_per_month"] / 1000) /  numberOfRooms;
-      console.log("MaxUsage",maxUsage)
-      console.log("length",numberOfRooms)
+      // console.log("MaxUsage",maxUsage)
+      // console.log("length",numberOfRooms)
       // console.log("Current Usage",currentUsage)
       if (maxUsage > 0) {
         // Remove math abs later(when backend logic is fixed and there wont be a negative values)
@@ -96,6 +75,31 @@ const SingleRoom = () => {
       }
     }
   }, [roomData, consumptionDetails]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setConsumptionDetails('');
+    setErrMsg('');
+    setProgressPercent(0);
+    // Simulate a network request or any async task
+    getRoomDetails(propertyId, roomId, token)
+      .then(data => setRoomData(data))
+      .catch(e => console.error(e));
+  
+    getAverageConsumption(propertyId, token)
+      .then(data => setConsumptionDetails(data))
+      .catch(e => {
+        console.log("Get average consumption second err", e);
+        setErrMsg(e)
+      })
+      .finally(() => setRefreshing(false));
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      onRefresh();
+    }, [])
+  );
 
 
   return (

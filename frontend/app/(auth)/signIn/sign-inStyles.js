@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
       height: '100%',
       marginTop: '15%',
       backgroundColor: '#ECF9FF',
-      gap: 20
+      gap: 15
     },
     image: {
         width: 160,

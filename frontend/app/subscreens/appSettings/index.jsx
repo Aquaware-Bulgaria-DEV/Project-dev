@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Switch, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as LocalAuthentication from 'expo-local-authentication';
@@ -6,22 +6,39 @@ import { styles } from "./appSettingsStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
 import { useTranslation } from "react-i18next";
 import SettingsButton from "../../globalComponents/settingsButton.jsx";
-import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const appSettings = () => {
   const { t } = useTranslation();
   const [isBiometricLoginTurnedOn, setBiometricLogin] = useState(false);
   const [isPasswordLoginTurnedOn, setPasswordLogin] = useState(false);
 
-  const updateLoginSettings = async (biometricLogin, passwordLogin) => {
-    try { //! Create API
-      await axios.post('http://192.168.1.2:8000/profile/update-login-settings/', {
-        biometricLogin,
-        passwordLogin,
-      });
-      console.log("Settings updated successfully.");
+  useEffect(() => {
+    const loadPreferences = async () => {
+      try {
+        const biometricLogin = await AsyncStorage.getItem('biometricLogin');
+        const passwordLogin = await AsyncStorage.getItem('passwordLogin');
+
+        if (biometricLogin !== null) {
+          setBiometricLogin(JSON.parse(biometricLogin));
+        }
+        if (passwordLogin !== null) {
+          setPasswordLogin(JSON.parse(passwordLogin));
+        }
+      } catch (error) {
+        console.error("Error loading login preferences:", error);
+      }
+    };
+
+    loadPreferences();
+  }, []);
+
+  const savePreferences = async (biometricLogin, passwordLogin) => {
+    try {
+      await AsyncStorage.setItem('biometricLogin', JSON.stringify(biometricLogin));
+      await AsyncStorage.setItem('passwordLogin', JSON.stringify(passwordLogin));
     } catch (error) {
-      console.error("Error updating login settings:", error);
+      console.error("Error saving login preferences:", error);
     }
   };
 
@@ -33,6 +50,7 @@ const appSettings = () => {
       if (hasHardware && isEnrolled) {
         if (isBiometricLoginTurnedOn) {
           setBiometricLogin(false);
+          setPasswordLogin(true); // Turn on password login if biometrics are turned off
           console.log("Biometric Login Turned Off");
         } else {
           const authResult = await LocalAuthentication.authenticateAsync({
@@ -48,8 +66,7 @@ const appSettings = () => {
             Alert.alert("Authentication failed", "Please try again.");
           }
         }
-        //! Make the API request with the updated state
-        updateLoginSettings(!isBiometricLoginTurnedOn, isPasswordLoginTurnedOn);
+        savePreferences(!isBiometricLoginTurnedOn, isPasswordLoginTurnedOn);
       } else {
         Alert.alert("Biometrics not supported", "This device does not support biometric authentication.");
       }
@@ -60,12 +77,18 @@ const appSettings = () => {
   };
 
   const handleTogglePasswordLoginBtn = async () => {
-    setPasswordLogin(!isPasswordLoginTurnedOn);
-    setBiometricLogin(false);
-    console.log(`Password Login Turned ${!isPasswordLoginTurnedOn ? "On" : "Off"}`);
-
-    //! Make the API request with the updated state
-    updateLoginSettings(isBiometricLoginTurnedOn, !isPasswordLoginTurnedOn);
+    if (!isPasswordLoginTurnedOn) {
+      // Turning on password login and disabling biometric login
+      setPasswordLogin(true);
+      setBiometricLogin(false);
+      console.log("Password Login Turned On");
+    } else {
+      // Turning off password login (but leaving biometric login unchanged)
+      setPasswordLogin(false);
+      console.log("Password Login Turned Off");
+    }
+    // Save the updated preferences
+    savePreferences(false, !isPasswordLoginTurnedOn);
   };
 
   return (

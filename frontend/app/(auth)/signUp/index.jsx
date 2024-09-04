@@ -12,6 +12,7 @@ import { styles } from './sign-upStyles';
 
 import AquawareLogo from '../../../assets/AquawareLogo.svg';
 import { login, register } from '../../services/fetch';
+import LanguageToggleButton from '../../globalComponents/LanguageToggleButton.jsx';
 
 const SignUp = () => {
   const [formValues, setFormValues] = React.useState({
@@ -93,6 +94,7 @@ const SignUp = () => {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Image source={AquawareLogo} style={styles.image} contentFit='cover' />
+        <LanguageToggleButton />
         <AuthForm
           title='Login' //Possible to make its fields and functionality on submit depending on the title, whether is Login or Register
           onFormChange={handleFormChange}

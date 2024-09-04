@@ -127,7 +127,7 @@ const Home = () => {
         {properties.length > 1 ? (
           <View style={styles.pickerContainer}>
             <RNPickerSelect
-              key={properties.value}
+              key={selectedProp}
               onValueChange={handlePropertyChange}
               items={properties}
               style={{

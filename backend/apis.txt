@@ -391,11 +391,13 @@ GET: Returns the details of the reading with the ID in the link
 Example:
 
 {
-    "id": 13,
+    "id": 3,
     "water_meter_id": 1,
+    "water_meter_number": "736453",
+    "property_type": "Garage",
     "user": 1,
-    "value": 125,
-    "date": "2024-07-29T10:29:29.566911Z"
+    "value": "102.675",
+    "date": "2024-09-04T09:59:17.087153Z"
 }
 
 PUT:
@@ -490,6 +492,64 @@ Takes
     "old_password": "<password>",
     "new_password": "<new password>"
 }
+
+~~~~~~~~~~~~~~~~~~~~~
+
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/consumption-advice/
+Returns two random explanations what does users water consumption mean
+
+POST:
+
+{
+    "water_usage": 650
+}
+
+returns 
+[
+    {
+        "id": 1,
+        "title": "Test title for less than 650 (1)",
+        "image": "http://ec2-18-234-44-48.compute-1.amazonaws.com/media/advice_images/1_IMG_2400.jpeg",
+        "min_value": 0.0,
+        "max_value": 650.0
+    },
+    {
+        "id": 6,
+        "title": "Test title for more than 650 (3)",
+        "image": "http://ec2-18-234-44-48.compute-1.amazonaws.com/media/advice_images/IMG_2383.jpeg",
+        "min_value": 650.0,
+        "max_value": 1350.0
+    }
+]
+
+
+~~~~~~~~~~~~~~~~~~
+
+API: http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/user-rank/
+
+returns tha ranking by city and water company
+
+GET:
+
+Returns:
+
+{
+    "town_rank": 1,
+    "company_rank": 1,
+    "last_updated": "2024-09-04T10:00:58.395685Z"
+}
+
+~~~~~~~~~~~~~~~~~
+http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/trigger-update-rankings/
+
+with GET triggers the calculation of the ranking list 
+
+~~~~~~~~~~~~~~~~~
+
+
+
+
 
 
 

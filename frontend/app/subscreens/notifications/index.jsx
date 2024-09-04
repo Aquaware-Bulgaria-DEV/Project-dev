@@ -16,7 +16,7 @@ import RNPickerSelect from "react-native-picker-select";
 const Notifications = () => {
   const { t } = useTranslation();
   const {
-    pushNotifications,
+    isPushNotificationsTurnedOn,
     togglePushNotifications,
     expoPushToken,
     isEmailNotificationsTurnedOn,
@@ -33,7 +33,7 @@ const Notifications = () => {
 
   const handleTogglePushNotificationsBtn = async () => {
     await togglePushNotifications();
-    if (!pushNotifications && expoPushToken) {
+    if (!isPushNotificationsTurnedOn && expoPushToken) {
       Alert.alert(
         "Push Notifications",
         `Your push notification token is: ${expoPushToken}`
@@ -78,7 +78,7 @@ const Notifications = () => {
               {t("notificationsPushNotifications")}
             </Text>
             <Switch
-              value={pushNotifications}
+              value={isPushNotificationsTurnedOn}
               onValueChange={handleTogglePushNotificationsBtn}
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}

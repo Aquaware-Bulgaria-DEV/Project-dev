@@ -4,27 +4,36 @@ import {
   Text,
   View,
   TextInput,
-  Alert,
-  TouchableOpacity,
   Pressable,
+  Alert,
 } from 'react-native';
 import { styles } from './addPropertyStyles.js';
 import { Header } from '../../globalComponents/header.jsx';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
 import { useTranslation } from 'react-i18next';
 
+import * as services from '../../services/fetch.js';
+import AuthContext from '../../Context/AuthContext.jsx';
+import { useRouter } from 'expo-router';
+
 const AddProperty = () => {
   const { t, i18n } = useTranslation();
-  const [numberPeople, setNumberPeople] = useState('');
-  const [property, setProperty] = useState('');
-  const [companyName, setCompanyName] = useState('');
+  const [numberPeople, setNumberPeople] = useState();
+  const [property, setProperty] = useState();
+  const [companyName, setCompanyName] = useState();
   const [clientNumber, setClientNumber] = useState('');
   const [waterMeterNum, setWaterMeterNum] = useState([{ id: 1, value: '' }]);
 
+  const [options, setOptions] = useState([]);
+  const [propTypes, setPropTypes] = useState([]);
+  const { token, userInfo } = useContext(AuthContext);
+
   const [errors, setErrors] = useState({});
+
+  const router = useRouter();
   const handlePropertySelectedChange = (value) => {
     setProperty(value);
     console.log(property);
@@ -33,24 +42,37 @@ const AddProperty = () => {
     setCompanyName(value);
   };
 
-  const options = [
-    { id: '1', label: 'Софийска вода' },
-    { id: '2', label: 'Тест' },
-    { id: '3', label: 'Дружество' },
-  ];
-  const propTypes = [
-    { id: '1', label: `${t('addPropertyType1')}` },
-    { id: '2', label: `${t('addPropertyType2')}` },
-    { id: '3', label: `${t('addPropertyType3')}` },
-  ];
-  const companyOptions = options.map((key) => ({
-    label: key.label,
-    value: key.label,
+  const fetchAllCompanies = async () => {
+    try {
+      const response = await services.getAllCompanies(token);
+      setOptions(response);
+    } catch (error) {
+      console.log('Error fetching all available companies:', error);
+    }
+  };
+
+  const fetchAllPropTypes = async () => {
+    try {
+      const response = await services.getAllPropertyTypes(token);
+      setPropTypes(response);
+    } catch (error) {
+      console.log('Error fetching prop types:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllCompanies();
+    fetchAllPropTypes();
+  }, []);
+
+  const companyOptions = options.map((option) => ({
+    label: option.name,
+    value: option.id,
   }));
 
-  const propertyOptions = propTypes.map((key) => ({
-    label: key.label,
-    value: key.label,
+  const propertyOptions = propTypes.map((type) => ({
+    label: type.type,
+    value: type.id,
   }));
 
   const addWaterMeterField = () => {
@@ -73,29 +95,52 @@ const AddProperty = () => {
 
   const validateData = () => {
     const newErrors = {};
-    if (!numberPeople) newErrors.numberPeople = `${t('addPropertyErrorNumOfPeople')}`;
+    if (!numberPeople)
+      newErrors.numberPeople = `${t('addPropertyErrorNumOfPeople')}`;
     if (!property) newErrors.property = `${t('addPropertyErrorProperty')}`;
-    if (!companyName) newErrors.companyName = `${t('addPropertyErrorCompanyName')}`;
-    if (!clientNumber) newErrors.clientNumber = `${t('addPropertyErrorClientNum')}`;
+    if (!companyName)
+      newErrors.companyName = `${t('addPropertyErrorCompanyName')}`;
+    if (!clientNumber)
+      newErrors.clientNumber = `${t('addPropertyErrorClientNum')}`;
     if (!waterMeterNum)
       newErrors.waterMeterNum = `${t('addPropertyErrorWaterMeterNum')}`;
     return newErrors;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const validationErrors = validateData();
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
-    console.log(numberPeople);
-    console.log(property);
-    console.log(companyName);
-    console.log(clientNumber);
-    console.log(waterMeterNum);
-
-    // POST method to be added
+    try {
+      const waterMeterValues = waterMeterNum.map((field) => field.value.trim());
+      console.log(waterMeterNum);
+      const data = {
+        type: {
+          id: property,
+        },
+        water_company: {
+          id: companyName,
+        },
+        client_number: {
+          client_number: clientNumber,
+        },
+        property: {
+          num_people: Number(numberPeople),
+        },
+        water_meters: waterMeterValues,
+      };
+      console.log('dadta', data);
+      const response = await services.createProperty(token, data);
+      console.log('Property created successfully:', response);
+      Alert.alert('Имотът е успешно създаден!');
+      router.push('subscreens/myProperties');
+    } catch (error) {
+      console.log('Error creating property:', error);
+    }
   };
 
   return (
@@ -119,7 +164,7 @@ const AddProperty = () => {
             )}
 
             <Text style={styles.text}>
-            {t('addPropertyProp')}
+              {t('addPropertyProp')}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <View>
@@ -144,12 +189,13 @@ const AddProperty = () => {
             )}
 
             <Text style={styles.text}>
-            {t('addPropertyCompany')}
+              {t('addPropertyCompany')}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <View>
               <View style={styles.pickerContainer}>
                 <RNPickerSelect
+                  key={options.id}
                   onValueChange={handleCompanySelectedChange}
                   items={companyOptions}
                   style={{
@@ -166,7 +212,7 @@ const AddProperty = () => {
             </View>
 
             <Text style={styles.text}>
-            {t('addPropertyClientNum')}{' '}
+              {t('addPropertyClientNum')}{' '}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <TextInput
@@ -179,9 +225,9 @@ const AddProperty = () => {
             )}
 
             {waterMeterNum.map((field) => (
-              <View>
+              <View key={field.id}>
                 <Text style={styles.text}>
-                {t('addPropertyWaterMeterNum')}
+                  {t('addPropertyWaterMeterNum')}
                   {field.id === 1 ? (
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       *
@@ -201,7 +247,9 @@ const AddProperty = () => {
             )}
           </View>
           <Pressable onPress={addWaterMeterField}>
-            <Text style={styles.plusText}>{t('addPropertyAddNewWaterMeter')}</Text>
+            <Text style={styles.plusText}>
+              {t('addPropertyAddNewWaterMeter')}
+            </Text>
           </Pressable>
         </View>
 

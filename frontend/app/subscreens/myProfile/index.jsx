@@ -26,6 +26,7 @@ import { styles } from './myProfileStyles.js';
 import { useTranslation } from 'react-i18next';
 import * as service from '../../services/fetch.js';
 import { useRouter } from 'expo-router';
+import { useNavigationBuilder } from '@react-navigation/native';
 
 const { height } = Dimensions.get('window');
 
@@ -46,7 +47,12 @@ const MyProfile = () => {
   const formattedDate = format(parseISO(userInfo.date_joined), 'dd.MM.yyyy');
 
   useEffect(() => {
-    setName(userInfo.first_name + ' ' + userInfo.last_name);
+    if (userInfo.first_name === null && userInfo.last_name === null) {
+      setName();
+    } else {
+      setName(userInfo.first_name + ' ' + userInfo.last_name);
+    }
+    console.log(userInfo);
     setPhone(userInfo.phone_number);
     setEmail(userInfo.email);
     setPicture(userInfo.profile_picture);
@@ -164,9 +170,9 @@ const MyProfile = () => {
                   </Pressable>
                 </View>
                 <View style={styles.clientInfo}>
-                  <Text
-                    style={styles.clientName}
-                  >{`${userInfo.first_name} ${userInfo.last_name}`}</Text>
+                  <Text style={styles.clientName}>
+                    {name === undefined ? `` : `${name}`}
+                  </Text>
                   <Text style={styles.clientNumber}>
                     {t('myProfileClientNumber')} 119862
                   </Text>

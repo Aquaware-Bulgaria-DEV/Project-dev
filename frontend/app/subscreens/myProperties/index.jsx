@@ -8,6 +8,7 @@ import SettingsButton from '../../globalComponents/settingsButton.jsx';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useIsFocused } from '@react-navigation/native';
 
 const MyProperties = () => {
   const { t, i18n } = useTranslation();
@@ -18,6 +19,7 @@ const MyProperties = () => {
 
   const fetchProperties = async () => {
     try {
+      setFetching(true);
       const response = await services.getAllProperties(token);
 
       setProperties(
@@ -26,7 +28,9 @@ const MyProperties = () => {
           value: obj['id'],
         }))
       );
+      setFetching(false);
     } catch (error) {
+      setFetching(false);
       console.error('Error fetching properties:', error);
     } finally {
       setLoading(false);
@@ -36,6 +40,16 @@ const MyProperties = () => {
   useEffect(() => {
     fetchProperties();
   }, []);
+
+  const focused = useIsFocused();
+  const [fetching, setFetching] = useState(false);
+
+  useEffect(() => {
+    if (focused && !fetching) {
+      fetchProperties();
+      console.log('fetching');
+    }
+  }, [focused]);
 
   if (loading) {
     return <Text>Loading...</Text>;

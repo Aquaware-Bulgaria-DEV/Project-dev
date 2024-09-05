@@ -138,7 +138,11 @@
     "propertyManagementDeletionAssertion": "Are you sure you want to delete the room?",
     "singleRoomActiveDevices": "active devices",
     "buttonFindOut": "Find out what that means",
-    "monthlyUsage": "Monthly usage"
+    "monthlyUsage": "Monthly usage",
+    "doubleProgressBarOr": "or",
+    "doubleProgressBarLiters": "liters"
+
+
 
 
 

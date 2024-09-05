@@ -135,5 +135,7 @@
     "propertyManagementDeletionAssertion": "Сигурен ли сте че искате да изтриете стаята?",
     "singleRoomActiveDevices": "активни уреда",
     "buttonFindOut": "Разбери какво значи",
-    "monthlyUsage": "Месечен разход"
+    "monthlyUsage": "Месечен разход",
+    "doubleProgressBarOr": "или",
+    "doubleProgressBarLiters": "литра"
 }

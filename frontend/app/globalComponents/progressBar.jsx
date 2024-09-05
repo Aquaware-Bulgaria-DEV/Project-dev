@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { View, Image, Text, StyleSheet, Dimensions } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
 
 const CircularProgressBar = ({ progress, quantity = 0, errMsg, size = 100, imageSource }) => {
+  const { t } = useTranslation();
   const dotsVisible = progress < 100 ? true : false;
   const progressColor = progress >= 95 ? progress >=100 ? "#E4003A" : "#EB5B00"  : "#339DFA";
   const strokeWidthBackground = 20;
@@ -92,7 +94,7 @@ const CircularProgressBar = ({ progress, quantity = 0, errMsg, size = 100, image
             </>
           )}
         </View>
-        <Text style={styles.textLabel}>Месечен разход</Text>
+        <Text style={styles.textLabel}>{t("monthlyUsage")}</Text>
       </View>
       {!errMsg && (
         <Image

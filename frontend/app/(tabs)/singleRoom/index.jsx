@@ -11,8 +11,10 @@ import { Header } from '../../globalComponents/header.jsx'
 import AuthContext from '../../Context/AuthContext.jsx';
 import ProgressBar from '../../globalComponents/progressBar.jsx';
 import CustomButton from '../../globalComponents/customButton.jsx';
+import { useTranslation } from 'react-i18next';
 
 const SingleRoom = () => {
+  const { t } = useTranslation();
   const [ roomData, setRoomData ] = React.useState('');
   const [ consumptionDetails, setConsumptionDetails ] = React.useState('');
   const [ currentQuantity, setCurrentQuantity ] = React.useState('');
@@ -114,12 +116,12 @@ const SingleRoom = () => {
         <View style={styles.wrapper}>
           <View style={styles.roomInfo}>
             <Text style={styles.roomName}>{roomData.name}</Text>
-            <Text style={styles.activeDevices}>4 активни уреда</Text>
+            <Text style={styles.activeDevices}>4 {t("singleRoomActiveDevices")}</Text>
           </View>
           <View style={styles.progressContainer}>
             <ProgressBar progress={progressPercent} size={300} quantity={currentQuantity} errMsg={errMsg} />
           </View>
-            <CustomButton title={"Разбери какво значи"} 
+            <CustomButton title={t("buttonFindOut")} 
             handlePress={() => router.push({
               pathname: '../../subscreens/DoubleProgressBar',
               params: {

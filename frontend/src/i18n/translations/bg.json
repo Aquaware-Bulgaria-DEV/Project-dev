@@ -132,5 +132,8 @@
     "addRoomName": "Име ма помещението",
     "editRoom": "Редактиране на помещение",
     "propertyManagement": "Управление на имота",
-    "propertyManagementDeletionAssertion": "Сигурен ли сте че искате да изтриете стаята?"
+    "propertyManagementDeletionAssertion": "Сигурен ли сте че искате да изтриете стаята?",
+    "singleRoomActiveDevices": "активни уреда",
+    "buttonFindOut": "Разбери какво значи",
+    "monthlyUsage": "Месечен разход"
 }

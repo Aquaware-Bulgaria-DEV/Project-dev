@@ -23,12 +23,12 @@ const AddRoom = () => {
   const { token } = useContext(AuthContext);
 
   const roomTypes = [
-    { id: 1, label: 'KITCHEN' },
-    { id: 2, label: 'BATHROOM' },
-    { id: 3, label: 'TOILET' },
-    { id: 4, label: 'LAUNDRY' },
-    { id: 5, label: 'GARDEN' },
-    { id: 6, label: 'GARAGE' },
+    { id: 1, label: t("addRoomTypeKitchen") },
+    { id: 2, label: t("addRoomTypeBathroom")},
+    { id: 3, label: t("addRoomTypeToilet")},
+    { id: 4, label: t("addRoomTypeLaundry") },
+    { id: 5, label: t("addRoomTypeGarden") },
+    { id: 6, label: t("addRoomTypeGarage") },
   ];
   const roomOptions = roomTypes.map((key) => ({
     label: key.label,

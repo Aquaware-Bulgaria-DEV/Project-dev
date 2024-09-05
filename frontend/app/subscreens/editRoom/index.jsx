@@ -15,8 +15,10 @@ import { Header } from '../../globalComponents/header.jsx';
 import CustomButton from '../../globalComponents/customButton.jsx';
 import * as services from '../../services/fetch.js';
 import AuthContext from '../../Context/AuthContext.jsx';
+import { useTranslation } from 'react-i18next';
 
 const EditRoom = () => {
+  const { t } = useTranslation();
   const [roomType, setRoomType] = useState('');
   const [name, setName] = useState('');
   const [errors, setErrors] = useState({});
@@ -41,12 +43,12 @@ const EditRoom = () => {
   };
 
   const roomTypes = [
-    { id: 1, label: 'KITCHEN' },
-    { id: 2, label: 'BATHROOM' },
-    { id: 3, label: 'TOILET' },
-    { id: 4, label: 'LAUNDRY' },
-    { id: 5, label: 'GARDEN' },
-    { id: 6, label: 'GARAGE' },
+    { id: 1, label: t("addRoomTypeKitchen") },
+    { id: 2, label: t("addRoomTypeBathroom")},
+    { id: 3, label: t("addRoomTypeToilet")},
+    { id: 4, label: t("addRoomTypeLaundry") },
+    { id: 5, label: t("addRoomTypeGarden") },
+    { id: 6, label: t("addRoomTypeGarage") },
   ];
 
   const roomOptions = roomTypes.map((key) => ({
@@ -60,8 +62,8 @@ const EditRoom = () => {
 
   const validateData = () => {
     const newErrors = {};
-    if (!roomType) newErrors.roomType = 'Моля, изберете помещение';
-    if (!name) newErrors.name = 'Моля, въведете име';
+    if (!roomType) newErrors.roomType = `${t("addRoomChooseRoomError")}`;
+    if (!name) newErrors.name = `${t("addRoomRoomNameError")}`;
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -100,9 +102,9 @@ const EditRoom = () => {
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false}></Header>
         <View style={styles.content}>
-          <Text style={styles.title}>Редактиране на помещение</Text>
+          <Text style={styles.title}>{t("editRoom")}</Text>
           <View style={styles.form}>
-            <Text style={styles.text}>Вид помещение</Text>
+            <Text style={styles.text}>{t("addRoomType")}</Text>
             <View style={{ marginVertical: 5 }}>
               <View style={styles.pickerContainer}>
                 <RNPickerSelect
@@ -120,7 +122,7 @@ const EditRoom = () => {
               <Text style={styles.errorText}>{errors.roomType}</Text>
             )}
             <Text style={styles.text}>
-              Име
+              {t("addRoomName")}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <TextInput
@@ -133,7 +135,7 @@ const EditRoom = () => {
         </View>
         <CustomButton
           handlePress={handleSubmit}
-          title='Запази'
+          title={t("customButtonSave")}
           color={'#388FED'}
           secondColor={'#4C62C7'}
           additionalStyles={styles.saveButton}

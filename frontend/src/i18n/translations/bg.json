@@ -117,10 +117,17 @@
     "addPropertyErrorCompanyName": "Моля, изберете дружество",
     "addPropertyErrorClientNum": "Моля, въведет клиентски номер",
     "addPropertyErrorWaterMeterNum": "Моля, въведете номер на водомер",
+    "addRoomTypeKitchen": "КУХНЯ",
+    "addRoomTypeBathroom": "БАНЯ",
+    "addRoomTypeToilet": "ТОАЛЕТНА",
+    "addRoomTypeLaundry": "ПЕРАЛНО ПОМЕЩЕНИЕ",
+    "addRoomTypeGarden": "ГРАДИНА",
+    "addRoomTypeGarage": "ГАРАЖ",
     "addRoomChooseRoomError": "Моля, изберете помещение",
     "addRoomRoomNameError": "Моля, въведете име",
     "addRoom": "Добавяне на помещение",
     "addRoomType": "Вид помещение",
     "addRoomPickARoom": "Избери вид помещение",
-    "addRoomName": "Име ма помещението"
+    "addRoomName": "Име ма помещението",
+    "editRoom": "Редактиране на помещение"
 }

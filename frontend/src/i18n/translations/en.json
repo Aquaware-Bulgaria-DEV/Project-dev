@@ -119,5 +119,12 @@
     "addPropertyErrorProperty": "Please enter a property",
     "addPropertyErrorCompanyName": "Please select a company",
     "addPropertyErrorClientNum": "Please enter a client number",
-    "addPropertyErrorWaterMeterNum": "Please enter the water meter number"
+    "addPropertyErrorWaterMeterNum": "Please enter the water meter number",
+    "addRoomChooseRoomError": "Please, choose a room",
+    "addRoomRoomNameError": "Please, type a room name",
+    "addRoom": "Add room",
+    "addRoomType": "Room type",
+    "addRoomPickARoom": "Choose type of room",
+    "addRoomName": "Room name"
+
 }

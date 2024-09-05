@@ -116,5 +116,11 @@
     "addPropertyErrorProperty": "Моля, въведете имот",
     "addPropertyErrorCompanyName": "Моля, изберете дружество",
     "addPropertyErrorClientNum": "Моля, въведет клиентски номер",
-    "addPropertyErrorWaterMeterNum": "Моля, въведете номер на водомер"
+    "addPropertyErrorWaterMeterNum": "Моля, въведете номер на водомер",
+    "addRoomChooseRoomError": "Моля, изберете помещение",
+    "addRoomRoomNameError": "Моля, въведете име",
+    "addRoom": "Добавяне на помещение",
+    "addRoomType": "Вид помещение",
+    "addRoomPickARoom": "Избери вид помещение",
+    "addRoomName": "Име ма помещението"
 }

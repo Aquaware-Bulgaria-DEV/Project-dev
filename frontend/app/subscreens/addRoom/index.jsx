@@ -7,8 +7,10 @@ import AuthContext from '../../Context/AuthContext.jsx';
 import CustomButton from '../../globalComponents/customButton.jsx';
 import * as services from '../../services/fetch.js';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 const AddRoom = () => {
+  const { t } = useTranslation();
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
   const [errors, setErrors] = useState({});
@@ -41,8 +43,8 @@ const AddRoom = () => {
 
   const validateData = () => {
     const newErrors = {};
-    if (!room) newErrors.room = 'Моля, изберете помещение';
-    if (!name) newErrors.name = 'Моля, въведете име';
+    if (!room) newErrors.room = `${t("addRoomChooseRoomError")}`;
+    if (!name) newErrors.name = `${t("addRoomRoomNameError")}`;
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -73,10 +75,10 @@ const AddRoom = () => {
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false}></Header>
         <View style={styles.content}>
-          <Text style={styles.title}>Добавяне на помещение</Text>
+          <Text style={styles.title}>{t("addRoom")}</Text>
           <View style={styles.form}>
             <Text style={styles.text}>
-              Вид помещение
+              {t("addRoomType")}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <View style={{ marginVertical: 5 }}>
@@ -89,14 +91,14 @@ const AddRoom = () => {
                     inputAndroid: styles.pickerItem,
                   }}
                   placeholder={{
-                    label: 'Избери вид помещение',
+                    label: `${t("addRoomPickARoom")}`,
                     value: '',
                   }}
                   value={room}
                 />
               </View>
             </View>
-            <Text style={styles.text}>Име</Text>
+            <Text style={styles.text}>{t("addRoomName")}</Text>
             <TextInput
               style={styles.inputField}
               onChangeText={setName}
@@ -109,7 +111,7 @@ const AddRoom = () => {
           handlePress={() =>
             handleSubmit(token, propId, { name, room_type: room })
           }
-          title='Запази'
+          title={t("customButtonSave")}
           color={'#388FED'}
           secondColor={'#4C62C7'}
           additionalStyles={styles.saveButton}

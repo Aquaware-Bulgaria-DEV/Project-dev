@@ -12,6 +12,7 @@ import AquawareLogo from '../../../assets/AquawareLogo.svg';
 import { login } from '../../services/fetch';
 import LanguageToggleButton from '../../globalComponents/LanguageToggleButton.jsx'; 
 import * as SecureStore from 'expo-secure-store';
+import LanguageToggleButton from "../../globalComponents/LanguageToggleButton.jsx";
 
 const SignIn = () => {
   const { saveToken, saveUserInfo } = React.useContext(AuthContext);
@@ -151,6 +152,7 @@ const SignIn = () => {
           onLogin={handleLogin}
           errorMessage={error}
         />
+        <LanguageToggleButton />
       </View>
     </SafeAreaView>
   );

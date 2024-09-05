@@ -55,7 +55,7 @@ const appSettings = () => {
         } else {
           const authResult = await LocalAuthentication.authenticateAsync({
             promptMessage: 'Authenticate',
-            disableDeviceFallback: true,
+            fallbackLabel: 'Use Password'
           });
           console.log('Authentication Result:', authResult);
 

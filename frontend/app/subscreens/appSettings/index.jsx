@@ -55,8 +55,9 @@ const appSettings = () => {
         } else {
           const authResult = await LocalAuthentication.authenticateAsync({
             promptMessage: 'Authenticate',
-            fallbackLabel: 'Use Password',
+            disableDeviceFallback: true,
           });
+          console.log('Authentication Result:', authResult);
 
           if (authResult.success) {
             setBiometricLogin(true);

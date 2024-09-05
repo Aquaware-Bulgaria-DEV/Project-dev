@@ -11,7 +11,7 @@ const LanguageToggleButton = () => {
   return (
     <TouchableOpacity onPress={toggleLanguage}>
       <Text style={styles.linkBold}>
-        {language === 'bg' ? 'Change language' : 'Смени езика'}
+        {language === 'bg' ? 'English' : 'Български'}
       </Text>
     </TouchableOpacity>
   );

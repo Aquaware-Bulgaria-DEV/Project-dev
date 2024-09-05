@@ -13,6 +13,7 @@ import { login } from '../../services/fetch';
 import LanguageToggleButton from '../../globalComponents/LanguageToggleButton.jsx'; 
 import * as SecureStore from 'expo-secure-store';
 import LanguageToggleButton from "../../globalComponents/LanguageToggleButton.jsx";
+import { t } from "i18next";
 
 const SignIn = () => {
   const { saveToken, saveUserInfo } = React.useContext(AuthContext);
@@ -146,6 +147,7 @@ const SignIn = () => {
         {biometricLoginEnabled && biometricConfigured && (
           <Button title="Login with Biometrics" onPress={handleBiometricAuth} />
         )}
+          <Button title={t("biometricsLogin")} onPress={handleBiometricAuth} />
         <AuthForm
           title='Login'
           onFormChange={handleFormChange}

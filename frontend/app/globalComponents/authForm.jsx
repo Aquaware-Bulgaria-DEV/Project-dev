@@ -10,8 +10,11 @@ import CustomButton from './customButton';
 
 import GooglePath from '../../assets/authSvg/google.png'
 import FacebookPath from '../../assets/authSvg/facebook.png'
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
-const FormField = ({title, value, placeholder, onFormChange, formValues, setFormValues, type, isSecure, ...props}) => {
+const FormField = ({ title, value, placeholder, onFormChange, formValues, setFormValues, type, isSecure, ...props }) => {
+  const { t } = useTranslation();
   const handleChange = (name, value) => {
     const updatedValues = { ...formValues, [name]: value };
     setFormValues(updatedValues);
@@ -56,19 +59,19 @@ const AuthForm = ({
     return (
       <>
         {/* {isReg && <FormField title={"Име"} type={'name'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />} */}
-        <FormField title={"Е-Поща"} type={'email'} isSecure={false} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
-        <FormField title={"Парола"} type={'password'} isSecure={true} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
-        {isReg && <FormField title={"Повтори парола"} isSecure={true} type={'repeatPassword'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />}
+        <FormField title={t("email")} type={'email'} isSecure={false} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
+        <FormField title={t("password")} type={'password'} isSecure={true} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
+        {isReg && <FormField title={t("passwordRepeat")} isSecure={true} type={'repeatPassword'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />}
         <Text style={styles.errorMsg}>{errorMessage}</Text>
         {
         isReg 
-        ? <CustomButton title={'Създай'} additionalStyles={{marginTop: 15,}} handlePress={onRegister}/> 
-        : <CustomButton title={'Влез'} additionalStyles={{marginTop: 15,}} handlePress={onLogin}/>
+        ? <CustomButton title={t("create")} additionalStyles={{marginTop: 15,}} handlePress={onRegister}/> 
+        : <CustomButton title={t("login")} additionalStyles={{marginTop: 15,}} handlePress={onLogin}/>
         }
-        <Text style={{fontSize: 14, fontWeight: 'bold', textTransform: 'uppercase'}}>или</Text>
+        <Text style={{fontSize: 14, fontWeight: 'bold', textTransform: 'uppercase'}}>{t("or")}</Text>
         <View style={styles.thirdPartyAuthBox}>
           <CustomButton 
-          title={'Влез с Google'} 
+          title={t("loginWithGoogle")} 
           handlePress={googleAuth}
           additionalStyles={{ 
             width: '35%',
@@ -81,7 +84,7 @@ const AuthForm = ({
           imagePath={GooglePath}
             />
           <CustomButton 
-          title={'Влез с Facebook'} 
+          title={t("loginWithFacebook")} 
           handlePress={facebookAuth}
           additionalStyles={{
             width: '35%',
@@ -99,14 +102,14 @@ const AuthForm = ({
         <View>
         <TouchableOpacity >
           <Text style={styles.link}>
-            Забравихте си паролата? <Text onPress={() => console.log('Change Password')} style={styles.linkBold}>Смени парола.</Text>
+          {t("forgotPassword")} <Text onPress={() => console.log('Change Password')} style={styles.linkBold}>{t("resetPassword")}</Text>
           </Text>
         </TouchableOpacity>
         </View>
         <View>
         <TouchableOpacity >
           <Text style={styles.link}>
-            Нямате профил? <Text onPress={() => router.push('signUp')} style={styles.linkBold}>Създай профил.</Text>
+          {t("noAccount")} <Text onPress={() => router.push('signUp')} style={styles.linkBold}>{t("createAccount")}</Text>
           </Text>
         </TouchableOpacity>
         </View>

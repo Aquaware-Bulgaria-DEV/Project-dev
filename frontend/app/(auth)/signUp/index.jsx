@@ -13,6 +13,7 @@ import { styles } from './sign-upStyles';
 import AquawareLogo from '../../../assets/AquawareLogo.svg';
 import { login, register } from '../../services/fetch';
 import LanguageToggleButton from '../../globalComponents/LanguageToggleButton.jsx';
+import { t } from 'i18next';
 
 const SignUp = () => {
   const [formValues, setFormValues] = React.useState({
@@ -41,11 +42,11 @@ const SignUp = () => {
       !formValues.password ||
       !formValues.repeatPassword
     ) {
-      setError('Моля, попълнете всички полета');
+      setError(`${t("fillAllFields")}`);
     }
 
     if (formValues.password !== formValues.repeatPassword) {
-      setError('Паролите не съвпадат');
+      setError(`${t("appSettingsChangePasswordMismatchError")}`);
     }
 
     try {
@@ -94,7 +95,6 @@ const SignUp = () => {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Image source={AquawareLogo} style={styles.image} contentFit='cover' />
-        <LanguageToggleButton />
         <AuthForm
           title='Login' //Possible to make its fields and functionality on submit depending on the title, whether is Login or Register
           onFormChange={handleFormChange}
@@ -105,6 +105,7 @@ const SignUp = () => {
           isReg={true}
           errorMessage={error}
         />
+        <LanguageToggleButton />
       </View>
     </SafeAreaView>
   );

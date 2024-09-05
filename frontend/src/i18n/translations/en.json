@@ -120,6 +120,7 @@
     "addPropertyErrorCompanyName": "Please select a company",
     "addPropertyErrorClientNum": "Please enter a client number",
     "addPropertyErrorWaterMeterNum": "Please enter the water meter number",
+    "addPropertySuccessful": "Property was added successfully!",
     "addRoomTypeKitchen": "KITCHEN",
     "addRoomTypeBathroom": "BATHROOM",
     "addRoomTypeToilet": "TOILET",
@@ -132,6 +133,9 @@
     "addRoomType": "Room type",
     "addRoomPickARoom": "Choose type of room",
     "addRoomName": "Room name",
-    "editRoom": "Edit room"
+    "editRoom": "Edit room",
+    "propertyManagement": "Property management",
+    "propertyManagementDeletionAssertion": "Are you sure you want to delete the room?"
+
 
 }

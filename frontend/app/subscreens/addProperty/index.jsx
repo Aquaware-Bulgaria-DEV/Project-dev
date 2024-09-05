@@ -136,7 +136,7 @@ const AddProperty = () => {
       console.log('dadta', data);
       const response = await services.createProperty(token, data);
       console.log('Property created successfully:', response);
-      Alert.alert('Имотът е успешно създаден!');
+      Alert.alert(`${t("addPropertySuccessful")}`);
       router.push('subscreens/myProperties');
     } catch (error) {
       console.log('Error creating property:', error);

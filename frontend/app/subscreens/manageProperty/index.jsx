@@ -7,8 +7,10 @@ import React, { useEffect, useState } from 'react';
 import AuthContext from '../../Context/AuthContext.jsx';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import CustomModal from '../../globalComponents/CustomModal.jsx';
+import { useTranslation } from 'react-i18next';
 
 const ManageProperty = () => {
+  const { t } = useTranslation();
   const [rooms, setRooms] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [roomToDelete, setRoomToDelete] = useState(null);
@@ -55,11 +57,11 @@ const ManageProperty = () => {
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} />
         <View style={styles.content}>
-          <Text style={styles.title}>Управление на апартамент</Text>
+          <Text style={styles.title}>{t("propertyManagement")}</Text>
 
           <SettingsButton
             style={styles.settingsButton}
-            title={'Добавяне на помещение'}
+            title={t("addRoom")}
             screen={'subscreens/addRoom'}
             icon={'plus'}
             iconColor={'black'}
@@ -102,7 +104,7 @@ const ManageProperty = () => {
         <CustomModal
           isVisible={modalVisible}
           setIsVisible={setModalVisible}
-          questionTxt={'Сигурен ли сте че искате да изтриете стаята?'}
+          questionTxt={t("propertyManagementDeletionAssertion")}
           actionHandler={confirmDeleteRoom}
         />
       </ScrollView>

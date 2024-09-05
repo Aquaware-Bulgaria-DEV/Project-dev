@@ -117,6 +117,7 @@
     "addPropertyErrorCompanyName": "Моля, изберете дружество",
     "addPropertyErrorClientNum": "Моля, въведет клиентски номер",
     "addPropertyErrorWaterMeterNum": "Моля, въведете номер на водомер",
+    "addPropertySuccessful": "Имотът е успешно създаден!",
     "addRoomTypeKitchen": "КУХНЯ",
     "addRoomTypeBathroom": "БАНЯ",
     "addRoomTypeToilet": "ТОАЛЕТНА",
@@ -129,5 +130,7 @@
     "addRoomType": "Вид помещение",
     "addRoomPickARoom": "Избери вид помещение",
     "addRoomName": "Име ма помещението",
-    "editRoom": "Редактиране на помещение"
+    "editRoom": "Редактиране на помещение",
+    "propertyManagement": "Управление на имота",
+    "propertyManagementDeletionAssertion": "Сигурен ли сте че искате да изтриете стаята?"
 }

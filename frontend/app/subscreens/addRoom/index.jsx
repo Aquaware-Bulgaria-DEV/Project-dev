@@ -23,16 +23,16 @@ const AddRoom = () => {
   const { token } = useContext(AuthContext);
 
   const roomTypes = [
-    { id: 1, label: t("addRoomTypeKitchen") },
-    { id: 2, label: t("addRoomTypeBathroom")},
-    { id: 3, label: t("addRoomTypeToilet")},
-    { id: 4, label: t("addRoomTypeLaundry") },
-    { id: 5, label: t("addRoomTypeGarden") },
-    { id: 6, label: t("addRoomTypeGarage") },
+    { id: 1, label: t('addRoomTypeKitchen'), value: 'KITCHEN' },
+    { id: 2, label: t('addRoomTypeBathroom'), value: 'BATHROOM' },
+    { id: 3, label: t('addRoomTypeToilet'), value: 'TOILET' },
+    { id: 4, label: t('addRoomTypeLaundry'), value: 'LAUNDRY' },
+    { id: 5, label: t('addRoomTypeGarden'), value: 'GARDER' },
+    { id: 6, label: t('addRoomTypeGarage'), value: 'GARAGE' },
   ];
   const roomOptions = roomTypes.map((key) => ({
     label: key.label,
-    value: key.label,
+    value: key.value,
     id: key.id,
   }));
 
@@ -43,8 +43,8 @@ const AddRoom = () => {
 
   const validateData = () => {
     const newErrors = {};
-    if (!room) newErrors.room = `${t("addRoomChooseRoomError")}`;
-    if (!name) newErrors.name = `${t("addRoomRoomNameError")}`;
+    if (!room) newErrors.room = `${t('addRoomChooseRoomError')}`;
+    if (!name) newErrors.name = `${t('addRoomRoomNameError')}`;
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -75,30 +75,30 @@ const AddRoom = () => {
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false}></Header>
         <View style={styles.content}>
-          <Text style={styles.title}>{t("addRoom")}</Text>
+          <Text style={styles.title}>{t('addRoom')}</Text>
           <View style={styles.form}>
             <Text style={styles.text}>
-              {t("addRoomType")}
+              {t('addRoomType')}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <View style={{ marginVertical: 5 }}>
               <View style={styles.pickerContainer}>
                 <RNPickerSelect
-                  onValueChange={(room) => handleRoomSelection(room)}
+                  onValueChange={(room) => handleRoomSelection(room)} //to check if needed
                   items={roomOptions}
                   style={{
                     inputIOS: styles.pickerItem,
                     inputAndroid: styles.pickerItem,
                   }}
                   placeholder={{
-                    label: `${t("addRoomPickARoom")}`,
+                    label: `${t('addRoomPickARoom')}`,
                     value: '',
                   }}
                   value={room}
                 />
               </View>
             </View>
-            <Text style={styles.text}>{t("addRoomName")}</Text>
+            <Text style={styles.text}>{t('addRoomName')}</Text>
             <TextInput
               style={styles.inputField}
               onChangeText={setName}
@@ -111,7 +111,7 @@ const AddRoom = () => {
           handlePress={() =>
             handleSubmit(token, propId, { name, room_type: room })
           }
-          title={t("customButtonSave")}
+          title={t('customButtonSave')}
           color={'#388FED'}
           secondColor={'#4C62C7'}
           additionalStyles={styles.saveButton}

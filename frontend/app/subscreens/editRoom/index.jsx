@@ -35,6 +35,7 @@ const EditRoom = () => {
       const response = await services.getRoomDetails(propertyId, roomId, token);
       setRoomType(response.room_type);
       setName(response.name);
+      console.log(roomType);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching property rooms:', error);
@@ -43,17 +44,17 @@ const EditRoom = () => {
   };
 
   const roomTypes = [
-    { id: 1, label: t("addRoomTypeKitchen") },
-    { id: 2, label: t("addRoomTypeBathroom")},
-    { id: 3, label: t("addRoomTypeToilet")},
-    { id: 4, label: t("addRoomTypeLaundry") },
-    { id: 5, label: t("addRoomTypeGarden") },
-    { id: 6, label: t("addRoomTypeGarage") },
+    { id: 1, label: t('addRoomTypeKitchen'), value: 'KITCHEN' },
+    { id: 2, label: t('addRoomTypeBathroom'), value: 'KITCHEN' },
+    { id: 3, label: t('addRoomTypeToilet'), value: 'TOILET' },
+    { id: 4, label: t('addRoomTypeLaundry'), value: 'LAUNDRY' },
+    { id: 5, label: t('addRoomTypeGarden'), value: 'GARDEN' },
+    { id: 6, label: t('addRoomTypeGarage'), value: 'GARAGE' },
   ];
 
   const roomOptions = roomTypes.map((key) => ({
     label: key.label,
-    value: key.label,
+    value: key.value,
   }));
 
   const handleRoomTypeChange = (value) => {
@@ -62,8 +63,8 @@ const EditRoom = () => {
 
   const validateData = () => {
     const newErrors = {};
-    if (!roomType) newErrors.roomType = `${t("addRoomChooseRoomError")}`;
-    if (!name) newErrors.name = `${t("addRoomRoomNameError")}`;
+    if (!roomType) newErrors.roomType = `${t('addRoomChooseRoomError')}`;
+    if (!name) newErrors.name = `${t('addRoomRoomNameError')}`;
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -102,9 +103,9 @@ const EditRoom = () => {
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false}></Header>
         <View style={styles.content}>
-          <Text style={styles.title}>{t("editRoom")}</Text>
+          <Text style={styles.title}>{t('editRoom')}</Text>
           <View style={styles.form}>
-            <Text style={styles.text}>{t("addRoomType")}</Text>
+            <Text style={styles.text}>{t('addRoomType')}</Text>
             <View style={{ marginVertical: 5 }}>
               <View style={styles.pickerContainer}>
                 <RNPickerSelect
@@ -122,7 +123,7 @@ const EditRoom = () => {
               <Text style={styles.errorText}>{errors.roomType}</Text>
             )}
             <Text style={styles.text}>
-              {t("addRoomName")}
+              {t('addRoomName')}
               <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
             </Text>
             <TextInput
@@ -135,7 +136,7 @@ const EditRoom = () => {
         </View>
         <CustomButton
           handlePress={handleSubmit}
-          title={t("customButtonSave")}
+          title={t('customButtonSave')}
           color={'#388FED'}
           secondColor={'#4C62C7'}
           additionalStyles={styles.saveButton}

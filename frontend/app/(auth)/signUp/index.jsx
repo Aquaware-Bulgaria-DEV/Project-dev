@@ -22,10 +22,7 @@ const SignUp = () => {
     password: '',
     repeatPassword: '',
   });
-  const {
-    saveToken,
-    saveUserInfo
-  } = React.useContext(AuthContext);
+  const { saveToken, saveUserInfo } = React.useContext(AuthContext);
 
   const [error, setError] = React.useState('');
   const router = useRouter();
@@ -42,11 +39,11 @@ const SignUp = () => {
       !formValues.password ||
       !formValues.repeatPassword
     ) {
-      setError(`${t("fillAllFields")}`);
+      setError(`${t('fillAllFields')}`);
     }
 
     if (formValues.password !== formValues.repeatPassword) {
-      setError(`${t("appSettingsChangePasswordMismatchError")}`);
+      setError(`${t('appSettingsChangePasswordMismatchError')}`);
     }
 
     try {
@@ -73,10 +70,10 @@ const SignUp = () => {
       }
 
       const profileData = await response.json();
-      saveUserInfo(profileData); 
-      setError(''); 
+      saveUserInfo(profileData);
+      setError('');
       // console.log(profileData);
-      router.push("/home");
+      router.push('subscreens/myProfile');
     } catch (error) {
       setError(error.message);
     }

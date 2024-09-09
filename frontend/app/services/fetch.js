@@ -514,6 +514,10 @@ export const login = async (data) => {
         password: data.password,
       }),
     });
+
+    if(response.status === 400) {
+      throw new Error(`Потребителското Ви име или парола не съответстват`);
+    }
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }

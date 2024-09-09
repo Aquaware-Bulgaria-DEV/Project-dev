@@ -57,11 +57,11 @@ const ManageProperty = () => {
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} />
         <View style={styles.content}>
-          <Text style={styles.title}>{t("propertyManagement")}</Text>
+          <Text style={styles.title}>{t('propertyManagement')}</Text>
 
           <SettingsButton
             style={styles.settingsButton}
-            title={t("addRoom")}
+            title={t('addRoom')}
             screen={'subscreens/addRoom'}
             icon={'plus'}
             iconColor={'black'}
@@ -93,7 +93,7 @@ const ManageProperty = () => {
                   },
                 })
               }
-              isInnerPressable={false}
+              // isInnerPressable={false}
               onSecondIconPress={() => {
                 setRoomToDelete(room.key);
                 setModalVisible(true);
@@ -104,7 +104,7 @@ const ManageProperty = () => {
         <CustomModal
           isVisible={modalVisible}
           setIsVisible={setModalVisible}
-          questionTxt={t("propertyManagementDeletionAssertion")}
+          questionTxt={t('propertyManagementDeletionAssertion')}
           actionHandler={confirmDeleteRoom}
         />
       </ScrollView>

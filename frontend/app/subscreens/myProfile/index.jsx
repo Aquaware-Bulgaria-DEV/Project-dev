@@ -26,7 +26,6 @@ import { styles } from './myProfileStyles.js';
 import { useTranslation } from 'react-i18next';
 import * as service from '../../services/fetch.js';
 import { useRouter } from 'expo-router';
-import { useNavigationBuilder } from '@react-navigation/native';
 
 const { height } = Dimensions.get('window');
 
@@ -44,19 +43,26 @@ const MyProfile = () => {
   const { control } = useForm();
 
   const pencil = getIcon('pencil', 'white', 13);
-  const formattedDate = format(parseISO(userInfo.date_joined), 'dd.MM.yyyy');
 
   useEffect(() => {
-    if (userInfo.first_name === null && userInfo.last_name === null) {
-      setName();
+    if (!userInfo.first_name && !userInfo.last_name) {
+      setName('');
+    } else if (userInfo.last_name === 'undefined') {
+      setName(userInfo.first_name);
     } else {
-      setName(userInfo.first_name + ' ' + userInfo.last_name);
+      setName(`${userInfo.first_name} ${userInfo.last_name}`);
     }
     console.log(userInfo);
-    setPhone(userInfo.phone_number);
-    setEmail(userInfo.email);
-    setPicture(userInfo.profile_picture);
-    setDate(formattedDate);
+    setPhone(userInfo.phone_number || '');
+    setEmail(userInfo.email || '');
+    setPicture(userInfo.profile_picture || null);
+    if (userInfo.date_joined) {
+      const formattedDate = format(
+        parseISO(userInfo.date_joined),
+        'dd.MM.yyyy'
+      );
+      setDate(formattedDate);
+    }
   }, [userInfo]);
 
   const handleRemove = () => {

@@ -54,10 +54,6 @@ const SignIn = () => {
       setError("All fields are required");
       return;
     }
-    if (formValues.password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      return;
-    }
 
     try {
       const loginResponse = await login(formValues);

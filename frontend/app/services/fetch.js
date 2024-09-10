@@ -596,6 +596,10 @@ export const addSelfReport = async (bodyData) => {
       throw new Error(errorMessage);
     }
 
+    if(response.status === 500) {
+      throw new Error(`Моля въведете реална стойност.`);
+    }
+
     return response;
   } catch (e) {
     // Log and rethrow the error with a message
@@ -623,6 +627,10 @@ export const editSelfReport = async (token, value, waterMeterId) => {
     if (contentType && contentType.includes('application/json')) {
       const responseData = await response.json();
       // console.log("Response data:", responseData);
+      if(response.status === 400) {
+        throw new Error(`Моля въведете реална стойност.`);
+      }
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

@@ -44,6 +44,7 @@ const SignUp = () => {
 
     if (formValues.password !== formValues.repeatPassword) {
       setError(`${t('appSettingsChangePasswordMismatchError')}`);
+      return;
     }
 
     try {

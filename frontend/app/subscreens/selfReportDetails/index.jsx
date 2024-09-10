@@ -29,7 +29,6 @@ const SelfReportDetails = () => {
         .catch(err => console.log("getSingleSelfReport error on details: ", err));
     }, [id]);
     
-
     useEffect(() => {
       if (selfReport?.value) {
         setQuantity(selfReport.value.toString()); // Ensure the quantity is a string
@@ -59,7 +58,7 @@ const SelfReportDetails = () => {
           <View style={styles.dataContainer}>
             <Text style={styles.dataLabel}>Имот</Text>
             <View style={styles.dataNameWrapper}>
-                <Text style={styles.dataName}>Кухня</Text>
+                <Text style={styles.dataName}>{selfReport?.property_type}</Text>
             </View>
           </View>
           <View style={styles.dataContainer}>

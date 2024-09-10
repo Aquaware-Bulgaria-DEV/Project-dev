@@ -45,23 +45,27 @@ const MyProfile = () => {
   const pencil = getIcon('pencil', 'white', 13);
 
   useEffect(() => {
-    if (!userInfo.first_name && !userInfo.last_name) {
-      setName('');
-    } else if (userInfo.last_name === 'undefined') {
-      setName(userInfo.first_name);
-    } else {
-      setName(`${userInfo.first_name} ${userInfo.last_name}`);
-    }
-    console.log(userInfo);
-    setPhone(userInfo.phone_number || '');
-    setEmail(userInfo.email || '');
-    setPicture(userInfo.profile_picture || null);
-    if (userInfo.date_joined) {
-      const formattedDate = format(
-        parseISO(userInfo.date_joined),
-        'dd.MM.yyyy'
-      );
-      setDate(formattedDate);
+    if (userInfo) {
+      if (!userInfo.first_name && !userInfo.last_name) {
+        setName('');
+      } else if (!userInfo.first_name) {
+        setName(userInfo.last_name || '');
+      } else if (!userInfo.last_name) {
+        setName(userInfo.first_name || '');
+      } else {
+        setName(`${userInfo.first_name || ''} ${userInfo.last_name || ''}`);
+      }
+      console.log(userInfo);
+      setPhone(userInfo.phone_number || '');
+      setEmail(userInfo.email || '');
+      setPicture(userInfo.profile_picture || null);
+      if (userInfo.date_joined) {
+        const formattedDate = format(
+          parseISO(userInfo.date_joined),
+          'dd.MM.yyyy'
+        );
+        setDate(formattedDate);
+      }
     }
   }, [userInfo]);
 

@@ -30,7 +30,6 @@ const SelfReportDetails = () => {
     }, [id]);
     
     useEffect(() => {
-      console.log(selfReport);
       if (selfReport?.value) {
         setQuantity(selfReport.value.toString()); // Ensure the quantity is a string
       }

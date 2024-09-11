@@ -45,6 +45,12 @@ export const styles = StyleSheet.create({
     opacity: .5,
     marginLeft: 15,
   },
+  errorMessage: {
+    color: 'red',
+    textAlign: 'center',
+    fontSize: 18,
+    marginBottom: 20
+  },
   dateContainer: {
     flexDirection: 'row',
     gap: 10,
@@ -56,11 +62,13 @@ export const styles = StyleSheet.create({
    color: 'black',
    opacity: .5 
   },
+  
   date: {
     color: 'black',
     fontWeight: 'bold',
     fontSize: 18,
     opacity: .5,
   }
+
 
 });

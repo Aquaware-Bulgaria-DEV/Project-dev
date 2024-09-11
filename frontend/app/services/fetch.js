@@ -190,6 +190,29 @@ export const getAllPropertyTypes = async (token) => {
   }
 };
 
+export const getUserRank = async (token) => {
+  try {
+    const response = await fetch(
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/user-rank/',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateProfile = async (profileData, picture, token) => {
   const formData = new FormData();
 
@@ -236,6 +259,31 @@ export const createProperty = async (token, data) => {
       `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/`,
       {
         method: 'POST',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
+export const editProperty = async (token, propId, data) => {
+  try {
+    const response = await fetch(
+      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propId}/`,
+      {
+        method: 'PATCH',
         headers: {
           Authorization: `Token ${token}`,
           'Content-Type': 'application/json',
@@ -515,7 +563,7 @@ export const login = async (data) => {
       }),
     });
 
-    if(response.status === 400) {
+    if (response.status === 400) {
       throw new Error(`Потребителското Ви име или парола не съответстват`);
     }
     if (!response.ok) {
@@ -596,7 +644,7 @@ export const addSelfReport = async (bodyData) => {
       throw new Error(errorMessage);
     }
 
-    if(response.status === 500) {
+    if (response.status === 500) {
       throw new Error(`Моля въведете реална стойност.`);
     }
 
@@ -627,7 +675,7 @@ export const editSelfReport = async (token, value, waterMeterId) => {
     if (contentType && contentType.includes('application/json')) {
       const responseData = await response.json();
       // console.log("Response data:", responseData);
-      if(response.status === 400) {
+      if (response.status === 400) {
         throw new Error(`Моля въведете реална стойност.`);
       }
 
@@ -648,3 +696,28 @@ export const editSelfReport = async (token, value, waterMeterId) => {
 };
 
 ///
+
+export const confirmPass = async (token, password) => {
+  try {
+    const response = await fetch(
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/deactivate/',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password: password }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.log('Error', e);
+    throw e;
+  }
+};

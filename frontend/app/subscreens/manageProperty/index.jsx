@@ -50,6 +50,7 @@ const ManageProperty = () => {
 
   useEffect(() => {
     fetchPropertyRooms(propId);
+    console.log('correct id', propId);
   }, []);
 
   return (
@@ -65,7 +66,7 @@ const ManageProperty = () => {
             screen={'subscreens/addRoom'}
             icon={'plus'}
             iconColor={'black'}
-            params={propId}
+            params={{ propId: propId }}
             onIconPress={() =>
               router.push({
                 pathname: 'subscreens/addRoom',

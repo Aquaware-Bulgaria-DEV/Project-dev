@@ -61,7 +61,7 @@ export const NotificationProvider = ({ children }) => {
     }
   };
 
-  const togglePushNotifications = async () => {
+  const togglePushNotifications = async (t) => {
     /**
      * When we start getting real data we must implement the following logic:
      * In the case of a sharp change in the value compared to the last reported period 
@@ -72,7 +72,7 @@ export const NotificationProvider = ({ children }) => {
     setPushNotificationsTurnedOn(newState);
     
     if (newState) {
-      const token = await registerForPushNotificationsAsync();
+      const token = await registerForPushNotificationsAsync(t);
       if (!token) {
         setPushNotificationsTurnedOn(false); // Revert the state if token is missing
         console.log("Push notification token is missing");
@@ -90,6 +90,7 @@ export const NotificationProvider = ({ children }) => {
       daily: isScheduledDailyTurnedOn,
       weekly: isScheduledWeeklyTurnedOn,
       monthly: isScheduledMonthlyTurnedOn,
+      language: preferences.language
     });
     
     if (!success) {
@@ -108,6 +109,7 @@ export const NotificationProvider = ({ children }) => {
       daily: isScheduledDailyTurnedOn,
       weekly: isScheduledWeeklyTurnedOn,
       monthly: isScheduledMonthlyTurnedOn,
+      language: preferences.language
     });
   
     if (!success) {
@@ -134,6 +136,7 @@ export const NotificationProvider = ({ children }) => {
       daily: newState,
       weekly: false,
       monthly: false,
+      language: preferences.language
     });
   
     if (!success) {
@@ -163,6 +166,8 @@ export const NotificationProvider = ({ children }) => {
       daily: false,
       weekly: newState,
       monthly: false,
+      language: preferences.language
+
     });
   
     if (!success) {
@@ -192,6 +197,8 @@ export const NotificationProvider = ({ children }) => {
       daily: false,
       weekly: false,
       monthly: newState,
+      language: preferences.language
+
     });
   
     if (!success) {

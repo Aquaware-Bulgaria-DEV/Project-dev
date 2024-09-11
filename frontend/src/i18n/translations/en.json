@@ -52,6 +52,8 @@
     "notificationsScheduledDaily": "Every day",
     "notificationsScheduledWeekly": "Every week",
     "notificationsScheduledMonthly": "Every month",
+    "notificationsErrorToken": "Failed to get push token for push notification!",
+    "notificationsErrorPushNotifications": "Must use physical device for Push Notifications",
     "appSettingsBiometricDataLogin": "Log In with Face/Touch ID",
     "appSettingsPasswordLogin": "Login with password",
     "appSettingsChangePassword": "Change your password",

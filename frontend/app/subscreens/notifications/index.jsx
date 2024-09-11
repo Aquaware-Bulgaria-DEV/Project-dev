@@ -32,7 +32,7 @@ const Notifications = () => {
   const [notificationFrequency, setNotificationFrequency] = useState(null);
 
   const handleTogglePushNotificationsBtn = async () => {
-    await togglePushNotifications();
+    await togglePushNotifications(t);
     if (!isPushNotificationsTurnedOn && expoPushToken) {
       Alert.alert(
         "Push Notifications",

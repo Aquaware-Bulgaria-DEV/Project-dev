@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
   },
   scrollViewContent: {
     paddingBottom: 125,
-
+    flexGrow: 1,
     marginTop: 35,
   },
   // title: {
@@ -19,14 +19,13 @@ export const styles = StyleSheet.create({
   // },
   text: {
     marginVertical: 35,
-    // fontStyle: 'normal',
   },
   headerTitle: {
     fontSize: 25,
     paddingBottom: 15,
     marginHorizontal: 24,
-    textShadowColor: '#000', // Shadow color
-    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
   },
   description: {
@@ -36,12 +35,15 @@ export const styles = StyleSheet.create({
     lineHeight: 25,
     marginHorizontal: 24,
   },
-  saveButton: {
+  tipsButton: {
     width: '88%',
     height: 68,
     borderRadius: 28,
     padding: 0,
     alignSelf: 'center',
+    marginBottom: 30,
+    position: 'absolute',
+    bottom: 30,
   },
   buttonText: {
     fontSize: 20,
@@ -64,13 +66,14 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     opacity: 0.3,
   },
-  removeBtn: {
-    fontSize: 12,
-    color: '#F67280',
-  },
+  // removeBtn: {
+  //   fontSize: 12,
+  //   color: '#F67280',
+  // },
   innerContainer: {
     backgroundColor: '#FFFFFF',
-    height: '87%',
+    // height: '87%',
+    flex: 1,
     marginVertical: 10,
     paddingTop: 30,
     paddingBottom: 30,
@@ -88,7 +91,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 25,
     marginVertical: 5,
     alignContent: 'center',
-    position: 'relative',
+    // position: 'relative',
   },
   avatar: {
     width: 95,

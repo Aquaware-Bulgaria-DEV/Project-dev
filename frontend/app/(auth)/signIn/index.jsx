@@ -91,14 +91,26 @@ const SignIn = () => {
 
   const handleBiometricAuth = async () => {
     try {
-      const result = await LocalAuthentication.authenticateAsync();
-      if (result.success) {
-        await sendCredentials();
+      const hasHardware = await LocalAuthentication.hasHardwareAsync();
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+  
+      if (hasHardware && isEnrolled) {
+        const result = await LocalAuthentication.authenticateAsync({
+          promptMessage: 'Log in with Face ID',
+          fallbackLabel: 'Use Passcode',  // Will show passcode as a fallback if Face ID fails
+          disableDeviceFallback: false,   // Ensure fallback is not disabled
+        });
+  
+        if (result.success) {
+          await sendCredentials();  // Successful authentication
+        } else {
+          Alert.alert('Authentication failed', 'Biometric authentication was not successful.');
+        }
       } else {
-        Alert.alert("Authentication failed", "Biometric authentication was not successful");
+        Alert.alert('Biometrics not available', 'Please ensure your biometrics are set up.');
       }
     } catch (error) {
-      Alert.alert("Error", "An error occurred during biometric authentication");
+      Alert.alert('Error', 'An error occurred during biometric authentication.');
     }
   };
 

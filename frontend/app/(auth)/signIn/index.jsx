@@ -97,13 +97,12 @@ const SignIn = () => {
       if (hasHardware && isEnrolled) {
         const result = await LocalAuthentication.authenticateAsync({
           promptMessage: 'Log in with Face ID',
-          fallbackLabel: 'Use Passcode',  // Will show passcode as a fallback if Face ID fails
-          disableDeviceFallback: false,   // Ensure fallback is not disabled
+          fallbackLabel: 'Use Passcode', 
+          disableDeviceFallback: false, 
         });
   
         if (result.success) {
-          await sendCredentials();  // Successful authentication
-        } else {
+          await sendCredentials(); 
           Alert.alert('Authentication failed', 'Biometric authentication was not successful.');
         }
       } else {

@@ -99,13 +99,13 @@ const AuthForm = ({
         </View>
         {!isReg && 
         <>
-        <View>
+        {/* <View>
         <TouchableOpacity >
           <Text style={styles.link}>
           {t("forgotPassword")} <Text onPress={() => console.log('Change Password')} style={styles.linkBold}>{t("resetPassword")}</Text>
           </Text>
         </TouchableOpacity>
-        </View>
+        </View> */}
         <View>
         <TouchableOpacity >
           <Text style={styles.link}>

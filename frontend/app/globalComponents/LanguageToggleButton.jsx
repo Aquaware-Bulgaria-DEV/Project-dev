@@ -5,8 +5,6 @@ import { styles } from './LanguageToggleButtonStyles'; // Define styles in a sep
 
 const LanguageToggleButton = () => {
   const { toggleLanguage, language } = useContext(LanguageContext);
-  console.log(language);
-  
 
   return (
     <TouchableOpacity onPress={toggleLanguage}>

@@ -31,6 +31,7 @@ const { height } = Dimensions.get('window');
 
 const MyProfile = () => {
   const { t, i18n } = useTranslation();
+
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -48,14 +49,12 @@ const MyProfile = () => {
     if (userInfo) {
       if (!userInfo.first_name && !userInfo.last_name) {
         setName('');
-      } else if (!userInfo.first_name) {
-        setName(userInfo.last_name || '');
-      } else if (!userInfo.last_name) {
+      } else if (userInfo.last_name == 'undefined') {
         setName(userInfo.first_name || '');
-      } else {
-        setName(`${userInfo.first_name || ''} ${userInfo.last_name || ''}`);
+      } else if (userInfo.first_name && userInfo.last_name) {
+        setName(`${userInfo.first_name} ${userInfo.last_name ?? ''}`);
       }
-      console.log(userInfo);
+
       setPhone(userInfo.phone_number || '');
       setEmail(userInfo.email || '');
       setPicture(userInfo.profile_picture || null);
@@ -68,6 +67,15 @@ const MyProfile = () => {
       }
     }
   }, [userInfo]);
+
+  const handleDeleteProf = async (password) => {
+    const response = await service.confirmPass(token, password);
+    if (response) {
+      router.push({
+        pathname: 'signUp',
+      });
+    }
+  };
 
   const handleRemove = () => {
     Alert.alert(
@@ -93,10 +101,7 @@ const MyProfile = () => {
                 },
                 {
                   text: `${t('alertDeleteProfileConfirm')}`,
-                  onPress: (password) => {
-                    console.log('Изтриване с парола:', password);
-                    //TODO: add verification logic
-                  },
+                  onPress: (password) => handleDeleteProf(password),
                 },
               ],
               'secure-text'
@@ -128,9 +133,11 @@ const MyProfile = () => {
         Alert.alert('Профилът Ви бе успешно променен.');
 
         router.push('home');
-      } else {
-        Alert.alert('Неуспешна промяна. Моля, опитайте отново.');
       }
+      //  else {
+
+      //   Alert.alert('Неуспешна промяна. Моля, опитайте отново.');
+      // }
     } catch (error) {
       console.error('Error updating profile:', error);
       Alert.alert('Неуспешна промяна. Моля, опитайте отново.');

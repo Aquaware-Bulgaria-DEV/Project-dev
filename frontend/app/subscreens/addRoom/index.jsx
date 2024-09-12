@@ -16,7 +16,7 @@ const AddRoom = () => {
   const [errors, setErrors] = useState({});
 
   const params = useLocalSearchParams();
-  const propId = params[0];
+  const propId = params['propId'];
 
   const router = useRouter();
 
@@ -27,7 +27,7 @@ const AddRoom = () => {
     { id: 2, label: t('addRoomTypeBathroom'), value: 'BATHROOM' },
     { id: 3, label: t('addRoomTypeToilet'), value: 'TOILET' },
     { id: 4, label: t('addRoomTypeLaundry'), value: 'LAUNDRY' },
-    { id: 5, label: t('addRoomTypeGarden'), value: 'GARDER' },
+    { id: 5, label: t('addRoomTypeGarden'), value: 'GARDEN' },
     { id: 6, label: t('addRoomTypeGarage'), value: 'GARAGE' },
   ];
   const roomOptions = roomTypes.map((key) => ({
@@ -57,7 +57,7 @@ const AddRoom = () => {
         name,
         room_type: room,
       });
-      console.log(response);
+      console.log('res', response);
 
       if (response) {
         router.push({

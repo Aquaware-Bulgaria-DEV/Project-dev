@@ -1,6 +1,6 @@
 // SignIn.js
 import React, { useEffect, useState } from "react";
-import { View, Text, SafeAreaView, Alert, Button } from "react-native";
+import { View, SafeAreaView, Button, Alert } from "react-native";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,18 +12,42 @@ import AquawareLogo from "../../../assets/AquawareLogo.svg";
 import { login } from "../../services/fetch";
 import LanguageToggleButton from "../../globalComponents/LanguageToggleButton.jsx";
 import * as SecureStore from "expo-secure-store";
+import * as Facebook from 'expo-auth-session/providers/facebook'; // Facebook provider
 import { t } from "i18next";
 
 const SignIn = () => {
   const { saveToken, saveUserInfo } = React.useContext(AuthContext);
-  const [formValues, setFormValues] = React.useState({
-    email: "",
-    password: "",
-  });
+  const [formValues, setFormValues] = React.useState({ email: "", password: "" });
   const [error, setError] = React.useState("");
   const [biometricLoginEnabled, setBiometricLoginEnabled] = useState(false);
   const [biometricConfigured, setBiometricConfigured] = useState(false);
   const router = useRouter();
+
+  // Facebook login setup
+  const [request, response, promptAsync] = Facebook.useAuthRequest({
+    clientId: '1052805583190115',
+  });
+  
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { access_token } = response.params;
+
+      // Use the access token to fetch user details from Facebook's API
+      fetch(`https://graph.facebook.com/me?access_token=${access_token}`)
+        .then(res => res.json())
+        .then(async userData => {
+          // Handle Facebook user authentication (e.g., send to your backend for verification)
+          await saveToken(access_token);
+          // Assuming saveUserInfo will store the profile details fetched from Facebook
+          saveUserInfo(userData);
+          router.push("/home");
+        })
+        .catch(err => {
+          console.error(err);          
+          setError("Failed to log in with Facebook.");
+        });
+    }
+  }, [response]);
 
   useEffect(() => {
     const loadBiometricPreference = async () => {
@@ -93,23 +117,23 @@ const SignIn = () => {
     try {
       const hasHardware = await LocalAuthentication.hasHardwareAsync();
       const isEnrolled = await LocalAuthentication.isEnrolledAsync();
-  
+
       if (hasHardware && isEnrolled) {
         const result = await LocalAuthentication.authenticateAsync({
-          promptMessage: 'Log in with Face ID',
-          fallbackLabel: 'Use Passcode', 
-          disableDeviceFallback: false, 
+          promptMessage: "Log in with Face ID",
+          fallbackLabel: "Use Passcode",
+          disableDeviceFallback: false,
         });
-  
+
         if (result.success) {
-          await sendCredentials(); 
-          Alert.alert('Authentication failed', 'Biometric authentication was not successful.');
+          await sendCredentials();
+          console.log("Biometric authentication was successful.");
         }
       } else {
-        Alert.alert('Biometrics not available', 'Please ensure your biometrics are set up.');
+        Alert.alert("Biometrics not available", "Please ensure your biometrics are set up.");
       }
     } catch (error) {
-      Alert.alert('Error', 'An error occurred during biometric authentication.');
+      Alert.alert("Error", "An error occurred during biometric authentication.");
     }
   };
 
@@ -130,6 +154,10 @@ const SignIn = () => {
     }
   };
 
+  const handleFacebookLogin = () => {
+    promptAsync();
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -141,6 +169,7 @@ const SignIn = () => {
           title="Login"
           onFormChange={handleFormChange}
           onLogin={handleLogin}
+          facebookAuth={handleFacebookLogin}
           errorMessage={error}
         />
         <LanguageToggleButton />

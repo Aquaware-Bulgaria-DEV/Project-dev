@@ -1,15 +1,10 @@
 import {styles} from "./authFormStyles"
-
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { router } from 'expo-router'
-
 import  globalStyles  from '../globalStyles';
 import CustomButton from './customButton';
-
-
-import GooglePath from '../../assets/authSvg/google.png'
-import FacebookPath from '../../assets/authSvg/facebook.png'
+import FacebookPath from '../../assets/authSvg/facebook.png';
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
@@ -29,94 +24,68 @@ const FormField = ({ title, value, placeholder, onFormChange, formValues, setFor
         secureTextEntry={isSecure}></TextInput>
       </View>
     </View>
-  )
-}
+  );
+};
 
 const AuthForm = ({
-    title, 
-    value, 
-    placeholder, 
-    onFormChange, 
-    onLogin, 
-    googleAuth, 
-    facebookAuth, 
-    isReg, 
-    onRegister,  
-    errorMessage,
-    ...props
-  }) => {
-    // let errorMsg = 'Error Message Example';
-    const [formValues, setFormValues] = React.useState({
-      // name: '',
-      email: '',
-      password: '',
-      repeatPassword: ''
-    })
-    useEffect(() => {
-      isReg ? null : setFormValues(prev => prev = { email: '', password: '' })
-    }, [])
-  
-    return (
-      <>
-        {/* {isReg && <FormField title={"Име"} type={'name'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />} */}
-        <FormField title={t("email")} type={'email'} isSecure={false} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
-        <FormField title={t("password")} type={'password'} isSecure={true} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
-        {isReg && <FormField title={t("passwordRepeat")} isSecure={true} type={'repeatPassword'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />}
-        <Text style={styles.errorMsg}>{errorMessage}</Text>
-        {
+  title, 
+  value, 
+  placeholder, 
+  onFormChange, 
+  onLogin, 
+  facebookAuth, 
+  isReg, 
+  onRegister,  
+  errorMessage,
+  ...props
+}) => {
+  const [formValues, setFormValues] = React.useState({
+    email: '',
+    password: '',
+    repeatPassword: ''
+  });
+
+  useEffect(() => {
+    isReg ? null : setFormValues(prev => prev = { email: '', password: '' });
+  }, []);
+
+  return (
+    <>
+      <FormField title={t("email")} type={'email'} isSecure={false} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
+      <FormField title={t("password")} type={'password'} isSecure={true} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />
+      {isReg && <FormField title={t("passwordRepeat")} isSecure={true} type={'repeatPassword'} onFormChange={onFormChange} formValues={formValues} setFormValues={setFormValues} />}
+      <Text style={styles.errorMsg}>{errorMessage}</Text>
+      {
         isReg 
-        ? <CustomButton title={t("create")} additionalStyles={{marginTop: 15,}} handlePress={onRegister}/> 
-        : <CustomButton title={t("login")} additionalStyles={{marginTop: 15,}} handlePress={onLogin}/>
-        }
-        <Text style={{fontSize: 14, fontWeight: 'bold', textTransform: 'uppercase'}}>{t("or")}</Text>
-        <View style={styles.thirdPartyAuthBox}>
-          <CustomButton 
-          title={t("loginWithGoogle")} 
-          handlePress={googleAuth}
-          additionalStyles={{ 
-            width: '35%',
-            padding: 5,
-            // borderRadius: 30, 
-            backgroundColor: '#FFF',
-            borderColor: globalStyles.primaryColor,
-            borderWidth: 1, 
-          }}
-          imagePath={GooglePath}
-            />
-          <CustomButton 
+        ? <CustomButton title={t("create")} additionalStyles={{marginTop: 15}} handlePress={onRegister}/> 
+        : <CustomButton title={t("login")} additionalStyles={{marginTop: 15}} handlePress={onLogin}/>
+      }
+      <Text style={{fontSize: 14, fontWeight: 'bold', textTransform: 'uppercase'}}>{t("or")}</Text>
+      <View style={styles.thirdPartyAuthBox}>
+        <CustomButton 
           title={t("loginWithFacebook")} 
           handlePress={facebookAuth}
           additionalStyles={{
             width: '35%',
             padding: 5,
-            // borderRadius: 30, 
             backgroundColor: '#FFF',
             borderColor: globalStyles.primaryColor,
-            borderWidth: 1, 
+            borderWidth: 1,
           }}
           imagePath={FacebookPath}
-              />
-        </View>
-        {!isReg && 
-        <>
-        {/* <View>
-        <TouchableOpacity >
-          <Text style={styles.link}>
-          {t("forgotPassword")} <Text onPress={() => console.log('Change Password')} style={styles.linkBold}>{t("resetPassword")}</Text>
-          </Text>
-        </TouchableOpacity>
-        </View> */}
+        />
+      </View>
+      {!isReg && 
         <View>
-        <TouchableOpacity >
-          <Text style={styles.link}>
-          {t("noAccount")} <Text onPress={() => router.push('signUp')} style={styles.linkBold}>{t("createAccount")}</Text>
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.link}>
+              {t("noAccount")} <Text onPress={() => router.push('signUp')} style={styles.linkBold}>{t("createAccount")}</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
-        </>}
-      </>
-    )
-}
+      }
+    </>
+  );
+};
 
-export default AuthForm
-
+export default AuthForm;

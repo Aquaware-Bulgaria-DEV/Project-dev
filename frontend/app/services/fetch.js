@@ -202,14 +202,16 @@ export const getUserRank = async (token) => {
         },
       }
     );
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const result = await response.json();
 
+    const result = await response.json();
     return result;
   } catch (error) {
-    throw error;
+    console.error('Error fetching user rank:', error.message);
+    throw new Error(`Failed to fetch user rank: ${error.message}`);
   }
 };
 

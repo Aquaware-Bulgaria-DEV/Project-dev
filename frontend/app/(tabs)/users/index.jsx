@@ -22,12 +22,21 @@ const Users = () => {
   const [name, setName] = useState('');
   const [town, setTown] = useState('');
   const [picture, setPicture] = useState(null);
-  const [place, setPlace] = useState(50);
+
   const [opacity, setOpacity] = useState(1);
+  const [rank, setRank] = useState('');
+
+  const getUserRank = async (token) => {
+    try {
+      const response = await services.getUserRank(token);
+      setRank(response);
+    } catch (error) {
+      console.error('Error fetching user rank:', error);
+    }
+  };
+
   useEffect(() => {
-    const userRank = async () => await services.getUserRank(token);
-    console.log(userRank());
-    if (userInfo) {
+    if (userInfo && token) {
       if (!userInfo.first_name && !userInfo.last_name) {
         setName('');
       } else if (userInfo.last_name == 'undefined') {
@@ -40,7 +49,8 @@ const Users = () => {
 
       setPicture(userInfo.profile_picture || null);
     }
-  }, [userInfo]);
+    getUserRank(token);
+  }, [userInfo, token]);
   const router = useRouter();
 
   return (
@@ -73,7 +83,7 @@ const Users = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.numPosition}>{place}</Text>
+          <Text style={styles.numPosition}>{rank.town_rank}</Text>
         </View>
 
         <View style={styles.credentials}>
@@ -94,7 +104,7 @@ const Users = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.numPosition}>{place}</Text>
+          <Text style={styles.numPosition}>{rank.company_rank}</Text>
         </View>
 
         <CustomButton

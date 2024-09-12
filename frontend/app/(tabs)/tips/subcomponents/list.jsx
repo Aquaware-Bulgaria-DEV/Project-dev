@@ -48,7 +48,7 @@ export const List = () => {
         ))}
       </View> */}
 
-      <Pressable
+      {/* <Pressable
         style={styles.accountContainer}
         onPress={() => router.push('subscreens/myProfile')}
       >
@@ -60,7 +60,7 @@ export const List = () => {
           </View>
         </View>
         <AntDesignI name={'arrowright'} size={35} style={styles.arrow} />
-      </Pressable>
+      </Pressable> */}
 
       <TipsByCategory></TipsByCategory>
     </ScrollView>

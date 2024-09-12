@@ -17,7 +17,7 @@ import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { parseISO, format } from 'date-fns';
-
+import RNPickerSelect from 'react-native-picker-select';
 import AuthContext from '../../Context/AuthContext.jsx';
 import CustomButton from '../../globalComponents/customButton.jsx';
 import { Header } from '../../globalComponents/header.jsx';
@@ -38,11 +38,28 @@ const MyProfile = () => {
   const [date, setDate] = useState('');
   const [picture, setPicture] = useState(null);
   const [opacity, setOpacity] = useState(1);
+  const [city, setCity] = useState('');
+
+  const cities = [
+    { id: 1, town: 'Sofia', label: 'Sofia' },
+    { id: 2, town: 'Plovdiv', label: 'Plovdiv' },
+    { id: 3, town: 'Blagoevgrad', label: 'Blagoevgrad' },
+    { id: 4, town: 'Burgas', label: 'Burgas' },
+    { id: 5, town: 'Varna', label: 'Varna' },
+    { id: 6, town: 'Stara Zagora', label: 'Stara Zagora' },
+  ];
+
+  const cityOptions = cities.map((city) => ({
+    label: city.label,
+    value: city.town,
+    id: city.id,
+  }));
 
   const router = useRouter();
   const { userInfo, token, saveUserInfo } = useContext(AuthContext);
   const { control } = useForm();
 
+  console.log(userInfo);
   const pencil = getIcon('pencil', 'white', 13);
 
   useEffect(() => {
@@ -54,7 +71,7 @@ const MyProfile = () => {
       } else if (userInfo.first_name && userInfo.last_name) {
         setName(`${userInfo.first_name} ${userInfo.last_name ?? ''}`);
       }
-
+      setCity(userInfo.city || '');
       setPhone(userInfo.phone_number || '');
       setEmail(userInfo.email || '');
       setPicture(userInfo.profile_picture || null);
@@ -118,6 +135,7 @@ const MyProfile = () => {
       last_name: name.split(' ')[1],
       phone_number: phone,
       email: email,
+      city: city,
     };
 
     try {
@@ -156,6 +174,10 @@ const MyProfile = () => {
       const localUri = result.assets[0].uri;
       setPicture(localUri); // Update the picture state
     }
+  };
+
+  const handleTownSelection = (value) => {
+    setCity(value);
   };
 
   return (
@@ -239,8 +261,26 @@ const MyProfile = () => {
                     />
                   )}
                 />
+                <Text style={styles.inputFieldName}>Град</Text>
+                <View style={{ marginVertical: 5 }}>
+                  <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                      onValueChange={(city) => handleTownSelection(city)} //to check if needed
+                      items={cityOptions}
+                      style={{
+                        inputIOS: styles.pickerItem,
+                        inputAndroid: styles.pickerItem,
+                      }}
+                      placeholder={{
+                        label: city.label || 'Изберете град',
+                        value: city.label || '',
+                        id: city.id || '',
+                      }}
+                      value={city}
+                    />
+                  </View>
+                </View>
                 <Text style={styles.inputFieldName}>{t('myProfileEmail')}</Text>
-
                 <TextInput
                   name='email'
                   style={styles.inputField}

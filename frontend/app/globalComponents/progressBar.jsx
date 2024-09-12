@@ -98,7 +98,7 @@ const CircularProgressBar = ({ progress, quantity = 0, errMsg, size = 100, image
       </View>
       {!errMsg && (
         <Image
-          source={imageSource}
+          source={{uri: imageSource}}
           style={[styles.image, { width: size - strokeWidthBackground - 12, height: size - strokeWidthBackground - 12 }]}
           resizeMode="cover"
         />

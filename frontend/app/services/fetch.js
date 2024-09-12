@@ -522,7 +522,7 @@ export const getSingleSelfReport = async (token, id) => {
 export const getRandomAdviceAndImage = async (token, waterUsage) => {
   try {
     const response = await fetch(
-      'http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/',
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/consumption-advice/',
       {
         method: 'POST',
         headers: {
@@ -533,7 +533,7 @@ export const getRandomAdviceAndImage = async (token, waterUsage) => {
       }
     );
     if (!response.ok) {
-      throw new Error("Something went wrong fetching advice and image");
+      throw new Error(`Couldn't fetch advice and image. Response status: ${response.status}`);
     }
     const data = await response.json();
     console.log('Data:', data);

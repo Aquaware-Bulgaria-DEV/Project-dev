@@ -19,19 +19,18 @@ const DoubleProgressBar = () => {
   const { progressPercent, currentQuantity, errMsg } = useLocalSearchParams();
   const litersQuantity = currentQuantity * 1000;
   const [ data, setData ] = useState('');
-  const [payload, setPayload] = useState({});
-
+  const [ payloadFetch, setPayloadFetch] = useState({});
   useEffect(() => {
-    setPayload({
+    setPayloadFetch({
       "water_usage": litersQuantity,
     });
-  }, [currentQuantity, progressPercent]);
+  }, [currentQuantity, progressPercent, errMsg]);
 
   useEffect(() => {
-    getRandomAdviceAndImage(token, payload)
+    getRandomAdviceAndImage(token, payloadFetch)
     .then(res => setData(res))
     .catch(err => console.log(err))
-  }, []);
+  }, [payloadFetch]);
   
 
 

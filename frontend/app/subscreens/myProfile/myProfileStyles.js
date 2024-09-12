@@ -26,6 +26,12 @@ export const styles = StyleSheet.create({
     marginHorizontal: 26,
     gap: 2,
   },
+  pickerContainer: {
+    backgroundColor: '#F9F9F9',
+    // borderRadius: 20,
+    height: 54,
+    justifyContent: 'center',
+  },
   screenLabel: {
     fontSize: 26,
     color: 'black',
@@ -110,6 +116,11 @@ export const styles = StyleSheet.create({
   },
   imageContainer: {
     position: 'relative',
+  },
+  pickerItem: {
+    fontSize: 16,
+    color: '#000',
+    marginLeft: 20,
   },
   editIcon: {
     position: 'absolute',

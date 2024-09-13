@@ -16,6 +16,7 @@ import LanguageToggleButton from '../../globalComponents/LanguageToggleButton.js
 import { t } from 'i18next';
 
 const SignUp = () => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const [formValues, setFormValues] = React.useState({
     name: '',
     email: '',
@@ -32,6 +33,7 @@ const SignUp = () => {
     console.log(newValues);
   };
 
+  
   const handleRegister = async () => {
     console.log(`in handle register: ${formValues}`);
     if (
@@ -40,6 +42,11 @@ const SignUp = () => {
       !formValues.repeatPassword
     ) {
       setError(`${t('fillAllFields')}`);
+    }
+
+    if(!validateEmail(formValues.email)) {
+      setError("Моля въведете валиден имейл адрес");
+      return;
     }
 
     if (formValues.password !== formValues.repeatPassword) {
@@ -79,6 +86,10 @@ const SignUp = () => {
       setError(error.message);
     }
   };
+
+  function validateEmail(email) {
+    return emailRegex.test(email);
+  }
 
   const googleHandler = () => {
     console.log('Google reg');

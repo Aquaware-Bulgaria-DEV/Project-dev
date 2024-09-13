@@ -521,6 +521,30 @@ export const getSingleSelfReport = async (token, id) => {
   }
 };
 
+export const getRandomAdviceAndImage = async (token, waterUsage) => {
+  try {
+    const response = await fetch(
+      'http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/consumption-advice/',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(waterUsage),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Couldn't fetch advice and image. Response status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('Data:', data);
+    return data;
+  } catch (e) {
+    throw e.message;
+  }
+}
+
 export const deleteSelfReport = async (token, id) => {
   try {
     const response = await fetch(
@@ -692,8 +716,7 @@ export const editSelfReport = async (token, value, waterMeterId) => {
       throw new Error(`Unexpected response format. Status: ${response.status}`);
     }
   } catch (e) {
-    console.error('Error in editSelfReport:', e);
-    throw e;
+    throw e.message;;
   }
 };
 

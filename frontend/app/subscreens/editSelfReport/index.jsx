@@ -27,6 +27,7 @@ const EditSelfReport = () => {
     const [ isLoading, setIsLoading ] = useState(true);
     const [ disableFetch, setDisableFetch ] = useState(true);
     const [ buttonText, setButtonText ] = useState('Запази');
+    const [errorMessage, setErrorMessage] = useState('');
 
 
     const { token } = useContext(AuthContext);
@@ -36,8 +37,9 @@ const EditSelfReport = () => {
         .then(res => {
           setSelfReport(res);
           setPrevQuantity(res.value);
+          setErrorMessage("");
         })
-        .catch(err => console.log("getSingleSelfReport error: ", err));
+        .catch((err) => setErrorMessage(err));
     }, [id]);
     
 
@@ -88,8 +90,9 @@ const EditSelfReport = () => {
         setButtonText("Запазено");
         setDisableFetch(false);
         setIsLoading(true);
+        setErrorMessage("");
       } catch (e) {
-        console.error('Edit request failed:', e);
+        setErrorMessage(e);
       }
     };
 
@@ -163,6 +166,7 @@ const EditSelfReport = () => {
               куб. м
             </Text>
           </View>
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
           <View style={styles.dateContainer}>
             <Text style={styles.dateLabel}>Добавен на:</Text>
             <Text style={styles.date}>{transformDate(selfReport?.date)}</Text>

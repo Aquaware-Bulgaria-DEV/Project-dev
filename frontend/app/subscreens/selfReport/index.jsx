@@ -179,7 +179,7 @@ const selfReport = () => {
               marginBottom: 20
             }}
           />
-          {data.map((report, index) => {
+          {data.length !== 0 ? data.map((report, index) => {
             const isLast = index === 0;
             const dateString = transformDate(report.date);
             return (
@@ -192,7 +192,7 @@ const selfReport = () => {
                 token={token}
               />
             );
-          })}
+          }) : <Text style={styles.noData}>{"Няма налични данни за самоотчет."}</Text>}
         </View>
       </ScrollView>
     </SafeAreaView>

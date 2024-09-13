@@ -34,7 +34,9 @@ const request = async (method, url, data = null) => {
         if (response.status === 204) {
             return {};
         }
-
+        if(response.status === 500){
+            throw new Error("Моля въведете реална стойност.");
+        }
         const result = await response.json();
 
         if (!response.ok) {

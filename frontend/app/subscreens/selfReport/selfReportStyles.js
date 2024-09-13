@@ -32,5 +32,11 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white',
     justifyContent: 'center',
-  }
+  }, 
+  noData: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: '#999999',
+    fontWeight: 'bold',
+   }
 });

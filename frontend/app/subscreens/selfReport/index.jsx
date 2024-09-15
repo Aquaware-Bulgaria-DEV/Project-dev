@@ -66,7 +66,7 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
             {getIcon("pencil", "#3F9FF4")}
           </Pressable>
         )}
-        <Pressable
+        {isLast && (<Pressable
           onPressIn={() => setTrashBinOpacity(0.5)}
           onPressOut={() => setTrashBinOpacity(1)}
           onPress={() => setModalVisible(true)} 
@@ -77,7 +77,7 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
           }}
         >
           {getIcon("trash", "#131313")}
-        </Pressable>
+        </Pressable>)}
         <CustomModal 
           isVisible={modalVisible}
           setIsVisible={setModalVisible}

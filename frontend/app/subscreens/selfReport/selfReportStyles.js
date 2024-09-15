@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     paddingBottom: 125,
     // marginHorizontal: 24,
-    marginTop: 35,
+    // marginTop: 35,
   },
   contentContainer: {
     margin: 26,

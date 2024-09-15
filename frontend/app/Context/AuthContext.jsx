@@ -26,6 +26,8 @@ export const AuthProvider = ({ children }) => {
   const saveToken = async (newToken) => {
     await storeData('@auth_token', newToken);
     setToken(newToken);
+  console.log(newToken);
+
   };
 
   const removeToken = async () => {

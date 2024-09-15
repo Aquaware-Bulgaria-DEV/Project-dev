@@ -66,3 +66,7 @@ export async function scheduleMonthlyNotification() {
     },
   });
 }
+
+export async function cancelAllNotifications() {
+  await Notifications.cancelAllScheduledNotificationsAsync();
+}

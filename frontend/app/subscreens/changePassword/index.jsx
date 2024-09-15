@@ -22,67 +22,59 @@ const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const validate = () => {
-    const newErrors = {};
+  const validateField = (field) => {
+    const newErrors = { ...errors };
 
-    // Rule: New password is required
-    if (!newPassword) {
-      newErrors.newPassword = t("appSettingsChangePasswordOldPassError");
-    } else {
-      // Rule 1: At least 8 characters
-      if (newPassword.length < 7) {
-        newErrors.newPassword = t("appSettingsChangePasswordLengthError");
-      }
+    switch (field) {
+      case "oldPassword":
+        newErrors.oldPassword = !oldPassword
+          ? t("appSettingsChangePasswordOldPassError")
+          : null;
+        break;
 
-      // Rule 2: Contains both letters and digits
-      const hasLetters = /[a-zA-Z]/.test(newPassword);
-      const hasDigits = /\d/.test(newPassword);
-      if (!hasLetters || !hasDigits) {
-        newErrors.newPassword = t("appSettingsChangePasswordSymbolsError");
-      }
+      case "newPassword":
+        newErrors.newPassword = !newPassword
+          ? t("appSettingsChangePasswordNewPassError")
+          : newPassword.length < 8 || !/[a-zA-Z]/.test(newPassword) || !/\d/.test(newPassword)
+          ? t("appSettingsChangePasswordSymbolsError")
+          : oldPassword === newPassword
+          ? t("appSettingsChangePasswordDifferentPass")
+          : null;
+        break;
 
-      // Rule 3: Old password and new password must not match
-      if (oldPassword === newPassword) {
-        newErrors.newPassword = t("appSettingsChangePasswordDifferentPass");
-      }
-    }
+      case "confirmNewPassword":
+        newErrors.confirmNewPassword = !confirmNewPassword
+          ? t("appSettingsChangePasswordConfirmError")
+          : newPassword !== confirmNewPassword
+          ? t("appSettingsChangePasswordMismatchError")
+          : null;
+        break;
 
-    // Rule: Confirm password is required
-    if (!confirmNewPassword) {
-      newErrors.confirmNewPassword = t("appSettingsChangePasswordNewPassError");
-    } else if (newPassword !== confirmNewPassword) {
-      // Rule 4: New password and confirm password must match
-      newErrors.confirmNewPassword = t(
-        "appSettingsChangePasswordMismatchError"
-      );
-    } else {
-      // Clear the error if the passwords match
-      newErrors.confirmNewPassword = null;
+      default:
+        break;
     }
 
     setErrors(newErrors);
-
-    // If no errors, validation is successful
-    return (
-      Object.keys(newErrors).filter((key) => newErrors[key] !== null).length ===
-      0
-    );
   };
 
   const handleChangePassword = async () => {
-    if (!validate()) {
-      return;
-    }
+    validateField("oldPassword");
+    validateField("newPassword");
+    validateField("confirmNewPassword");
+
+    if (Object.values(errors).some((error) => error !== null)) return;
+
+    setIsLoading(true); // Start loading state
 
     try {
-      console.log("trying to change the password");
       const response = await fetch(
         "http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/change-password/",
         {
           method: "POST",
           headers: {
-            Authorization: `Token ${token}`, // Use the token retrieved from context
+            Authorization: `Token ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
@@ -94,21 +86,20 @@ const ChangePassword = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log("Error Response Data:", errorData);
         throw new Error(
           errorData.error || t("appSettingsChangePasswordErrorTitle")
         );
       }
 
-      const data = await response.json();
       Alert.alert(
         t("appSettingsChangePasswordSuccessTitle"),
         t("appSettingsChangePasswordSuccessMessage")
       );
       router.push("/settings");
     } catch (error) {
-      console.error("Error:", error.message);
       Alert.alert(t("appSettingsChangePasswordErrorTitle"), error.message);
+    } finally {
+      setIsLoading(false); // End loading state
     }
   };
 
@@ -128,7 +119,8 @@ const ChangePassword = () => {
               style={styles.inputField}
               secureTextEntry
               value={oldPassword}
-              onChangeText={(text) => setOldPassword(text)}
+              onChangeText={setOldPassword}
+              onBlur={() => validateField("oldPassword")}
               placeholder=""
             />
             {errors.oldPassword && (
@@ -145,8 +137,19 @@ const ChangePassword = () => {
               value={newPassword}
               onChangeText={(text) => {
                 setNewPassword(text);
-                validate();
+                setErrors((prevErrors) => ({
+                  ...prevErrors,
+                  newPassword:
+                    text.length < 8
+                      ? t("appSettingsChangePasswordSymbolsError")
+                      : null,
+                  confirmNewPassword:
+                    confirmNewPassword === text
+                      ? null
+                      : t("appSettingsChangePasswordMismatchError"),
+                }));
               }}
+              onBlur={() => validateField("newPassword")}
               placeholder=""
             />
             {errors.newPassword && (
@@ -163,21 +166,13 @@ const ChangePassword = () => {
               value={confirmNewPassword}
               onChangeText={(text) => {
                 setConfirmNewPassword(text);
-
-                // Clear mismatch error as soon as passwords match
-                if (newPassword === text) {
-                  setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    confirmNewPassword: null,
-                  }));
-                } else {
-                  setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    confirmNewPassword: t(
-                      "appSettingsChangePasswordMismatchError"
-                    ),
-                  }));
-                }
+                setErrors((prevErrors) => ({
+                  ...prevErrors,
+                  confirmNewPassword:
+                    text === newPassword
+                      ? null
+                      : t("appSettingsChangePasswordMismatchError"),
+                }));
               }}
               placeholder=""
             />
@@ -186,13 +181,13 @@ const ChangePassword = () => {
             )}
           </View>
 
-          <Pressable onPress={handleChangePassword}>
+          <Pressable onPress={handleChangePassword} disabled={isLoading}>
             <LinearGradient
               style={styles.addButton}
               colors={["#388FED", "#205187"]}
             >
               <Text style={styles.addText}>
-                {t("appSettingsChangePassword")}
+                {isLoading ? t("appSettingsChangePasswordLoading") : t("appSettingsChangePassword")}
               </Text>
             </LinearGradient>
           </Pressable>

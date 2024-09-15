@@ -3,7 +3,8 @@ import {
   registerForPushNotificationsAsync, 
   scheduleDailyNotification, 
   scheduleWeeklyNotification, 
-  scheduleMonthlyNotification 
+  scheduleMonthlyNotification, 
+  cancelAllNotifications
 } from "../../app/subscreens/notifications/notificationsHandler";
 import AuthContext from "../../app/Context/AuthContext";
 
@@ -128,6 +129,8 @@ export const NotificationProvider = ({ children }) => {
   
     if (newState) {
       await scheduleDailyNotification();
+    } else {
+      await cancelAllNotifications();  // Cancel notifications when toggled off
     }
   
     const success = await updateNotificationSettings({
@@ -158,6 +161,8 @@ export const NotificationProvider = ({ children }) => {
   
     if (newState) {
       await scheduleWeeklyNotification();
+    } else {
+      await cancelAllNotifications();  // Cancel notifications when toggled off
     }
   
     const success = await updateNotificationSettings({
@@ -189,6 +194,8 @@ export const NotificationProvider = ({ children }) => {
   
     if (newState) {
       await scheduleMonthlyNotification();
+    } else {
+      await cancelAllNotifications();  // Cancel notifications when toggled off
     }
   
     const success = await updateNotificationSettings({

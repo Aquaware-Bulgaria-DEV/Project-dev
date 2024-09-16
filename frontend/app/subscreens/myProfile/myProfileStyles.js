@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   scrollViewContent: {
     paddingBottom: 125,
     // marginHorizontal: 24,
-    // marginTop: 35,
+    marginTop: 35,
   },
   content: {
     marginHorizontal: 26,
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
   },
   innerContainer: {
     backgroundColor: '#FFFFFF',
-    height: '87%',
+    height: '90%',
     marginVertical: 10,
     paddingTop: 30,
     paddingBottom: 30,
@@ -121,6 +121,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000',
     marginLeft: 20,
+    marginVertical: 15,
   },
   editIcon: {
     position: 'absolute',

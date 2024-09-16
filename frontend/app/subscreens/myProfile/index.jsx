@@ -39,6 +39,7 @@ const MyProfile = () => {
   const [picture, setPicture] = useState(null);
   const [opacity, setOpacity] = useState(1);
   const [city, setCity] = useState('');
+  const [validData, setValidData] = useState(false);
 
   const cities = [
     { id: 1, town: 'Sofia', label: 'Sofia' },
@@ -130,35 +131,49 @@ const MyProfile = () => {
   };
 
   const dataSubmissionHandler = async () => {
-    const profileData = {
-      first_name: name.split(' ')[0],
-      last_name: name.split(' ')[1],
-      phone_number: phone,
-      email: email,
-      city: city,
-    };
+    if (!name) {
+      Alert.alert('Моля, въведете име');
+      return;
+    } else if (!phone) {
+      Alert.alert('Моля, въведете телефонен номер');
+      return;
+    } else if (!city) {
+      Alert.alert('Моля, изберете град');
+      return;
+    } else {
+      setValidData(true);
+    }
+    if (validData) {
+      const profileData = {
+        first_name: name.split(' ')[0],
+        last_name: name.split(' ')[1],
+        phone_number: phone,
+        email: email,
+        city: city,
+      };
 
-    try {
-      const { data, response } = await service.updateProfile(
-        profileData,
-        picture,
-        token
-      );
+      try {
+        const { data, response } = await service.updateProfile(
+          profileData,
+          picture,
+          token
+        );
 
-      if (response.ok) {
-        console.log('Profile updated successfully:', data);
-        saveUserInfo(data);
-        Alert.alert('Профилът Ви бе успешно променен.');
+        if (response.ok) {
+          console.log('Profile updated successfully:', data);
+          saveUserInfo(data);
+          Alert.alert('Профилът Ви бе успешно променен.');
 
-        router.push('home');
+          router.push('home');
+        }
+        //  else {
+
+        //   Alert.alert('Неуспешна промяна. Моля, опитайте отново.');
+        // }
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        Alert.alert('Неуспешна промяна. Моля, опитайте отново.');
       }
-      //  else {
-
-      //   Alert.alert('Неуспешна промяна. Моля, опитайте отново.');
-      // }
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      Alert.alert('Неуспешна промяна. Моля, опитайте отново.');
     }
   };
 

@@ -97,6 +97,9 @@ const AddProperty = () => {
     const newErrors = {};
     if (!numberPeople)
       newErrors.numberPeople = `${t('addPropertyErrorNumOfPeople')}`;
+    if (numberPeople >= 20 || numberPeople <= 0) {
+      newErrors.numberPeople = 'Стойността може да бъде между 1 и 20';
+    }
     if (!property) newErrors.property = `${t('addPropertyErrorProperty')}`;
     if (!companyName)
       newErrors.companyName = `${t('addPropertyErrorCompanyName')}`;

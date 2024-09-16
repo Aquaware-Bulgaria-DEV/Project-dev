@@ -199,7 +199,7 @@ const EditProperty = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
-        <Header showProfilePic={false}></Header>
+        <Header showProfilePic={false} resetRouter={true}></Header>
         <View style={styles.content}>
           <Text style={styles.title}>Редактиране на имот</Text>
           <View style={styles.form}>

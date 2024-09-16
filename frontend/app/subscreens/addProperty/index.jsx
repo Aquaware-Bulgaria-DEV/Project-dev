@@ -136,7 +136,7 @@ const AddProperty = () => {
       console.log('dadta', data);
       const response = await services.createProperty(token, data);
       console.log('Property created successfully:', response);
-      Alert.alert(`${t("addPropertySuccessful")}`);
+      Alert.alert(`${t('addPropertySuccessful')}`);
       router.push('subscreens/myProperties');
     } catch (error) {
       console.log('Error creating property:', error);
@@ -146,7 +146,7 @@ const AddProperty = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
-        <Header showProfilePic={false}></Header>
+        <Header showProfilePic={false} resetRouter={true}></Header>
         <View style={styles.content}>
           <Text style={styles.title}>{t('addProperty')}</Text>
           <View style={styles.form}>

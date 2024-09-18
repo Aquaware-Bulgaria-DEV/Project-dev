@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react';
-
 import {
   ScrollView,
   Text,
@@ -12,6 +11,7 @@ import {
   TextInput,
   Pressable,
   Alert,
+  Modal,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
@@ -40,6 +40,8 @@ const MyProfile = () => {
   const [opacity, setOpacity] = useState(1);
   const [city, setCity] = useState('');
   const [validData, setValidData] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [password, setPassword] = useState('');
 
   const cities = [
     { id: 1, town: 'Sofia', label: 'Sofia' },
@@ -60,9 +62,20 @@ const MyProfile = () => {
   const { userInfo, token, saveUserInfo } = useContext(AuthContext);
   const { control } = useForm();
 
-  console.log(userInfo);
-  const pencil = getIcon('pencil', 'white', 13);
-
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     const firstName = userInfo.first_name || '';
+  //     const lastName = userInfo.last_name || '';
+  //     setName(`${firstName} ${lastName}`.trim());
+  //     setCity(userInfo.city || '');
+  //     setPhone(userInfo.phone_number || '');
+  //     setEmail(userInfo.email || '');
+  //     setPicture(userInfo.profile_picture || null);
+  //     if (userInfo.date_joined) {
+  //       setDate(format(parseISO(userInfo.date_joined), 'dd.MM.yyyy'));
+  //     }
+  //   }
+  // }, [userInfo]);
   useEffect(() => {
     if (userInfo) {
       if (!userInfo.first_name && !userInfo.last_name) {
@@ -89,45 +102,23 @@ const MyProfile = () => {
   const handleDeleteProf = async (password) => {
     const response = await service.confirmPass(token, password);
     if (response) {
-      router.push({
-        pathname: 'signUp',
-      });
+      router.push({ pathname: 'signUp' });
     }
+    setIsModalVisible(false);
   };
 
   const handleRemove = () => {
-    Alert.alert(
-      `${t('alertDeleteProfile')}`,
-      `${t('alertDeleteProfileAssert')}`,
-      [
-        {
-          text: `${t('alertDeleteProfileNo')}`,
-          onPress: () => console.log('Премахване'),
-          style: 'cancel',
-        },
-        {
-          text: `${t('alertDeleteProfileYes')}`,
-          onPress: () => {
-            Alert.prompt(
-              `${t('alertDeleteProfileTypeYourPassword')}`,
-              `${t('alertDeleteProfileTypeYourPasswordForConfirmation')}`,
-              [
-                {
-                  text: `${t('alertDeleteProfileCancel')}`,
-                  onPress: () => console.log('Изтриване отказано'),
-                  style: 'cancel',
-                },
-                {
-                  text: `${t('alertDeleteProfileConfirm')}`,
-                  onPress: (password) => handleDeleteProf(password),
-                },
-              ],
-              'secure-text'
-            );
-          },
-        },
-      ]
-    );
+    Alert.alert(t('alertDeleteProfile'), t('alertDeleteProfileAssert'), [
+      {
+        text: t('alertDeleteProfileNo'),
+        onPress: () => console.log('Deletion Canceled'),
+        style: 'cancel',
+      },
+      {
+        text: t('alertDeleteProfileYes'),
+        onPress: () => setIsModalVisible(true),
+      },
+    ]);
   };
 
   const dataSubmissionHandler = async () => {
@@ -187,7 +178,7 @@ const MyProfile = () => {
 
     if (!result.canceled) {
       const localUri = result.assets[0].uri;
-      setPicture(localUri); // Update the picture state
+      setPicture(localUri);
     }
   };
 
@@ -203,7 +194,8 @@ const MyProfile = () => {
           keyboardVerticalOffset={height}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <Header showProfilePic={false}></Header>
+          <Header showProfilePic={false} />
+
           <View style={styles.content}>
             <Text style={styles.screenLabel}>{t('myProfile')}</Text>
             <Text style={styles.otherDetails}>
@@ -220,13 +212,12 @@ const MyProfile = () => {
                 <View style={styles.imageContainer}>
                   <Image style={styles.avatar} source={{ uri: picture }} />
                   <Pressable style={styles.editIcon} onPress={changePicture}>
-                    <Text>{pencil}</Text>
+                    <Text>{getIcon('pencil', 'white', 13)}</Text>
                   </Pressable>
                 </View>
+
                 <View style={styles.clientInfo}>
-                  <Text style={styles.clientName}>
-                    {name === undefined ? `` : `${name}`}
-                  </Text>
+                  <Text style={styles.clientName}>{name || ''}</Text>
                   <Text style={styles.clientNumber}>
                     {t('myProfileClientNumber')} 119862
                   </Text>
@@ -241,9 +232,9 @@ const MyProfile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
+
               <View style={styles.form}>
                 <Text style={styles.inputFieldName}>{t('myProfileName')}</Text>
-
                 <Controller
                   control={control}
                   name='name'
@@ -260,7 +251,6 @@ const MyProfile = () => {
                 />
 
                 <Text style={styles.inputFieldName}>{t('myProfilePhone')}</Text>
-
                 <Controller
                   control={control}
                   name='phone'
@@ -276,11 +266,12 @@ const MyProfile = () => {
                     />
                   )}
                 />
+
                 <Text style={styles.inputFieldName}>Град</Text>
                 <View style={{ marginVertical: 5 }}>
                   <View style={styles.pickerContainer}>
                     <RNPickerSelect
-                      onValueChange={(city) => handleTownSelection(city)} //to check if needed
+                      onValueChange={handleTownSelection}
                       items={cityOptions}
                       style={{
                         inputIOS: styles.pickerItem,
@@ -295,6 +286,7 @@ const MyProfile = () => {
                     />
                   </View>
                 </View>
+
                 <Text style={styles.inputFieldName}>{t('myProfileEmail')}</Text>
                 <TextInput
                   name='email'
@@ -307,14 +299,54 @@ const MyProfile = () => {
                 <CustomButton
                   handlePress={dataSubmissionHandler}
                   title={t('customButtonSave')}
-                  color={'#388FED'}
-                  secondColor={'#4C62C7'}
+                  color='#388FED'
+                  secondColor='#4C62C7'
                   additionalStyles={styles.saveButton}
                   additionalTextStyle={styles.buttonText}
                 />
               </View>
             </View>
           </View>
+
+          <Modal
+            visible={isModalVisible}
+            transparent={true}
+            animationType='slide'
+          >
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>{t('alertDeleteProfile')}</Text>
+                <Text style={styles.modalMessage}>
+                  {t('alertDeleteProfileTypeYourPasswordForConfirmation')}
+                </Text>
+                <TextInput
+                  style={styles.modalInput}
+                  secureTextEntry={true}
+                  placeholder={t('alertDeleteProfileTypeYourPassword')}
+                  value={password}
+                  onChangeText={setPassword}
+                />
+                <View style={styles.modalButtons}>
+                  <TouchableOpacity
+                    style={styles.modalButton}
+                    onPress={() => setIsModalVisible(false)}
+                  >
+                    <Text style={styles.modalButtonText}>
+                      {t('alertDeleteProfileCancel')}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.modalButton}
+                    onPress={() => handleDeleteProf(password)}
+                  >
+                    <Text style={styles.modalButtonText}>
+                      {t('alertDeleteProfileConfirm')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>

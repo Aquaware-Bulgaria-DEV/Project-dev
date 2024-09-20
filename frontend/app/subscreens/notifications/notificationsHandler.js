@@ -30,7 +30,7 @@ export async function scheduleDailyNotification() {
       body: "This is your daily notification.",
     },
     trigger: {
-      hour: 9,
+      hour: 10,
       minute: 0,
       repeats: true,
     },
@@ -45,7 +45,7 @@ export async function scheduleWeeklyNotification() {
     },
     trigger: {
       weekday: 1,  // Monday
-      hour: 9,
+      hour: 10,
       minute: 0,
       repeats: true,
     },

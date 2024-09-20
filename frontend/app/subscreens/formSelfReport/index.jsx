@@ -9,8 +9,10 @@ import getIcon from "../../../utils/icons.js";
 import CustomButton from "../../globalComponents/customButton.jsx";
 import AuthContext from "../../Context/AuthContext.jsx";
 import { addSelfReport, getWaterMetters } from "../../services/fetch.js";
+import { useTranslation } from "react-i18next";
 
 const SelfReport = () => {
+  const { t } = useTranslation();
   const [value, setValue] = useState("");
   const [opacity, setOpacity] = useState(1);
   const [meterCount, setMeterCount] = useState(2);
@@ -23,7 +25,7 @@ const SelfReport = () => {
 
   const [ selectedMeters, setSelectedMeters ] = useState([]);
 
-  const [ buttonText, setButtonText ] = useState("Добави");
+  const [ buttonText, setButtonText ] = useState(`${t('settingsFormSelfReportAddButton')}`);
   // const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   const { token } = useContext(AuthContext);
@@ -182,7 +184,7 @@ const SelfReport = () => {
 
     addSelfReport(payload)
     .then(res => {
-      setButtonText("Отчетът е добавен");
+      setButtonText(`${t('settingsFormSelfReportAddedButton')}`);
       setIsLoading(true);
       setErrorMessage('');
     })
@@ -222,9 +224,9 @@ const SelfReport = () => {
       >
         <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Добавяне на данни</Text>
+          <Text style={styles.title}>{t('settingsFormSelfReportAddData')}</Text>
           <View>
-            <Text style={styles.labels}>Имот</Text>
+            <Text style={styles.labels}>{t('settingsSelfReportDelailsProperty')}</Text>
             <View style={styles.pickerContainer}>
               <RNPickerSelect
                 onValueChange={handleValueChange}
@@ -234,7 +236,7 @@ const SelfReport = () => {
                   inputAndroid: styles.pickerItem,
                 }}
                 placeholder={{
-                  label: "Избери имот",
+                  label: `${t('addPropertyChoose')}`,
                   value: "",
                 }}
                 value={value}
@@ -249,7 +251,7 @@ const SelfReport = () => {
             disabled={isLoading}
           >
             <Text style={[styles.addWaterMeter, { opacity: isLoading ? 0.5 : 1 }]}>
-              {getIcon("plus", "#3CA5D8", 15)}Добави водомер
+              {getIcon("plus", "#3CA5D8", 15)}{t('settingsFormSelfReportAddWaterMeter')}
             </Text>
           </Pressable>
           <Text style={styles.errorMessage}>{errorMessage}</Text>

@@ -27,12 +27,20 @@ const Notifications = () => {
     toggleScheduledWeeklyNotifications,
     isScheduledMonthlyTurnedOn,
     toggleScheduledMonthlyNotifications,
+    notificationFrequency, 
+    setNotificationFrequency,
+    updateNotificationSettings, // Destructure this for final API call
   } = useContext(NotificationContext);
 
-  const [notificationFrequency, setNotificationFrequency] = useState(null);
+  const [loading, setLoading] = useState(false); // Added a loading state to handle multiple clicks
 
   const handleTogglePushNotificationsBtn = async () => {
+    if (loading) return; // Prevent duplicate calls during loading
+
+    setLoading(true);
     await togglePushNotifications(t);
+    setLoading(false);
+
     if (!isPushNotificationsTurnedOn && expoPushToken) {
       Alert.alert(
         "Push Notifications",
@@ -41,9 +49,24 @@ const Notifications = () => {
     }
   };
 
-  const handleFrequencyChange = (value) => {
+  const handleFrequencyChange = async (value) => {
+    if (loading) return; // Prevent duplicate changes while loading
+    setLoading(true);
+
     setNotificationFrequency(value);
 
+    // Reset all other frequencies and toggle the selected one
+    const newSettings = {
+      daily: value === "daily",
+      weekly: value === "weekly",
+      monthly: value === "monthly",
+      push: isPushNotificationsTurnedOn,
+      email_notification: isEmailNotificationsTurnedOn,
+    };
+
+    // Update the settings after changing frequency
+    await updateNotificationSettings(newSettings);
+    
     switch (value) {
       case "daily":
         toggleScheduledDailyNotifications();
@@ -57,9 +80,10 @@ const Notifications = () => {
       default:
         break;
     }
+
+    setLoading(false);
   };
 
-  // Dropdown options
   const frequencyOptions = [
     { id: '1', label: t("notificationsScheduledDaily"), value: 'daily' },
     { id: '2', label: t("notificationsScheduledWeekly"), value: 'weekly' },

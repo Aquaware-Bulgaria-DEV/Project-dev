@@ -12,8 +12,11 @@ import { Header } from "../../globalComponents/header.jsx";
 import {styles} from "./selfReportDetailsStyles.js";
 import { getSingleSelfReport } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const SelfReportDetails = () => {
+  const { t } = useTranslation();
     const { id } = useLocalSearchParams();
     const [ selfReport, setSelfReport ] = useState();
     const [ quantity, setQuantity ] = useState(0);
@@ -54,20 +57,20 @@ const SelfReportDetails = () => {
       >
         <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Данни на самоотчет</Text>
+          <Text style={styles.title}>{t('settingsSelfReportDelailsData')}</Text>
           <View style={styles.dataContainer}>
-            <Text style={styles.dataLabel}>Имот</Text>
+            <Text style={styles.dataLabel}>{t('settingsSelfReportDelailsProperty')}</Text>
             <View style={styles.dataNameWrapper}>
                 <Text style={styles.dataName}>{selfReport?.property_type}</Text>
             </View>
           </View>
           <View style={styles.dataContainer}>
-            <Text style={styles.dataLabel}>Номер на водомер</Text>
+            <Text style={styles.dataLabel}>{t('settingsSelfReportDelailsWaterMeterNum')}</Text>
             <View style={styles.dataNameWrapper}>
                 <Text style={styles.dataName}>{selfReport?.water_meter_number}</Text>
             </View>
           </View>
-          <Text style={[styles.dataLabel, {marginBottom: 10}]}>Стойност</Text>
+          <Text style={[styles.dataLabel, {marginBottom: 10}]}>{t('settingsSelfReportDelailsValue')}</Text>
           <View
             style={{
               flexDirection: "row",
@@ -104,7 +107,7 @@ const SelfReportDetails = () => {
             </Text>
           </View>
           <View style={styles.dateContainer}>
-            <Text style={styles.dateLabel}>Добавен на:</Text>
+            <Text style={styles.dateLabel}>{t('settingsSelfReportDelailsAddedOn')}</Text>
             <Text style={styles.date}>{transformDate(selfReport?.date)}</Text>
           </View>
         </View>

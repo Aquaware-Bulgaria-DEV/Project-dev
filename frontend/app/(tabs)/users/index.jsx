@@ -61,7 +61,7 @@ const Users = () => {
       >
         <Header showProfilePic />
         <View style={styles.text}>
-          <Text style={styles.headerTitle}>Моите резултати</Text>
+          <Text style={styles.headerTitle}>{t('usersMyResults')}</Text>
           <Text style={styles.description}>{t('usersRanklist')}</Text>
         </View>
 

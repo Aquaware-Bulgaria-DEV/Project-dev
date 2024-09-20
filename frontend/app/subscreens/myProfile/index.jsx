@@ -267,7 +267,7 @@ const MyProfile = () => {
                   )}
                 />
 
-                <Text style={styles.inputFieldName}>Град</Text>
+                <Text style={styles.inputFieldName}>{t('myProfileCity')}</Text>
                 <View style={{ marginVertical: 5 }}>
                   <View style={styles.pickerContainer}>
                     <RNPickerSelect
@@ -278,7 +278,7 @@ const MyProfile = () => {
                         inputAndroid: styles.pickerItem,
                       }}
                       placeholder={{
-                        label: city.label || 'Изберете град',
+                        label: city.label || `${t('myProfileChooseCity')}`,
                         value: city.label || '',
                         id: city.id || '',
                       }}

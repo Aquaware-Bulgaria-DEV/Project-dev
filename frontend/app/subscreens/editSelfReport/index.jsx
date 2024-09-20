@@ -16,10 +16,12 @@ import {styles} from "./editSelfReportStyles.js";
 import { editSelfReport, getSingleSelfReport } from "../../services/fetch.js";
 import AuthContext from "../../Context/AuthContext.jsx";
 import CustomButton from "../../globalComponents/customButton.jsx";
+import { useTranslation } from "react-i18next";
 
 
 
 const EditSelfReport = () => {
+  const { t } = useTranslation();
     const { id } = useLocalSearchParams();
     const [ selfReport, setSelfReport ] = useState();
     const [ quantity, setQuantity ] = useState(0);
@@ -87,7 +89,7 @@ const EditSelfReport = () => {
       try {
         const res = await editSelfReport(token, quantityNumber, id);
         // console.log("Response from editSelfReport:", res);  // Log the response for debugging
-        setButtonText("Запазено");
+        setButtonText(`${t('settingsEditSelfReportButtonSave')}`);
         setDisableFetch(false);
         setIsLoading(true);
         setErrorMessage("");
@@ -115,20 +117,20 @@ const EditSelfReport = () => {
       >
         <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Редактиране на данни</Text>
+          <Text style={styles.title}>{t('settingsEditSelfReportEditData')}</Text>
           <View style={styles.dataContainer}>
-            <Text style={styles.dataLabel}>Имот</Text>
+            <Text style={styles.dataLabel}>{t('settingsSelfReportDelailsProperty')}</Text>
             <View style={styles.dataNameWrapper}>
                 <Text style={styles.dataName}>Кухня</Text>
             </View>
           </View>
           <View style={styles.dataContainer}>
-            <Text style={styles.dataLabel}>Номер на водомер</Text>
+            <Text style={styles.dataLabel}>{t('settingsSelfReportDelailsWaterMeterNum')}</Text>
             <View style={styles.dataNameWrapper}>
                 <Text style={styles.dataName}>{selfReport?.water_meter_number}</Text>
             </View>
           </View>
-          <Text style={[styles.dataLabel, {marginBottom: 10}]}>Стойност</Text>
+          <Text style={[styles.dataLabel, {marginBottom: 10}]}>{t('settingsSelfReportDelailsValue')}</Text>
           <View
             style={{
               flexDirection: "row",
@@ -153,7 +155,7 @@ const EditSelfReport = () => {
             editable={disableFetch}
             onChangeText={handleTextInputChange}
             value={quantity}
-            placeholder="Въведи стойност"
+            placeholder={t('settingsEditSelfReportAddValue')}
           />
             <Text
               style={{
@@ -168,7 +170,7 @@ const EditSelfReport = () => {
           </View>
           <Text style={styles.errorMessage}>{errorMessage}</Text>
           <View style={styles.dateContainer}>
-            <Text style={styles.dateLabel}>Добавен на:</Text>
+            <Text style={styles.dateLabel}>{t('settingsSelfReportDelailsAddedOn')}</Text>
             <Text style={styles.date}>{transformDate(selfReport?.date)}</Text>
           </View>
         </View>

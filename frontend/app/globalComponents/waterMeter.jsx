@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import RNPickerSelect from "react-native-picker-select";
 
 import { styles } from "./waterMeterStyles.js";
+import { useTranslation } from "react-i18next";
 
 const WaterMeter = ({
   waterMeters,
@@ -14,6 +15,7 @@ const WaterMeter = ({
   setSelectedMeters,
   selectedMeters,
 }) => {
+  const { t } = useTranslation();
   const [meterId, setMeterId] = useState("");
   const [quantity, setQuantity] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
@@ -64,7 +66,7 @@ const WaterMeter = ({
   return (
     <View style={styles.waterMeterContainer}>
       <View>
-        <Text style={styles.labels}>Номер на водомер</Text>
+        <Text style={styles.labels}>{t('waterMeterNumber')}</Text>
         <View style={styles.pickerContainer}>
           <RNPickerSelect
             disabled={isDisabled ? true : false}
@@ -75,7 +77,7 @@ const WaterMeter = ({
               inputAndroid: [styles.pickerItem, { opacity: isDisabled ? 0.4 : 1 }],
             }}
             placeholder={{
-              label: "Избери водомер",
+              label: `${t('waterMeterPicker')}`,
               value: "",
             }}
             value={meterId}
@@ -83,7 +85,7 @@ const WaterMeter = ({
         </View>
       </View>
       <View>
-        <Text style={styles.labels}>Стойност</Text>
+        <Text style={styles.labels}>{t('settingsSelfReportDelailsValue')}</Text>
         <View
           style={{
             flexDirection: "row",
@@ -104,7 +106,7 @@ const WaterMeter = ({
             keyboardType="numeric"
             onChangeText={handleTextInputChange}
             value={quantity}
-            placeholder="Въведи стойност"
+            placeholder={t('waterMeterAddValue')}
           />
           <Text
             style={{
@@ -114,7 +116,7 @@ const WaterMeter = ({
               paddingLeft: 15,
             }}
           >
-            куб. м
+            {t('waterMeterCubicM')}
           </Text>
         </View>
       </View>

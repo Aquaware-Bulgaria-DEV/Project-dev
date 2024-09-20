@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 125,
     marginTop: 35,
   },
-  contentContainer: {
+  content: {
     margin: 26,
     justifyContent: 'center',
   },

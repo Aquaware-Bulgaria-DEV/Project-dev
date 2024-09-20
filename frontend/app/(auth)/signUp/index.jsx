@@ -45,7 +45,7 @@ const SignUp = () => {
     }
 
     if(!validateEmail(formValues.email)) {
-      setError("Моля въведете валиден имейл адрес");
+      setError(`${t('signUpEmailError')}`);
       return;
     }
 

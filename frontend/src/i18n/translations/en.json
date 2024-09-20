@@ -15,6 +15,15 @@
     "noAccount": "Don't have an account?",
     "createAccount": "Create Account",
     "biometricsLogin": "Login with biometrics",
+    "signUpEmailError": "Please use a valid email address",
+    "fetchLoginError": "Username or password is incorrectly filled",
+    "loginEmailOrPassError": "Incorrect email or password",
+    "somethingWentWrong": "Something went wrong.",
+    "errorSelfReportValue": "Please, give a bigger value than the one from the previous self report.",
+    "errorSelfReportRealValue": "Please, give a real value.",
+    "errorSelfReportUnexpected": "An unexpected error occurred",
+
+
     "home": "Home",
     "welcome": "Hello",
     "welcomeQuestion": "For what part of your home would you like to check your consumption?",

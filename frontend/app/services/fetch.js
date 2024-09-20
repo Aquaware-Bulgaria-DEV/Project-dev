@@ -590,7 +590,7 @@ export const login = async (data) => {
     });
 
     if (response.status === 400) {
-      throw new Error(`Потребителското Ви име или парола не съответстват`);
+      throw new Error(`${t('fetchLoginError')}`);
     }
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -599,7 +599,7 @@ export const login = async (data) => {
     if (user.token) {
       return user;
     } else {
-      throw new Error('Грешен имейл или парола');
+      throw new Error(`${t('loginEmailOrPassError')}`);
     }
   } catch (error) {
     throw new Error(error.message);
@@ -647,7 +647,7 @@ export const addReport = async (token, formValues) => {
     );
     const data = await response.json();
     if (!response.ok) {
-      throw new Error('Something went wrong.');
+      throw new Error(`${t('somethingWentWrong')}`);
     }
   } catch (e) {
     throw e.message;
@@ -666,19 +666,19 @@ export const addSelfReport = async (bodyData) => {
       const result = await response.json();
       const errorMessage =
         result.error ||
-        'Моля, въведете стойност, по-голяма от въведената при предишния самоотчет.';
+        `${t('errorSelfReportValue')}`;
       throw new Error(errorMessage);
     }
 
     if (response.status === 500) {
-      throw new Error(`Моля въведете реална стойност.`);
+      throw new Error(`${t('errorSelfReportRealValue')}`);
     }
 
     return response;
   } catch (e) {
     // Log and rethrow the error with a message
     // console.error("Fetch error addSelfReportService:", e);
-    throw e.message || e.error || 'An unexpected error occurred';
+    throw e.message || e.error || `${t('errorSelfReportUnexpected')}`;
   }
 };
 
@@ -702,7 +702,7 @@ export const editSelfReport = async (token, value, waterMeterId) => {
       const responseData = await response.json();
       // console.log("Response data:", responseData);
       if (response.status === 400) {
-        throw new Error(`Моля въведете реална стойност.`);
+        throw new Error(`${t('errorSelfReportRealValue')}`);
       }
 
       if (!response.ok) {

@@ -22,6 +22,8 @@
     "errorSelfReportValue": "Please, give a bigger value than the one from the previous self report.",
     "errorSelfReportRealValue": "Please, give a real value.",
     "errorSelfReportUnexpected": "An unexpected error occurred",
+    "errorFacebookLogin": "Failed to log in with Facebook.",
+    "errorAllFieldsAreRequired": "All fields are required",
 
 
     "home": "Home",
@@ -49,6 +51,25 @@
     "settingsApp": "App settings",
     "settingsLanguage": "Language",
     "settingsSelfReport": "Self Report",
+    "settingsSelfReportNoData": "No available data for self report.",
+    "settingsSelfReportDeletion": "Are you sure you want to delete the self report?",
+    "settingsSelfReportDelailsData": "Self report data",
+    "settingsSelfReportDelailsProperty": "Property",
+    "settingsSelfReportDelailsWaterMeterNum": "Water meter number",
+    "settingsSelfReportDelailsValue": "Value",
+    "settingsSelfReportDelailsAddedOn": "Added on:",
+    "settingsEditSelfReportButtonSave": "Saved",
+    "settingsEditSelfReportEditData": "Edit data",
+    "settingsEditSelfReportAddValue": "Add value",
+    "settingsFormSelfReportAddData": "Add data",
+    "settingsFormSelfReportAddWaterMeter": "Add water meter",
+    "settingsFormSelfReportAddedButton": "Self report was added",
+    "settingsFormSelfReportAddButton": "Add",
+    "waterMeterNumber": "Water meter number",
+    "waterMeterPicker": "Choose water meter",
+    "waterMeterAddValue": "Add value",
+    "waterMeterCubicM": "cub. m",
+
     "settingsLogout": "Logout",
     "settingsChangeLanguageEN": "English",
     "settingsChangeLanguageBG": "Bulgarian",
@@ -89,6 +110,9 @@
     "myProfileRemove": "Remove profile",
     "myProfileName": "Name",
     "myProfilePhone": "Phone",
+    "myProfileCity": "City",
+    "myProfileChooseCity": "Choose city",
+
     "myProfileEmail": "Email",
     "customButtonSave": "Save",
     "alertDeleteProfile": "Remove profile",
@@ -151,7 +175,9 @@
     "buttonFindOut": "Find out what that means",
     "monthlyUsage": "Monthly usage",
     "doubleProgressBarOr": "or",
-    "doubleProgressBarLiters": "liters"
+    "doubleProgressBarLiters": "liters",
+    "usersMyResults": "My results"
+
 
 
 

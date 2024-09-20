@@ -22,6 +22,7 @@ import { router, useFocusEffect } from "expo-router";
 import CustomModal from "../../globalComponents/CustomModal.jsx";
 
 const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
+  const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false); // Modal visibility state
   const [containerOpacity, setContainerOpacity] = useState(1); 
 
@@ -81,7 +82,7 @@ const DataComponent = ({ date, id, isLast, onRefresh, token }) => {
         <CustomModal 
           isVisible={modalVisible}
           setIsVisible={setModalVisible}
-          questionTxt={"Сигурен ли сте че искате да изтриете самоотчетът?"}
+          questionTxt={t('settingsSelfReportDeletion')}
           actionHandler={handleDelete}
         />
       </View>
@@ -192,7 +193,7 @@ const selfReport = () => {
                 token={token}
               />
             );
-          }) : <Text style={styles.noData}>{"Няма налични данни за самоотчет."}</Text>}
+          }) : <Text style={styles.noData}>{t('settingsSelfReportNoData')}</Text>}
         </View>
       </ScrollView>
     </SafeAreaView>

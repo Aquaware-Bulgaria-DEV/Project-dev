@@ -44,7 +44,7 @@ const SignIn = () => {
         })
         .catch(err => {
           console.error(err);          
-          setError("Failed to log in with Facebook.");
+          setError(`${t('errorFacebookLogin')}`);
         });
     }
   }, [response]);
@@ -75,7 +75,7 @@ const SignIn = () => {
 
   const handleLogin = async () => {
     if (formValues.email === "" || formValues.password === "") {
-      setError("All fields are required");
+      setError(`${t('errorAllFieldsAreRequired')}`);
       return;
     }
 

@@ -28,7 +28,7 @@ const LanguagePreferences = () => {
         showsVerticalScrollIndicator={false}
       >
         <Header showProfilePic={false} />
-        <View style={styles.content}>
+        <View style={styles.contentContainer}>
           <Text style={styles.title}>{t("settingsLanguage")}</Text>
 
           {/* Button for English Language */}

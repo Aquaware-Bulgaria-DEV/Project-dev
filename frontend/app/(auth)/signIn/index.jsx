@@ -13,9 +13,10 @@ import { login } from "../../services/fetch";
 import LanguageToggleButton from "../../globalComponents/LanguageToggleButton.jsx";
 import * as SecureStore from "expo-secure-store";
 import * as Facebook from 'expo-auth-session/providers/facebook'; // Facebook provider
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const SignIn = () => {
+  const { t } = useTranslation();
   const { saveToken, saveUserInfo } = React.useContext(AuthContext);
   const [formValues, setFormValues] = React.useState({ email: "", password: "" });
   const [error, setError] = React.useState("");

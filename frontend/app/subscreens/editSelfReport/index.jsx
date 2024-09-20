@@ -8,7 +8,6 @@ import {
   Dimensions,
   Pressable
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from 'expo-router'
 import { Header } from "../../globalComponents/header.jsx";
 
@@ -109,7 +108,6 @@ const EditSelfReport = () => {
     }
     
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         style={{ flexGrow: 1 }}
         contentContainerStyle={styles.scrollViewContent}
@@ -183,7 +181,6 @@ const EditSelfReport = () => {
             additionalTextStyle={{ fontSize: 20, textAlign: "center" }}
             disabled={isLoading}/>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

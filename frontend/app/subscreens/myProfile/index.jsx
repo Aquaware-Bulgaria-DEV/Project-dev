@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { parseISO, format } from 'date-fns';
 import RNPickerSelect from 'react-native-picker-select';
 import AuthContext from '../../Context/AuthContext.jsx';
@@ -187,7 +186,6 @@ const MyProfile = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
@@ -349,7 +347,6 @@ const MyProfile = () => {
           </Modal>
         </KeyboardAvoidingView>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

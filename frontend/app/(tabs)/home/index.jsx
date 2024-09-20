@@ -3,7 +3,6 @@ import { styles } from './homeStyles.js';
 import {
   View,
   Text,
-  SafeAreaView,
   ImageBackground,
   ScrollView,
   Pressable,
@@ -112,7 +111,6 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
@@ -159,7 +157,6 @@ const Home = () => {
           </Pressable>
         ))}
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

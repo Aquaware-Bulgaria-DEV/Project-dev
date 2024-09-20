@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './managePropertyStyles.js';
 import * as services from '../../services/fetch.js';
@@ -54,7 +54,6 @@ const ManageProperty = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} />
         <View style={styles.content}>
@@ -109,7 +108,6 @@ const ManageProperty = () => {
           actionHandler={confirmDeleteRoom}
         />
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

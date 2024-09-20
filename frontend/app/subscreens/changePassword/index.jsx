@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import {
-  SafeAreaView,
   ScrollView,
   Text,
   View,
@@ -104,7 +103,6 @@ const ChangePassword = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} />
         <View style={styles.content}>
@@ -193,7 +191,6 @@ const ChangePassword = () => {
           </Pressable>
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

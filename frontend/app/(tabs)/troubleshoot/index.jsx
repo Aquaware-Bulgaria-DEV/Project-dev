@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 // Import RNPickerSelect
@@ -180,9 +179,8 @@ const Troubleshoot = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
-        style={{ flex: 1 }}
+        style={styles.container}
         contentContainerStyle={{ minHeight: height }}
         alwaysBounceVertical={false}
       >
@@ -290,7 +288,6 @@ const Troubleshoot = () => {
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

@@ -1,6 +1,7 @@
 // SignIn.js
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, Button, Alert } from "react-native";
+import { View, Button, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, SafeAreaView, ScrollView, Image } from "react-native";
+import { Text, ScrollView, Image } from "react-native";
 import { Header } from "../../globalComponents/header.jsx";
 import { styles } from "./tipsStyles.js";
 
@@ -13,7 +13,6 @@ const Tips = () => {
   const { t, i18n } = useTranslation();
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
@@ -25,7 +24,6 @@ const Tips = () => {
 
         <List />
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   logo: {
     width: 45,
-    height: 42,
+    height: 45,
     borderRadius: 5,
     overflow: "visible",
   },

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Aquaware",
-    "slug": "aquaware",
+    "slug": "aqua",
     "scheme": "aquaware",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,7 +17,8 @@
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app uses FaceID to authenticate users.",
         "NSBiometricUsageDescription": "This app uses biometric authentication to secure access."
-      }
+      },
+      "bundleIdentifier": "com.anonymous.aquaware"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +32,12 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b79becc4-3630-4361-af85-d4455a64add2"
+      }
+    },
+    "owner": "aquaware_bulgaria"
   }
 }

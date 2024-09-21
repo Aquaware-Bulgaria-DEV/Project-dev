@@ -23,13 +23,15 @@ import { NotificationProvider } from '../src/context/NotificationsContext';
 
 const RootLayout = () => {
   return (
-    <AuthProvider>
-      <LanguageProvider>
-      <NotificationProvider>
-          <Stack screenOptions={{ headerShown: false }} />
-        </NotificationProvider>
-      </LanguageProvider>
-    </AuthProvider>
+    <SafeAreaView style={{flex:1}}>
+      <AuthProvider>
+        <LanguageProvider>
+        <NotificationProvider>
+            <Stack screenOptions={{ headerShown: false }} />
+          </NotificationProvider>
+        </LanguageProvider>
+      </AuthProvider>
+    </SafeAreaView>
   );
 };
 

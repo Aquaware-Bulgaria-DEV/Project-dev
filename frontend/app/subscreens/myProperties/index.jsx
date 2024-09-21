@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, ScrollView, View } from 'react-native';
+import { Text, ScrollView, View } from 'react-native';
 import { Header } from '../../globalComponents/header.jsx';
 import * as services from '../../services/fetch.js';
 import React from 'react';
@@ -56,7 +56,6 @@ const MyProperties = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false}></Header>
         <View style={styles.content}>
@@ -95,7 +94,6 @@ const MyProperties = () => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

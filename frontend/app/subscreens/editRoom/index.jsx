@@ -3,7 +3,6 @@ import {
   ScrollView,
   Text,
   View,
-  SafeAreaView,
   TextInput,
   ActivityIndicator,
 } from 'react-native';
@@ -92,14 +91,11 @@ const EditRoom = () => {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
         <ActivityIndicator size='large' color='#0000ff' />
-      </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} resetRouter={true}></Header>
         <View style={styles.content}>
@@ -143,7 +139,6 @@ const EditRoom = () => {
           additionalTextStyle={styles.buttonText}
         />
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

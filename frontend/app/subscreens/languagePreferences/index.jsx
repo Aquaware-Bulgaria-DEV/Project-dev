@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ScrollView, SafeAreaView, Pressable } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import { styles } from "./languagePreferencesStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
 import { useTranslation } from "react-i18next";
@@ -22,7 +22,6 @@ const LanguagePreferences = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
@@ -74,7 +73,6 @@ const LanguagePreferences = () => {
           </Pressable>
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

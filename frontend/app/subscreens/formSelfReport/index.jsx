@@ -1,6 +1,5 @@
 import { View, Text, ScrollView, Pressable } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./formSelfReportStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
 import RNPickerSelect from "react-native-picker-select";
@@ -216,7 +215,6 @@ const SelfReport = () => {
 
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}
@@ -267,7 +265,6 @@ const SelfReport = () => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

@@ -1,7 +1,6 @@
 import {
   ScrollView,
   Text,
-  SafeAreaView,
   View,
   TouchableOpacity,
   Image,
@@ -54,7 +53,6 @@ const Users = () => {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
@@ -120,7 +118,6 @@ const Users = () => {
           additionalTextStyle={styles.buttonText}
         ></CustomButton>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

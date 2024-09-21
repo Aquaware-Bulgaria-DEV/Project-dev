@@ -5,7 +5,6 @@ import {
   ScrollView,
   Alert,
   Switch,
-  SafeAreaView,
 } from "react-native";
 import { styles } from "./notificationsStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
@@ -91,7 +90,6 @@ const Notifications = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} />
         <View style={styles.contentContainer}>
@@ -143,7 +141,6 @@ const Notifications = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

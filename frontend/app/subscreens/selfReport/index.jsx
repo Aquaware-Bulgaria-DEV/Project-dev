@@ -8,7 +8,6 @@ import {
   RefreshControl
 } from "react-native";
 import React, { useEffect, useContext, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./selfReportStyles.js";
 import SettingsButton from "../../globalComponents/settingsButton";
 import { Header } from "../../globalComponents/header.jsx";
@@ -152,7 +151,6 @@ const selfReport = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         style={{ flexGrow: 1 }}
         contentContainerStyle={styles.scrollViewContent}
@@ -196,7 +194,6 @@ const selfReport = () => {
           }) : <Text style={styles.noData}>{t('settingsSelfReportNoData')}</Text>}
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './settingsStyles.js';
 import SettingsButton from '../../globalComponents/settingsButton.jsx';
@@ -11,7 +11,6 @@ const Settings = () => {
   const { t, i18n } = useTranslation();
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
@@ -63,8 +62,6 @@ const Settings = () => {
           </View>
         </View>
       </ScrollView>
-
-    </SafeAreaView>
   );
 };
 

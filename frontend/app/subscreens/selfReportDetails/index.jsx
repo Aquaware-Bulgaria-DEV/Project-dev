@@ -5,7 +5,6 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from 'expo-router'
 import { Header } from "../../globalComponents/header.jsx";
 
@@ -49,7 +48,6 @@ const SelfReportDetails = () => {
     }
     
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         style={{ flexGrow: 1 }}
         contentContainerStyle={styles.scrollViewContent}
@@ -112,7 +110,6 @@ const SelfReportDetails = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 38 : 0, 
     // paddingBottom: 125,
     // marginHorizontal: 24,
-    // marginTop: 35,
+    marginTop: 35,
   },
   content: {
     margin: 26,

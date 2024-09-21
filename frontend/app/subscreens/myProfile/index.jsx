@@ -101,7 +101,7 @@ const MyProfile = () => {
   const handleDeleteProf = async (password) => {
     const response = await service.confirmPass(token, password);
     if (response) {
-      router.push({ pathname: 'signUp' });
+      router.push({ pathname: 'signIn' });
     }
     setIsModalVisible(false);
   };

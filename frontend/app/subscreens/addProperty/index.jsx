@@ -1,5 +1,4 @@
 import {
-  SafeAreaView,
   ScrollView,
   Text,
   View,
@@ -147,7 +146,6 @@ const AddProperty = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} resetRouter={true}></Header>
         <View style={styles.content}>
@@ -265,7 +263,6 @@ const AddProperty = () => {
           </LinearGradient>
         </Pressable>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

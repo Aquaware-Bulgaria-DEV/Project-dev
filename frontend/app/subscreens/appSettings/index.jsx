@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Switch, Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as LocalAuthentication from 'expo-local-authentication';
 import { styles } from "./appSettingsStyles.js";
 import { Header } from "../../globalComponents/header.jsx";
@@ -71,7 +70,6 @@ const appSettings = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} />
         <View style={styles.content}>
@@ -92,7 +90,6 @@ const appSettings = () => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

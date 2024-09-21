@@ -1,6 +1,5 @@
 import { View, Text, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Header } from '../../globalComponents/header'
 import { useLocalSearchParams } from 'expo-router'
 
@@ -38,7 +37,6 @@ const DoubleProgressBar = () => {
   const effectiveProgressPercent = errMsg ? 0 : progressPercent;
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}
@@ -83,7 +81,6 @@ const DoubleProgressBar = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
   )
 }
 

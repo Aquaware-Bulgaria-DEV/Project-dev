@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image } from 'react-native';
 import React from 'react';
 import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './tipStyle.js';
@@ -28,7 +28,6 @@ const Tip = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
@@ -41,7 +40,6 @@ const Tip = () => {
           <Text style={styles.text}>{tip.content}</Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

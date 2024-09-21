@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, Button, ScrollView, RefreshControl } from 'react-native';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 
@@ -102,7 +101,6 @@ const SingleRoom = () => {
 
 
   return (
-    <SafeAreaView style={styles.container}>
     <ScrollView
       style={styles.scrollView}
       contentContainerStyle={styles.scrollViewContent}
@@ -137,7 +135,6 @@ const SingleRoom = () => {
         </View>
       </View>
     </ScrollView>
-  </SafeAreaView>
   );
 };
 

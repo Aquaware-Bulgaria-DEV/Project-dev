@@ -1,4 +1,4 @@
-import { ScrollView, Text, View, SafeAreaView, TextInput } from 'react-native';
+import { ScrollView, Text, View, TextInput } from 'react-native';
 import { Header } from '../../globalComponents/header.jsx';
 import { styles } from './addRoomStyles.js';
 import { useState, useContext } from 'react';
@@ -71,7 +71,6 @@ const AddRoom = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <Header showProfilePic={false} resetRouter={true}></Header>
         <View style={styles.content}>
@@ -118,7 +117,6 @@ const AddRoom = () => {
           additionalTextStyle={styles.buttonText}
         ></CustomButton>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 

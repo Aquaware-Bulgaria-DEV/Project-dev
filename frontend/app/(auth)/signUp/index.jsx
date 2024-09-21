@@ -13,9 +13,10 @@ import { styles } from './sign-upStyles';
 import AquawareLogo from '../../../assets/AquawareLogo.svg';
 import { login, register } from '../../services/fetch';
 import LanguageToggleButton from '../../globalComponents/LanguageToggleButton.jsx';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
+  const { t } = useTranslation();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const [formValues, setFormValues] = React.useState({
     name: '',

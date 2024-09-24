@@ -5,6 +5,7 @@ import {
   scheduleWeeklyNotification,
   scheduleMonthlyNotification,
   cancelAllNotifications,
+  sendEmailNotification,
 } from "../../app/subscreens/notifications/notificationsHandler";
 import AuthContext from "../../app/Context/AuthContext";
 
@@ -130,6 +131,10 @@ export const NotificationProvider = ({ children }) => {
   const toggleEmailNotifications = async () => {
     const newState = !isEmailNotificationsTurnedOn;
     setEmailNotificationsTurnedOn(newState);
+
+    if (newState) {
+      await sendEmailNotification(token, preferences.email);
+    }
 
     const success = await updateNotificationSettings({
       push: isPushNotificationsTurnedOn,

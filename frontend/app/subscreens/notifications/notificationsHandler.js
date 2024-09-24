@@ -23,6 +23,30 @@ export async function registerForPushNotificationsAsync(t) {
   return token;
 }
 
+export async function sendEmailNotification(token, email) {
+  //! Waiting for API on the backend
+  // try {
+  //   const response = await fetch("https://your-backend-url/send-email", {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Token ${token}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       email,
+  //       subject: "Email Notifications Activated",
+  //       message: "You have activated email notifications for your account.",
+  //     }),
+  //   });
+  //   return response;
+  // } catch (error) {
+  //   console.error("Error sending email notification: ", error);
+  //   return { ok: false };
+  // }
+  console.log("Sending email notification to: ", email, "Token: ", token);
+  
+}
+
 //TODO: Implement logic for showing different messages every day.
 export async function scheduleDailyNotification() {
   await Notifications.scheduleNotificationAsync({

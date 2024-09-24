@@ -15,6 +15,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { useLocalSearchParams } from 'expo-router';
 import * as services from '../../services/fetch.js';
 import AuthContext from '../../Context/AuthContext.jsx';
+import { router } from 'expo-router';
 
 const EditProperty = () => {
   const params = useLocalSearchParams();
@@ -166,24 +167,24 @@ const EditProperty = () => {
 
     const data = {
       num_people: parseInt(numberPeople),
-      type: {
-        id: property.id,
-        type: property.type,
-        image: property.image,
-      },
-      client_number: {
-        client_number: clientNumber,
-        water_company: selectedCompanyId,
-        users: [],
-      },
-      water_meters: [waterMeterNum],
+      // type: {
+      //   id: property.id,
+      //   type: property.type,
+      //   image: property.image,
+      // },
+      // client_number: {
+      //   client_number: clientNumber,
+      //   water_company: selectedCompanyId,
+      //   users: [],
+      // },
+      // water_meters: [...waterMeterNum],
     };
-    console.log('DATA', data);
 
     try {
       const response = await services.editProperty(token, id, data);
-      if (response.ok) {
+      if (response) {
         Alert.alert('Успешна актуализация', 'Имотът беше успешно обновен.');
+        router.push('subscreens/myProperties');
       }
     } catch (error) {
       console.error('Error updating property:', error);
@@ -196,117 +197,115 @@ const EditProperty = () => {
   }
 
   return (
-      <ScrollView style={styles.scrollViewContent}>
-        <Header showProfilePic={false} resetRouter={true}></Header>
-        <View style={styles.content}>
-          <Text style={styles.title}>Редактиране на имот</Text>
-          <View style={styles.form}>
-            <View style={styles.numPeople}>
-              <Text style={styles.text}>Брой хора в жилището</Text>
-              <TextInput
-                style={styles.inputNumPeople}
-                onChangeText={setNumberPeople}
-                value={numberPeople}
-                keyboardType='numeric'
+    <ScrollView style={styles.scrollViewContent}>
+      <Header showProfilePic={false} resetRouter={true}></Header>
+      <View style={styles.content}>
+        <Text style={styles.title}>Редактиране на имот</Text>
+        <View style={styles.form}>
+          <View style={styles.numPeople}>
+            <Text style={styles.text}>Брой хора в жилището</Text>
+            <TextInput
+              style={styles.inputNumPeople}
+              onChangeText={setNumberPeople}
+              value={numberPeople}
+              keyboardType='numeric'
+            />
+          </View>
+          {errors.numberPeople && (
+            <Text style={styles.errorText}>{errors.numberPeople}</Text>
+          )}
+
+          <Text style={styles.text}>
+            Имот
+            <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
+          </Text>
+          <View>
+            <View style={styles.pickerContainer}>
+              <RNPickerSelect
+                key={property.id}
+                onValueChange={handlePropertySelectedChange}
+                items={propertyTypes.map((item) => ({
+                  label: item.label,
+                  value: item.id,
+                }))}
+                placeholder={{
+                  label: 'Изберете имот',
+                  value: null,
+                }}
+                value={property.id}
               />
             </View>
-            {errors.numberPeople && (
-              <Text style={styles.errorText}>{errors.numberPeople}</Text>
-            )}
-
-            <Text style={styles.text}>
-              Имот
-              <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
-            </Text>
-            <View>
-              <View style={styles.pickerContainer}>
-                <RNPickerSelect
-                  key={property.id}
-                  onValueChange={handlePropertySelectedChange}
-                  items={propertyTypes.map((item) => ({
-                    label: item.label,
-                    value: item.id,
-                  }))}
-                  placeholder={{
-                    label: 'Изберете имот',
-                    value: null,
-                  }}
-                  value={property.id}
-                />
-              </View>
-            </View>
-            {errors.property && (
-              <Text style={styles.errorText}>{errors.property}</Text>
-            )}
-
-            <Text style={styles.text}>
-              Дружество
-              <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
-            </Text>
-            <View>
-              <View style={styles.pickerContainer}>
-                <RNPickerSelect
-                  key={selectedCompanyId}
-                  onValueChange={handleCompanySelectedChange}
-                  items={companyNames}
-                  placeholder={{
-                    label: 'Изберете дружество',
-                    value: null,
-                  }}
-                  value={selectedCompanyId}
-                />
-              </View>
-            </View>
-            {errors.companyName && (
-              <Text style={styles.errorText}>{errors.companyName}</Text>
-            )}
-
-            <Text style={styles.text}>
-              Клиентски номер{' '}
-              <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
-            </Text>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={setClientNumber}
-              value={clientNumber}
-            />
-            {errors.clientNumber && (
-              <Text style={styles.errorText}>{errors.clientNumber}</Text>
-            )}
-
-            {waterMeters.map((obj) => (
-              <View key={obj.id}>
-                <Text style={styles.text}>
-                  Номер на водомер
-                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
-                    *
-                  </Text>
-                </Text>
-                <TextInput
-                  style={styles.inputField}
-                  value={obj.value}
-                  onChangeText={(text) => handleInputChange(obj.id, text)}
-                />
-              </View>
-            ))}
-            {errors.waterMeterNum && (
-              <Text style={styles.errorText}>{errors.waterMeterNum}</Text>
-            )}
           </View>
-          <Pressable onPress={addWaterMeterField}>
-            <Text style={styles.plusText}> + Добави водомер</Text>
-          </Pressable>
-        </View>
+          {errors.property && (
+            <Text style={styles.errorText}>{errors.property}</Text>
+          )}
 
-        <Pressable onPress={handleSubmit}>
-          <LinearGradient
-            style={styles.addButton}
-            colors={['#388FED', '#205187']}
-          >
-            <Text style={styles.addText}>Добави</Text>
-          </LinearGradient>
+          <Text style={styles.text}>
+            Дружество
+            <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
+          </Text>
+          <View>
+            <View style={styles.pickerContainer}>
+              <RNPickerSelect
+                key={selectedCompanyId}
+                onValueChange={handleCompanySelectedChange}
+                items={companyNames}
+                placeholder={{
+                  label: 'Изберете дружество',
+                  value: null,
+                }}
+                value={selectedCompanyId}
+              />
+            </View>
+          </View>
+          {errors.companyName && (
+            <Text style={styles.errorText}>{errors.companyName}</Text>
+          )}
+
+          <Text style={styles.text}>
+            Клиентски номер{' '}
+            <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
+          </Text>
+          <TextInput
+            style={styles.inputField}
+            onChangeText={setClientNumber}
+            value={clientNumber}
+          />
+          {errors.clientNumber && (
+            <Text style={styles.errorText}>{errors.clientNumber}</Text>
+          )}
+
+          {waterMeters.map((obj) => (
+            <View key={obj.id}>
+              <Text style={styles.text}>
+                Номер на водомер
+                <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
+              </Text>
+              <TextInput
+                style={styles.inputField}
+                value={obj.value}
+                onChangeText={(text) => handleInputChange(obj.id, text)}
+              />
+            </View>
+          ))}
+          {errors.waterMeterNum && (
+            <Text style={styles.errorText}>{errors.waterMeterNum}</Text>
+          )}
+        </View>
+        <Pressable onPress={addWaterMeterField}>
+          <Text style={styles.plusText}> + Добави водомер</Text>
         </Pressable>
-      </ScrollView>
+      </View>
+
+      <Pressable onPress={handleSubmit}>
+        <LinearGradient
+          style={styles.addButton}
+          colors={['#388FED', '#205187']}
+        >
+          <Text style={styles.addText}>Добави</Text>
+        </LinearGradient>
+      </Pressable>
+    </ScrollView>
   );
 };
 

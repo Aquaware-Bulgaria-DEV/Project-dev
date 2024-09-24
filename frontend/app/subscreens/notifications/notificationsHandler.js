@@ -23,11 +23,12 @@ export async function registerForPushNotificationsAsync(t) {
   return token;
 }
 
+//TODO: Implement logic for showing different messages every day.
 export async function scheduleDailyNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "Daily Reminder",
-      body: "This is your daily notification.",
+      title: `${t("notificationsMessageDailyTitle")}`,
+      body: `${t("notificationsMessageDailyText")}`,
     },
     trigger: {
       hour: 10,
@@ -37,11 +38,12 @@ export async function scheduleDailyNotification() {
   });
 }
 
+//TODO: Implement logic for showing different messages in order with previous week water consumption.
 export async function scheduleWeeklyNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "Weekly Reminder",
-      body: "This is your weekly notification.",
+      title: `${t("notificationsMessageWeeklyTitleLowerConsumption")}`,
+      body: `${t("notificationsMessageWeeklyTextLowerConsumption")}`,
     },
     trigger: {
       weekday: 1,  // Monday
@@ -52,11 +54,12 @@ export async function scheduleWeeklyNotification() {
   });
 }
 
+//TODO: Implement logic for showing different messages in order with previous month water consumption.
 export async function scheduleMonthlyNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "Monthly Reminder",
-      body: "This is your monthly notification.",
+      title: `${t("notificationsMessageMonthlyTitleLowerConsumption")}`,
+      body: `${t("notificationsMessageMonthlyTextLowerConsumption")}`,
     },
     trigger: {
       day: 1,  // First day of the month

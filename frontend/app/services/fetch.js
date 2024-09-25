@@ -282,6 +282,7 @@ export const createProperty = async (token, data) => {
 
 export const editProperty = async (token, propId, data) => {
   try {
+    console.log('djdjd');
     const response = await fetch(
       `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propId}/`,
       {
@@ -297,7 +298,7 @@ export const editProperty = async (token, propId, data) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const result = await response.json();
-
+    console.log('result fetch file', result);
     return result;
   } catch (error) {
     console.error('Error:', error);
@@ -535,7 +536,9 @@ export const getRandomAdviceAndImage = async (token, waterUsage) => {
       }
     );
     if (!response.ok) {
-      throw new Error(`Couldn't fetch advice and image. Response status: ${response.status}`);
+      throw new Error(
+        `Couldn't fetch advice and image. Response status: ${response.status}`
+      );
     }
     const data = await response.json();
     console.log('Data:', data);
@@ -543,7 +546,7 @@ export const getRandomAdviceAndImage = async (token, waterUsage) => {
   } catch (e) {
     throw e.message;
   }
-}
+};
 
 export const deleteSelfReport = async (token, id) => {
   try {
@@ -716,7 +719,7 @@ export const editSelfReport = async (token, value, waterMeterId) => {
       throw new Error(`Unexpected response format. Status: ${response.status}`);
     }
   } catch (e) {
-    throw e.message;;
+    throw e.message;
   }
 };
 

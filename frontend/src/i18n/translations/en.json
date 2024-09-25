@@ -24,8 +24,6 @@
     "errorSelfReportUnexpected": "An unexpected error occurred",
     "errorFacebookLogin": "Failed to log in with Facebook.",
     "errorAllFieldsAreRequired": "All fields are required",
-
-
     "home": "Home",
     "welcome": "Hello",
     "welcomeQuestion": "For what part of your home would you like to check your consumption?",
@@ -69,7 +67,6 @@
     "waterMeterPicker": "Choose water meter",
     "waterMeterAddValue": "Add value",
     "waterMeterCubicM": "cub. m",
-
     "settingsLogout": "Logout",
     "settingsChangeLanguageEN": "English",
     "settingsChangeLanguageBG": "Bulgarian",
@@ -84,6 +81,17 @@
     "notificationsScheduledMonthly": "Every month",
     "notificationsErrorToken": "Failed to get push token for push notification!",
     "notificationsErrorPushNotifications": "Must use physical device for Push Notifications",
+    "notificationsMessageDailyTitle": "Знаеш ли, че...",
+    "notificationsMessageDailyText": "Можеш да спестиш до 20% от водата, ако съкратиш времето за душ с 5 минути? Изпробвай го и намали разходите си!",
+    "notificationsMessageWeeklyTitleLowerConsumption": "What's new this week?",
+    "notificationsMessageWeeklyTextLowerConsumption": "You managed to reduce your water usage by X liters compared to last week.",
+    "notificationsMessageWeeklyTitleHigherConsumption": "You can do better.",
+    "notificationsMessageWeeklyTextHigherConsumption": "Your water consumption is X liters higher than last week.",
+    "notificationsMessageMonthlyTitleLowerConsumption": "Keep up the good work.",
+    "notificationsMessageMonthlyTextLowerConsumption": "Your consumption is significantly lower this month.",
+    "notificationsMessageMonthlyReportTitle": "Your monthly report is here.",
+    "notificationsMessageMonthlyReportText": "See how much water you used and discover new ways to save.",
+
     "appSettingsBiometricDataLogin": "Log In with Face/Touch ID",
     "appSettingsPasswordLogin": "Login with password",
     "appSettingsChangePassword": "Change your password",
@@ -97,7 +105,6 @@
     "appSettingsChangePasswordLoading": "Changing your password...",
     "appSettingsChangePasswordConfirmError": "Please, confirm your new password",
     "appSettingsChangePasswordDifferentPass": "The new password must be different from the old password",
-
     "appSettingsChangePasswordMismatchError": "Password mismatch",
     "appSettingsChangePasswordSuccessTitle": "Password change",
     "appSettingsChangePasswordSuccessMessage": "Your password was changed successfully.",

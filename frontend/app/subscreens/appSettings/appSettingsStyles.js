@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5",
   },
   scrollViewContent: {
-    paddingTop: Platform.OS === 'ios' ? 38 : 0, 
+    // paddingTop: Platform.OS === 'ios' ? 38 : 0, 
     // paddingBottom: 125,
     // marginHorizontal: 24,
     marginTop: 35,

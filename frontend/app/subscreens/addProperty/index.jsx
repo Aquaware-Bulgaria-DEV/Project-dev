@@ -94,18 +94,29 @@ const AddProperty = () => {
 
   const validateData = () => {
     const newErrors = {};
-    if (!numberPeople)
+
+    if (!numberPeople) {
       newErrors.numberPeople = `${t('addPropertyErrorNumOfPeople')}`;
-    if (numberPeople >= 20 || numberPeople <= 0) {
+    } else if (numberPeople < 1 || numberPeople > 20) {
       newErrors.numberPeople = 'Стойността може да бъде между 1 и 20';
     }
-    if (!property) newErrors.property = `${t('addPropertyErrorProperty')}`;
-    if (!companyName)
+
+    if (!property) {
+      newErrors.property = `${t('addPropertyErrorProperty')}`;
+    }
+
+    if (!companyName) {
       newErrors.companyName = `${t('addPropertyErrorCompanyName')}`;
-    if (!clientNumber)
+    }
+
+    if (!clientNumber) {
       newErrors.clientNumber = `${t('addPropertyErrorClientNum')}`;
-    if (!waterMeterNum)
+    }
+    const emptyWaterMeters = waterMeterNum.some((field) => !field.value.trim());
+    if (emptyWaterMeters) {
       newErrors.waterMeterNum = `${t('addPropertyErrorWaterMeterNum')}`;
+    }
+
     return newErrors;
   };
 
@@ -146,123 +157,132 @@ const AddProperty = () => {
   };
 
   return (
-      <ScrollView style={styles.scrollViewContent}>
-        <Header showProfilePic={false} resetRouter={true}></Header>
-        <View style={styles.content}>
-          <Text style={styles.title}>{t('addProperty')}</Text>
-          <View style={styles.form}>
-            <View style={styles.numPeople}>
-              <Text style={styles.text}>{t('addPropertyNumOfPeople')}</Text>
-              <TextInput
-                style={styles.inputNumPeople}
-                onChangeText={setNumberPeople}
-                value={numberPeople}
-                keyboardType='numeric'
+    <ScrollView style={styles.scrollViewContent}>
+      <Header showProfilePic={false} resetRouter={true}></Header>
+      <View style={styles.content}>
+        <Text style={styles.title}>{t('addProperty')}</Text>
+        <View style={styles.form}>
+          <View style={styles.numPeople}>
+            <Text style={styles.text}>{t('addPropertyNumOfPeople')}</Text>
+            <TextInput
+              style={styles.inputNumPeople}
+              onChangeText={(value) => {
+                const formattedValue = value.replace(/[^0-9]/g, '');
+                if (
+                  formattedValue === '' ||
+                  (parseInt(formattedValue, 10) >= 1 &&
+                    parseInt(formattedValue, 10) <= 20)
+                ) {
+                  setNumberPeople(formattedValue);
+                }
+              }}
+              value={numberPeople}
+              keyboardType='numeric'
+            />
+          </View>
+          {errors.numberPeople && (
+            <Text style={styles.errorText}>{errors.numberPeople}</Text>
+          )}
+
+          <Text style={styles.text}>
+            {t('addPropertyProp')}
+            <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
+          </Text>
+          <View>
+            <View style={styles.pickerContainer}>
+              <RNPickerSelect
+                onValueChange={handlePropertySelectedChange}
+                items={propertyOptions}
+                style={{
+                  inputIOS: styles.pickerItem,
+                  inputAndroid: styles.pickerItem,
+                }}
+                placeholder={{
+                  label: `${t('addPropertyChoose')}`,
+                  value: '',
+                }}
+                value={property}
               />
             </View>
-            {errors.numberPeople && (
-              <Text style={styles.errorText}>{errors.numberPeople}</Text>
-            )}
-
-            <Text style={styles.text}>
-              {t('addPropertyProp')}
-              <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
-            </Text>
-            <View>
-              <View style={styles.pickerContainer}>
-                <RNPickerSelect
-                  onValueChange={handlePropertySelectedChange}
-                  items={propertyOptions}
-                  style={{
-                    inputIOS: styles.pickerItem,
-                    inputAndroid: styles.pickerItem,
-                  }}
-                  placeholder={{
-                    label: `${t('addPropertyChoose')}`,
-                    value: '',
-                  }}
-                  value={property}
-                />
-              </View>
-            </View>
-            {errors.property && (
-              <Text style={styles.errorText}>{errors.property}</Text>
-            )}
-
-            <Text style={styles.text}>
-              {t('addPropertyCompany')}
-              <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
-            </Text>
-            <View>
-              <View style={styles.pickerContainer}>
-                <RNPickerSelect
-                  key={options.id}
-                  onValueChange={handleCompanySelectedChange}
-                  items={companyOptions}
-                  style={{
-                    inputIOS: styles.pickerItem,
-                    inputAndroid: styles.pickerItem,
-                  }}
-                  placeholder={{
-                    label: `${t('addPropertyChooseCompany')}`,
-                    value: '',
-                  }}
-                  value={companyName}
-                />
-              </View>
-            </View>
-
-            <Text style={styles.text}>
-              {t('addPropertyClientNum')}{' '}
-              <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
-            </Text>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={setClientNumber}
-              value={clientNumber}
-            />
-            {errors.clientNumber && (
-              <Text style={styles.errorText}>{errors.clientNumber}</Text>
-            )}
-
-            {waterMeterNum.map((field) => (
-              <View key={field.id}>
-                <Text style={styles.text}>
-                  {t('addPropertyWaterMeterNum')}
-                  {field.id === 1 ? (
-                    <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
-                      *
-                    </Text>
-                  ) : null}
-                </Text>
-                <TextInput
-                  key={field.id}
-                  style={styles.inputField}
-                  value={field.value}
-                  onChangeText={(text) => handleInputChange(field.id, text)}
-                />
-              </View>
-            ))}
-            {errors.waterMeterNum && (
-              <Text style={styles.errorText}>{errors.waterMeterNum}</Text>
-            )}
           </View>
-          <Pressable onPress={addWaterMeterField}>
-            <Text style={styles.plusText}>
-              {t('addPropertyAddNewWaterMeter')}
-            </Text>
-          </Pressable>
-        </View>
+          {errors.property && (
+            <Text style={styles.errorText}>{errors.property}</Text>
+          )}
 
-        <Pressable onPress={handleSubmit}>
-          <LinearGradient
-            style={styles.addButton}
-            colors={['#388FED', '#205187']}
-          >
-            <Text style={styles.addText}>{t('addPropertyButton')}</Text>
-          </LinearGradient>
+          <Text style={styles.text}>
+            {t('addPropertyCompany')}
+            <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
+          </Text>
+          <View>
+            <View style={styles.pickerContainer}>
+              <RNPickerSelect
+                key={options.id}
+                onValueChange={handleCompanySelectedChange}
+                items={companyOptions}
+                style={{
+                  inputIOS: styles.pickerItem,
+                  inputAndroid: styles.pickerItem,
+                }}
+                placeholder={{
+                  label: `${t('addPropertyChooseCompany')}`,
+                  value: '',
+                }}
+                value={companyName}
+              />
+            </View>
+          </View>
+
+          <Text style={styles.text}>
+            {t('addPropertyClientNum')}{' '}
+            <Text style={{ color: 'red', alignSelf: 'flex-start' }}>*</Text>
+          </Text>
+          <TextInput
+            style={styles.inputField}
+            onChangeText={setClientNumber}
+            value={clientNumber}
+          />
+          {errors.clientNumber && (
+            <Text style={styles.errorText}>{errors.clientNumber}</Text>
+          )}
+
+          {waterMeterNum.map((field) => (
+            <View key={field.id}>
+              <Text style={styles.text}>
+                {t('addPropertyWaterMeterNum')}
+                {field.id === 1 ? (
+                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                    *
+                  </Text>
+                ) : null}
+              </Text>
+              <TextInput
+                key={field.id}
+                style={styles.inputField}
+                value={field.value}
+                onChangeText={(text) => handleInputChange(field.id, text)}
+              />
+            </View>
+          ))}
+          {errors.waterMeterNum && (
+            <Text style={styles.errorText}>{errors.waterMeterNum}</Text>
+          )}
+        </View>
+        <Pressable onPress={addWaterMeterField}>
+          <Text style={styles.plusText}>
+            {t('addPropertyAddNewWaterMeter')}
+          </Text>
         </Pressable>
-      </ScrollView>
+      </View>
+
+      <Pressable onPress={handleSubmit}>
+        <LinearGradient
+          style={styles.addButton}
+          colors={['#388FED', '#205187']}
+        >
+          <Text style={styles.addText}>{t('addPropertyButton')}</Text>
+        </LinearGradient>
+      </Pressable>
+    </ScrollView>
   );
 };
 

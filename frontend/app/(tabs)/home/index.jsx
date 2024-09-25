@@ -111,52 +111,49 @@ const Home = () => {
   };
 
   return (
-      <ScrollView
-        contentContainerStyle={styles.scrollViewContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <Header showProfilePic />
-        <View style={styles.text}>
-          <Text style={styles.headerTitle}>
-            {t('welcome')}, {userInfo?.first_name}!
-          </Text>
-          <Text style={styles.description}>{t('welcomeQuestion')}</Text>
+    <ScrollView
+      contentContainerStyle={styles.scrollViewContent}
+      showsVerticalScrollIndicator={false}
+    >
+      <Header showProfilePic />
+      <View style={styles.text}>
+        <Text style={styles.headerTitle}>
+          {t('welcome')}, {userInfo?.first_name}!
+        </Text>
+        <Text style={styles.description}>{t('welcomeQuestion')}</Text>
+      </View>
+      {properties.length > 1 ? (
+        <View style={styles.pickerContainer}>
+          <RNPickerSelect
+            key={selectedProp}
+            onValueChange={handlePropertyChange}
+            items={properties}
+            style={{
+              inputIOS: styles.pickerItem,
+              inputAndroid: styles.pickerItem,
+            }}
+            value={selectedProp}
+          />
         </View>
-        {properties.length > 1 ? (
-          <View style={styles.pickerContainer}>
-            <RNPickerSelect
-              key={selectedProp}
-              onValueChange={handlePropertyChange}
-              items={properties}
-              style={{
-                inputIOS: styles.pickerItem,
-                inputAndroid: styles.pickerItem,
-              }}
-              value={selectedProp}
-            />
-          </View>
-        ) : null}
+      ) : null}
 
-        {rooms.map((room) => (
-          <Pressable
-            key={room.value}
-            style={styles.paddingZero}
-            onPress={() =>
-              router.push({
-                pathname: 'singleRoom',
-                params: { propertyId: selectedProp, roomId: room.value },
-              })
-            }
-          >
-            <ImageBackground
-              style={styles.rooms}
-              source={roomImages[room.type]}
-            >
-              <Text style={styles.roomText}>{room.label}</Text>
-            </ImageBackground>
-          </Pressable>
-        ))}
-      </ScrollView>
+      {rooms.map((room) => (
+        <Pressable
+          key={room.value}
+          style={styles.paddingZero}
+          onPress={() =>
+            router.push({
+              pathname: 'singleRoom',
+              params: { propertyId: selectedProp, roomId: room.value },
+            })
+          }
+        >
+          <ImageBackground style={styles.rooms} source={roomImages[room.type]}>
+            <Text style={styles.roomText}>{room.label}</Text>
+          </ImageBackground>
+        </Pressable>
+      ))}
+    </ScrollView>
   );
 };
 

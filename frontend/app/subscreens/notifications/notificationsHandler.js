@@ -1,5 +1,5 @@
 import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
+/*import * as Permissions from 'expo-permissions';*/
 import Constants from 'expo-constants';
 
 export async function registerForPushNotificationsAsync(t) {

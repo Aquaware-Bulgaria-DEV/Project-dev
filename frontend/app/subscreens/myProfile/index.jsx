@@ -61,20 +61,6 @@ const MyProfile = () => {
   const { userInfo, token, saveUserInfo } = useContext(AuthContext);
   const { control } = useForm();
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     const firstName = userInfo.first_name || '';
-  //     const lastName = userInfo.last_name || '';
-  //     setName(`${firstName} ${lastName}`.trim());
-  //     setCity(userInfo.city || '');
-  //     setPhone(userInfo.phone_number || '');
-  //     setEmail(userInfo.email || '');
-  //     setPicture(userInfo.profile_picture || null);
-  //     if (userInfo.date_joined) {
-  //       setDate(format(parseISO(userInfo.date_joined), 'dd.MM.yyyy'));
-  //     }
-  //   }
-  // }, [userInfo]);
   useEffect(() => {
     if (userInfo) {
       if (!userInfo.first_name && !userInfo.last_name) {
@@ -122,7 +108,7 @@ const MyProfile = () => {
 
   const dataSubmissionHandler = async () => {
     if (!name) {
-      Alert.alert('Моля, въведете име');
+      Alert.alert('Моля, въведете име и фамилия');
       return;
     } else if (!phone) {
       Alert.alert('Моля, въведете телефонен номер');
@@ -132,8 +118,6 @@ const MyProfile = () => {
       return;
     } else {
       setValidData(true);
-    }
-    if (validData) {
       const profileData = {
         first_name: name.split(' ')[0],
         last_name: name.split(' ')[1],
@@ -186,167 +170,167 @@ const MyProfile = () => {
   };
 
   return (
-      <ScrollView style={styles.scrollViewContent}>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          keyboardVerticalOffset={height}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-          <Header showProfilePic={false} />
+    <ScrollView style={styles.scrollViewContent}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={height}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <Header showProfilePic={false} />
 
-          <View style={styles.content}>
-            <Text style={styles.screenLabel}>{t('myProfile')}</Text>
-            <Text style={styles.otherDetails}>
-              {t('myProfileActiveFrom')} {date}
-            </Text>
-            <Text style={styles.otherDetails}>
-              {t('myProfileClientOf')} Софийска вода
-            </Text>
-          </View>
+        <View style={styles.content}>
+          <Text style={styles.screenLabel}>{t('myProfile')}</Text>
+          <Text style={styles.otherDetails}>
+            {t('myProfileActiveFrom')} {date}
+          </Text>
+          <Text style={styles.otherDetails}>
+            {t('myProfileClientOf')} Софийска вода
+          </Text>
+        </View>
 
-          <View style={styles.reqContainer}>
-            <View style={styles.innerContainer}>
-              <View style={styles.credentials}>
-                <View style={styles.imageContainer}>
-                  <Image style={styles.avatar} source={{ uri: picture }} />
-                  <Pressable style={styles.editIcon} onPress={changePicture}>
-                    <Text>{getIcon('pencil', 'white', 13)}</Text>
-                  </Pressable>
-                </View>
-
-                <View style={styles.clientInfo}>
-                  <Text style={styles.clientName}>{name || ''}</Text>
-                  <Text style={styles.clientNumber}>
-                    {t('myProfileClientNumber')} 119862
-                  </Text>
-                  <TouchableOpacity
-                    onPressIn={() => setOpacity(0.7)}
-                    onPressOut={() => setOpacity(1)}
-                    onPress={handleRemove}
-                  >
-                    <Text style={[styles.removeBtn, { opacity }]}>
-                      {t('myProfileRemove')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+        <View style={styles.reqContainer}>
+          <View style={styles.innerContainer}>
+            <View style={styles.credentials}>
+              <View style={styles.imageContainer}>
+                <Image style={styles.avatar} source={{ uri: picture }} />
+                <Pressable style={styles.editIcon} onPress={changePicture}>
+                  <Text>{getIcon('pencil', 'white', 13)}</Text>
+                </Pressable>
               </View>
 
-              <View style={styles.form}>
-                <Text style={styles.inputFieldName}>{t('myProfileName')}</Text>
-                <Controller
-                  control={control}
-                  name='name'
-                  render={({ field: { onChange } }) => (
-                    <TextInput
-                      style={styles.inputField}
-                      onChangeText={(text) => {
-                        onChange(text);
-                        setName(text);
-                      }}
-                      value={name}
-                    />
-                  )}
-                />
-
-                <Text style={styles.inputFieldName}>{t('myProfilePhone')}</Text>
-                <Controller
-                  control={control}
-                  name='phone'
-                  render={({ field: { onChange } }) => (
-                    <TextInput
-                      style={styles.inputField}
-                      onChangeText={(text) => {
-                        onChange(text);
-                        setPhone(text);
-                      }}
-                      keyboardType='phone-pad'
-                      value={phone}
-                    />
-                  )}
-                />
-
-                <Text style={styles.inputFieldName}>{t('myProfileCity')}</Text>
-                <View style={{ marginVertical: 5 }}>
-                  <View style={styles.pickerContainer}>
-                    <RNPickerSelect
-                      onValueChange={handleTownSelection}
-                      items={cityOptions}
-                      style={{
-                        inputIOS: styles.pickerItem,
-                        inputAndroid: styles.pickerItem,
-                      }}
-                      placeholder={{
-                        label: city.label || `${t('myProfileChooseCity')}`,
-                        value: city.label || '',
-                        id: city.id || '',
-                      }}
-                      value={city}
-                    />
-                  </View>
-                </View>
-
-                <Text style={styles.inputFieldName}>{t('myProfileEmail')}</Text>
-                <TextInput
-                  name='email'
-                  style={styles.inputField}
-                  value={email}
-                  readOnly
-                  keyboardType='email-address'
-                />
-
-                <CustomButton
-                  handlePress={dataSubmissionHandler}
-                  title={t('customButtonSave')}
-                  color='#388FED'
-                  secondColor='#4C62C7'
-                  additionalStyles={styles.saveButton}
-                  additionalTextStyle={styles.buttonText}
-                />
-              </View>
-            </View>
-          </View>
-
-          <Modal
-            visible={isModalVisible}
-            transparent={true}
-            animationType='slide'
-          >
-            <View style={styles.modalOverlay}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>{t('alertDeleteProfile')}</Text>
-                <Text style={styles.modalMessage}>
-                  {t('alertDeleteProfileTypeYourPasswordForConfirmation')}
+              <View style={styles.clientInfo}>
+                <Text style={styles.clientName}>{name || ''}</Text>
+                <Text style={styles.clientNumber}>
+                  {t('myProfileClientNumber')} 119862
                 </Text>
-                <TextInput
-                  style={styles.modalInput}
-                  secureTextEntry={true}
-                  placeholder={t('alertDeleteProfileTypeYourPassword')}
-                  value={password}
-                  onChangeText={setPassword}
-                />
-                <View style={styles.modalButtons}>
-                  <TouchableOpacity
-                    style={styles.modalButton}
-                    onPress={() => setIsModalVisible(false)}
-                  >
-                    <Text style={styles.modalButtonText}>
-                      {t('alertDeleteProfileCancel')}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.modalButton}
-                    onPress={() => handleDeleteProf(password)}
-                  >
-                    <Text style={styles.modalButtonText}>
-                      {t('alertDeleteProfileConfirm')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  onPressIn={() => setOpacity(0.7)}
+                  onPressOut={() => setOpacity(1)}
+                  onPress={handleRemove}
+                >
+                  <Text style={[styles.removeBtn, { opacity }]}>
+                    {t('myProfileRemove')}
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
-          </Modal>
-        </KeyboardAvoidingView>
-      </ScrollView>
+
+            <View style={styles.form}>
+              <Text style={styles.inputFieldName}>Име и Фамилия</Text>
+              <Controller
+                control={control}
+                name='name'
+                render={({ field: { onChange } }) => (
+                  <TextInput
+                    style={styles.inputField}
+                    onChangeText={(text) => {
+                      onChange(text);
+                      setName(text);
+                    }}
+                    value={name}
+                  />
+                )}
+              />
+
+              <Text style={styles.inputFieldName}>{t('myProfilePhone')}</Text>
+              <Controller
+                control={control}
+                name='phone'
+                render={({ field: { onChange } }) => (
+                  <TextInput
+                    style={styles.inputField}
+                    onChangeText={(text) => {
+                      onChange(text);
+                      setPhone(text);
+                    }}
+                    keyboardType='phone-pad'
+                    value={phone}
+                  />
+                )}
+              />
+
+              <Text style={styles.inputFieldName}>{t('myProfileCity')}</Text>
+              <View style={{ marginVertical: 5 }}>
+                <View style={styles.pickerContainer}>
+                  <RNPickerSelect
+                    onValueChange={handleTownSelection}
+                    items={cityOptions}
+                    style={{
+                      inputIOS: styles.pickerItem,
+                      inputAndroid: styles.pickerItem,
+                    }}
+                    placeholder={{
+                      label: city.label || `${t('myProfileChooseCity')}`,
+                      value: city.label || '',
+                      id: city.id || '',
+                    }}
+                    value={city}
+                  />
+                </View>
+              </View>
+
+              <Text style={styles.inputFieldName}>{t('myProfileEmail')}</Text>
+              <TextInput
+                name='email'
+                style={styles.inputField}
+                value={email}
+                readOnly
+                keyboardType='email-address'
+              />
+
+              <CustomButton
+                handlePress={dataSubmissionHandler}
+                title={t('customButtonSave')}
+                color='#388FED'
+                secondColor='#4C62C7'
+                additionalStyles={styles.saveButton}
+                additionalTextStyle={styles.buttonText}
+              />
+            </View>
+          </View>
+        </View>
+
+        <Modal
+          visible={isModalVisible}
+          transparent={true}
+          animationType='slide'
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>{t('alertDeleteProfile')}</Text>
+              <Text style={styles.modalMessage}>
+                {t('alertDeleteProfileTypeYourPasswordForConfirmation')}
+              </Text>
+              <TextInput
+                style={styles.modalInput}
+                secureTextEntry={true}
+                placeholder={t('alertDeleteProfileTypeYourPassword')}
+                value={password}
+                onChangeText={setPassword}
+              />
+              <View style={styles.modalButtons}>
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={() => setIsModalVisible(false)}
+                >
+                  <Text style={styles.modalButtonText}>
+                    {t('alertDeleteProfileCancel')}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={() => handleDeleteProf(password)}
+                >
+                  <Text style={styles.modalButtonText}>
+                    {t('alertDeleteProfileConfirm')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

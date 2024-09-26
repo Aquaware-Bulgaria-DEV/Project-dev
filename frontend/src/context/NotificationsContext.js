@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   registerForPushNotificationsAsync,
-  scheduleDailyNotification,
-  scheduleWeeklyNotification,
   scheduleMonthlyNotification,
   cancelAllNotifications,
   sendEmailNotification,

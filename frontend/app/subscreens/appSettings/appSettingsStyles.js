@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,9 +6,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5",
   },
   scrollViewContent: {
-    // paddingTop: Platform.OS === 'ios' ? 38 : 0, 
-    // paddingBottom: 125,
-    // marginHorizontal: 24,
     marginTop: 35,
   },
   content: {
@@ -20,8 +16,8 @@ export const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 28,
     marginLeft: 15,
-    textShadowColor: '#000', // Shadow color
-    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+    textShadowColor: '#000', 
+    textShadowOffset: { width: 1, height: 1 }, 
     textShadowRadius: 5,
   },
   settingsBtn: {

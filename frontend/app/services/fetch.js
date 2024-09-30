@@ -1,4 +1,5 @@
 import { get, post } from '../../utils/request';
+import { useTranslation } from "react-i18next";
 
 const server = 'http://ec2-18-234-44-48.compute-1.amazonaws.com';
 
@@ -578,7 +579,7 @@ export const deleteSelfReport = async (token, id) => {
   }
 };
 
-export const login = async (data) => {
+export const login = async (data, language) => {
   try {
     const response = await fetch(`${server}/profile/login/`, {
       method: 'POST',
@@ -593,23 +594,37 @@ export const login = async (data) => {
     });
 
     if (response.status === 400) {
-      throw new Error(`Потребителското Ви име или парола не съответстват`);
+      if (language === 'bg') {
+        throw new Error('Потребителското Ви име или парола не съответстват');
+      } else {
+        throw new Error('Your username or password do not match');
+      }
     }
+
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      if (language === 'bg') {
+        throw new Error(`HTTP грешка! Статус: ${response.status}`);
+      } else {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
     }
+
     const user = await response.json();
     if (user.token) {
       return user;
     } else {
-      throw new Error('Грешен имейл или парола');
+      if (language === 'bg') {
+        throw new Error('Грешен имейл или парола');
+      } else {
+        throw new Error('Invalid email or password');
+      }
     }
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export const register = async (email, password) => {
+export const register = async (email, password, language) => {
   try {
     const response = await fetch(`${server}/profile/create/`, {
       method: 'POST',
@@ -623,15 +638,21 @@ export const register = async (email, password) => {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      if (language === 'bg') {
+        throw new Error(`HTTP грешка! Статус: ${response.status}`);
+      } else {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
-    return error;
-    // console.error("Error:", error);
-    // Alert.alert("Грешка", "Проблем при връзката със сървъра");
+    if (language === 'bg') {
+      throw new Error('Проблем при връзката със сървъра');
+    } else {
+      throw new Error('Problem connecting to the server');
+    }
   }
 };
 

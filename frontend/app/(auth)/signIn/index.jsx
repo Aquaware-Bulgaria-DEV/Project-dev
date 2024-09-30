@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 
 const SignIn = () => {
   const { t } = useTranslation();
-  const { saveToken, saveUserInfo } = React.useContext(AuthContext);
+  const { saveToken, saveUserInfo, preferences } = React.useContext(AuthContext);
   const [formValues, setFormValues] = React.useState({ email: "", password: "" });
   const [error, setError] = React.useState("");
   const [biometricLoginEnabled, setBiometricLoginEnabled] = useState(false);
@@ -81,8 +81,10 @@ const SignIn = () => {
       return;
     }
 
+    const language = preferences?.language || 'en';
+
     try {
-      const loginResponse = await login(formValues);
+      const loginResponse = await login(formValues, language);
       await saveToken(loginResponse.token);
 
       if (biometricLoginEnabled) {

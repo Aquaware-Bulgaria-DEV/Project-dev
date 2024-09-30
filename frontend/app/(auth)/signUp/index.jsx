@@ -24,7 +24,7 @@ const SignUp = () => {
     password: '',
     repeatPassword: '',
   });
-  const { saveToken, saveUserInfo } = React.useContext(AuthContext);
+  const { saveToken, saveUserInfo, preferences } = React.useContext(AuthContext);
 
   const [error, setError] = React.useState('');
   const router = useRouter();
@@ -55,9 +55,11 @@ const SignUp = () => {
       return;
     }
 
+    const language = preferences?.language || 'en';
+
     try {
-      const user = await register(formValues.email, formValues.password);
-      const userInfo = await login(formValues);
+      const user = await register(formValues.email, formValues.password, language);
+      const userInfo = await login(formValues, language);
       const token = userInfo.token;
       saveToken(token);
 

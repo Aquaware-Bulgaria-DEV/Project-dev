@@ -1,14 +1,15 @@
 {
   "expo": {
     "name": "Aquaware",
-    "slug": "aquaware",
+    "slug": "aqua",
+    "description":"Aquaware is an app for saving water.",
     "scheme": "aquaware",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/AquawareLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/BigLogo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,19 +18,27 @@
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app uses FaceID to authenticate users.",
         "NSBiometricUsageDescription": "This app uses biometric authentication to secure access."
-      }
+      },
+      "bundleIdentifier": "com.anonymous.aquaware"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/AquawareLogo.png",
+        "backgroundColor": "#ff00ff"
+      },
+      "package": "com.anonymous.aquaware"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b79becc4-3630-4361-af85-d4455a64add2"
+      }
+    },
+    "owner": "aquaware_bulgaria"
   }
 }

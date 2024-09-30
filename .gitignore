@@ -1,7 +1,7 @@
 auth--login
 .idea/Project-dev.iml
 .idea/workspace.xml
-
+frontend_backup/
 
 /backend/venv
 /backend/venv/bin

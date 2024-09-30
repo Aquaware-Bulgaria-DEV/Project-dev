@@ -126,28 +126,28 @@ export const NotificationProvider = ({ children }) => {
     }
   };
 
-  const toggleEmailNotifications = async () => {
-    const newState = !isEmailNotificationsTurnedOn;
-    setEmailNotificationsTurnedOn(newState);
+  // const toggleEmailNotifications = async () => {
+  //   const newState = !isEmailNotificationsTurnedOn;
+  //   setEmailNotificationsTurnedOn(newState);
 
-    if (newState) {
-      await sendEmailNotification(token, preferences.email);
-    }
+  //   if (newState) {
+  //     await sendEmailNotification(token, preferences.email);
+  //   }
 
-    const success = await updateNotificationSettings({
-      push: isPushNotificationsTurnedOn,
-      email_notification: newState,
-      daily: isScheduledDailyTurnedOn,
-      weekly: isScheduledWeeklyTurnedOn,
-      monthly: isScheduledMonthlyTurnedOn,
-      language: preferences.language,
-    });
+  //   const success = await updateNotificationSettings({
+  //     push: isPushNotificationsTurnedOn,
+  //     email_notification: newState,
+  //     daily: isScheduledDailyTurnedOn,
+  //     weekly: isScheduledWeeklyTurnedOn,
+  //     monthly: isScheduledMonthlyTurnedOn,
+  //     language: preferences.language,
+  //   });
 
-    if (!success) {
-      setEmailNotificationsTurnedOn(!newState); // Revert the state if server update fails
-      console.log("Turning on email notifications NOT successful");
-    }
-  };
+  //   if (!success) {
+  //     setEmailNotificationsTurnedOn(!newState); // Revert the state if server update fails
+  //     console.log("Turning on email notifications NOT successful");
+  //   }
+  // };
 
   const toggleScheduledDailyNotifications = async () => {
     const newState = !isScheduledDailyTurnedOn;
@@ -247,7 +247,7 @@ export const NotificationProvider = ({ children }) => {
         togglePushNotifications,
         expoPushToken,
         isEmailNotificationsTurnedOn,
-        toggleEmailNotifications,
+        // toggleEmailNotifications,
         isScheduledDailyTurnedOn,
         toggleScheduledDailyNotifications,
         isScheduledWeeklyTurnedOn,

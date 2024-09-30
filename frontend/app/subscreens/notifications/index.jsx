@@ -104,7 +104,7 @@ const Notifications = () => {
             />
           </View>
 
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
+          {/* <View style={[styles.settingsBtn, styles.switchContainer]}>
             <Text style={styles.buttonText}>
               {t("notificationsEmailNotifications")}
             </Text>
@@ -114,7 +114,7 @@ const Notifications = () => {
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />
-          </View>
+          </View> */}
 
           <Text style={styles.text}>
             {t("notificationsScheduleFrequency")}

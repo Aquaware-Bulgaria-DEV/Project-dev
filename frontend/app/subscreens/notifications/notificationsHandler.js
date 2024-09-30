@@ -22,7 +22,7 @@ export async function registerForPushNotificationsAsync(t) {
   return token;
 }
 
-export async function sendEmailNotification(token, email) {
+// export async function sendEmailNotification(token, email) {
   //! Waiting for API on the backend
   // try {
   //   const response = await fetch("https://your-backend-url/send-email", {
@@ -42,9 +42,9 @@ export async function sendEmailNotification(token, email) {
   //   console.error("Error sending email notification: ", error);
   //   return { ok: false };
   // }
-  console.log("Sending email notification to: ", email, "Token: ", token);
+  // console.log("Sending email notification to: ", email, "Token: ", token);
   
-}
+// }
 
 //TODO: Implement logic for showing different messages every day.
 export async function scheduleDailyNotification() {

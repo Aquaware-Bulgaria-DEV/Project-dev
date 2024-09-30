@@ -54,60 +54,60 @@ const ManageProperty = () => {
   }, []);
 
   return (
-      <ScrollView style={styles.scrollViewContent}>
-        <Header showProfilePic={false} />
-        <View style={styles.content}>
-          <Text style={styles.title}>{t('propertyManagement')}</Text>
+    <ScrollView style={styles.scrollViewContent}>
+      <Header showProfilePic={false} resetRouter={true} />
+      <View style={styles.content}>
+        <Text style={styles.title}>{t('propertyManagement')}</Text>
 
+        <SettingsButton
+          style={styles.settingsButton}
+          title={t('addRoom')}
+          screen={'subscreens/addRoom'}
+          icon={'plus'}
+          iconColor={'black'}
+          params={{ propId: propId }}
+          onIconPress={() =>
+            router.push({
+              pathname: 'subscreens/addRoom',
+            })
+          }
+          isInnerPressable={false}
+        />
+        {rooms.map((room) => (
           <SettingsButton
+            key={room.key}
             style={styles.settingsButton}
-            title={t('addRoom')}
-            screen={'subscreens/addRoom'}
-            icon={'plus'}
-            iconColor={'black'}
-            params={{ propId: propId }}
+            title={room.label}
+            screen={'subscreens/editRoom'}
+            icon={'pencil'}
+            iconColor={'#3F9FF4'}
+            secondIcon={'trash'}
+            secondIconColor={'black'}
+            params={{ propertyId: params['propertyId'], roomId: room.key }}
             onIconPress={() =>
               router.push({
-                pathname: 'subscreens/addRoom',
+                pathname: 'subscreens/editRoom',
+                params: {
+                  propertyId: params['propertyId'],
+                  roomId: room.key,
+                },
               })
             }
-            isInnerPressable={false}
+            // isInnerPressable={false}
+            onSecondIconPress={() => {
+              setRoomToDelete(room.key);
+              setModalVisible(true);
+            }}
           />
-          {rooms.map((room) => (
-            <SettingsButton
-              key={room.key}
-              style={styles.settingsButton}
-              title={room.label}
-              screen={'subscreens/editRoom'}
-              icon={'pencil'}
-              iconColor={'#3F9FF4'}
-              secondIcon={'trash'}
-              secondIconColor={'black'}
-              params={{ propertyId: params['propertyId'], roomId: room.key }}
-              onIconPress={() =>
-                router.push({
-                  pathname: 'subscreens/editRoom',
-                  params: {
-                    propertyId: params['propertyId'],
-                    roomId: room.key,
-                  },
-                })
-              }
-              // isInnerPressable={false}
-              onSecondIconPress={() => {
-                setRoomToDelete(room.key);
-                setModalVisible(true);
-              }}
-            />
-          ))}
-        </View>
-        <CustomModal
-          isVisible={modalVisible}
-          setIsVisible={setModalVisible}
-          questionTxt={t('propertyManagementDeletionAssertion')}
-          actionHandler={confirmDeleteRoom}
-        />
-      </ScrollView>
+        ))}
+      </View>
+      <CustomModal
+        isVisible={modalVisible}
+        setIsVisible={setModalVisible}
+        questionTxt={t('propertyManagementDeletionAssertion')}
+        actionHandler={confirmDeleteRoom}
+      />
+    </ScrollView>
   );
 };
 

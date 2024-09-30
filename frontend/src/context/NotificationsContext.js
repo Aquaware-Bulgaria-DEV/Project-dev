@@ -15,8 +15,8 @@ export const NotificationProvider = ({ children }) => {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [isPushNotificationsTurnedOn, setPushNotificationsTurnedOn] =
     useState(false);
-  const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] =
-    useState(false);
+  // const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] =
+  //   useState(false);
   const [isScheduledDailyTurnedOn, setScheduledDailyTurnedOn] = useState(false);
   const [isScheduledWeeklyTurnedOn, setScheduledWeeklyTurnedOn] =
     useState(false);
@@ -27,7 +27,7 @@ export const NotificationProvider = ({ children }) => {
     if (preferences) {
       console.log("Loaded preferences on login: ", preferences);
       setPushNotificationsTurnedOn(preferences.push || false);
-      setEmailNotificationsTurnedOn(preferences.email_notification || false);
+      // setEmailNotificationsTurnedOn(preferences.email_notification || false);
       setScheduledDailyTurnedOn(preferences.daily || false);
       setScheduledWeeklyTurnedOn(preferences.weekly || false);
       setScheduledMonthlyTurnedOn(preferences.monthly || false);
@@ -246,7 +246,7 @@ export const NotificationProvider = ({ children }) => {
         isPushNotificationsTurnedOn,
         togglePushNotifications,
         expoPushToken,
-        isEmailNotificationsTurnedOn,
+        // isEmailNotificationsTurnedOn,
         // toggleEmailNotifications,
         isScheduledDailyTurnedOn,
         toggleScheduledDailyNotifications,

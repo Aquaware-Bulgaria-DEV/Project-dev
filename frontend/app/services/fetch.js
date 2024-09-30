@@ -1,5 +1,6 @@
+import { Alert } from 'react-native';
 import { get, post } from '../../utils/request';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 const server = 'http://ec2-18-234-44-48.compute-1.amazonaws.com';
 
@@ -203,15 +204,19 @@ export const getUserRank = async (token) => {
         },
       }
     );
-
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if (response.status === 404) {
+        Alert.alert(
+          'Класацията не е намерена',
+          'Няма достатъчно данни за участие в класацията!'
+        );
+      }
     }
-
     const result = await response.json();
+
     return result;
   } catch (error) {
-    console.error('Error fetching user rank:', error.message);
+    console.error('Error fetching user rank:', error);
     throw new Error(`Failed to fetch user rank: ${error.message}`);
   }
 };

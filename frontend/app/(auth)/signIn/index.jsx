@@ -13,7 +13,7 @@ import AquawareLogo from "../../../assets/AquawareLogo.svg";
 import { login } from "../../services/fetch";
 import LanguageToggleButton from "../../globalComponents/LanguageToggleButton.jsx";
 import * as SecureStore from "expo-secure-store";
-import * as Facebook from 'expo-auth-session/providers/facebook'; // Facebook provider
+// import * as Facebook from 'expo-auth-session/providers/facebook'; // Facebook provider
 import { useTranslation } from "react-i18next";
 
 const SignIn = () => {
@@ -26,30 +26,30 @@ const SignIn = () => {
   const router = useRouter();
 
   // Facebook login setup
-  const [request, response, promptAsync] = Facebook.useAuthRequest({
-    clientId: '1052805583190115',
-  });
+  // const [request, response, promptAsync] = Facebook.useAuthRequest({
+  //   clientId: '1052805583190115',
+  // });
   
-  useEffect(() => {
-    if (response?.type === "success") {
-      const { access_token } = response.params;
+  // useEffect(() => {
+  //   if (response?.type === "success") {
+  //     const { access_token } = response.params;
 
-      // Use the access token to fetch user details from Facebook's API
-      fetch(`https://graph.facebook.com/me?access_token=${access_token}`)
-        .then(res => res.json())
-        .then(async userData => {
-          // Handle Facebook user authentication (e.g., send to your backend for verification)
-          await saveToken(access_token);
-          // Assuming saveUserInfo will store the profile details fetched from Facebook
-          saveUserInfo(userData);
-          router.push("/home");
-        })
-        .catch(err => {
-          console.error(err);          
-          setError(`${t('errorFacebookLogin')}`);
-        });
-    }
-  }, [response]);
+  //     // Use the access token to fetch user details from Facebook's API
+  //     fetch(`https://graph.facebook.com/me?access_token=${access_token}`)
+  //       .then(res => res.json())
+  //       .then(async userData => {
+  //         // Handle Facebook user authentication (e.g., send to your backend for verification)
+  //         await saveToken(access_token);
+  //         // Assuming saveUserInfo will store the profile details fetched from Facebook
+  //         saveUserInfo(userData);
+  //         router.push("/home");
+  //       })
+  //       .catch(err => {
+  //         console.error(err);          
+  //         setError(`${t('errorFacebookLogin')}`);
+  //       });
+  //   }
+  // }, [response]);
 
   useEffect(() => {
     const loadBiometricPreference = async () => {
@@ -158,9 +158,9 @@ const SignIn = () => {
     }
   };
 
-  const handleFacebookLogin = () => {
-    promptAsync();
-  };
+  // const handleFacebookLogin = () => {
+  //   promptAsync();
+  // };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -173,7 +173,7 @@ const SignIn = () => {
           title="Login"
           onFormChange={handleFormChange}
           onLogin={handleLogin}
-          facebookAuth={handleFacebookLogin}
+          // facebookAuth={handleFacebookLogin}
           errorMessage={error}
         />
         <LanguageToggleButton />

@@ -34,9 +34,6 @@
     "plugins": [
       "expo-router"
     ],
-    "facebookAppId": "1052805583190115", 
-    "facebookDisplayName": "Aquaware",
-    "facebookScheme": "fb1052805583190115", 
     "extra": {
       "eas": {
         "projectId": "b79becc4-3630-4361-af85-d4455a64add2"

@@ -24,7 +24,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/AquawareLogo.png",
-        "backgroundColor": "#ff00ff"
+        "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.aquaware"
     },

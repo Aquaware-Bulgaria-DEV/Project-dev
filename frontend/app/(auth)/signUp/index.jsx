@@ -94,14 +94,6 @@ const SignUp = () => {
     return emailRegex.test(email);
   }
 
-  const googleHandler = () => {
-    console.log('Google reg');
-  };
-
-  const facebookHandler = () => {
-    console.log('Facebook reg');
-  };
-
   // TODO: When Google & Facebook authentication is ready to implement, pass the handler trough props
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -112,8 +104,6 @@ const SignUp = () => {
           onFormChange={handleFormChange}
           // keyboardType="email-address"
           onRegister={handleRegister}
-          facebookAuth={facebookHandler}
-          googleAuth={googleHandler}
           isReg={true}
           errorMessage={error}
         />

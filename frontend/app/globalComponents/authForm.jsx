@@ -4,7 +4,6 @@ import React, { useEffect } from 'react'
 import { router } from 'expo-router'
 import  globalStyles  from '../globalStyles';
 import CustomButton from './customButton';
-import FacebookPath from '../../assets/authSvg/facebook.png';
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
@@ -34,7 +33,6 @@ const AuthForm = ({
   placeholder, 
   onFormChange, 
   onLogin, 
-  facebookAuth, 
   isReg, 
   onRegister,  
   errorMessage,
@@ -61,21 +59,6 @@ const AuthForm = ({
         ? <CustomButton title={t("create")} additionalStyles={{marginTop: 15}} handlePress={onRegister}/> 
         : <CustomButton title={t("login")} additionalStyles={{marginTop: 15}} handlePress={onLogin}/>
       }
-      <Text style={{fontSize: 14, fontWeight: 'bold', textTransform: 'uppercase'}}>{t("or")}</Text>
-      <View style={styles.thirdPartyAuthBox}>
-        <CustomButton 
-          title={t("loginWithFacebook")} 
-          handlePress={facebookAuth}
-          additionalStyles={{
-            width: '35%',
-            padding: 5,
-            backgroundColor: '#FFF',
-            borderColor: globalStyles.primaryColor,
-            borderWidth: 1,
-          }}
-          imagePath={FacebookPath}
-        />
-      </View>
       {!isReg && 
         <View>
           <TouchableOpacity>

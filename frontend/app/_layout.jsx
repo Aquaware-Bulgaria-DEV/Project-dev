@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, StyleSheet } from 'react-native';
 import {Link , Redirect, Stack} from 'expo-router';
@@ -9,7 +9,6 @@ import { AuthProvider } from './Context/AuthContext';
 import AuthContext from './Context/AuthContext';
 import { LanguageProvider } from '../src/context/LanguageContext';
 import { NotificationProvider } from '../src/context/NotificationsContext';
-import * as Facebook from 'expo-facebook'; // Facebook setup
 
 // const MyStack = () => {
 
@@ -23,23 +22,6 @@ import * as Facebook from 'expo-facebook'; // Facebook setup
 // }
 
 const RootLayout = () => {
-
-  //Facebook setup
-  useEffect(() => {
-    async function initFacebookSdk() {
-      try {
-        await Facebook.initializeAsync({
-          appId: '1052805583190115',
-        });
-        console.log('Facebook SDK initialized');
-      } catch (error) {
-        console.error('Error initializing Facebook SDK', error);
-      }
-    }
-
-    initFacebookSdk();
-  }, []);
-
   return (
     <SafeAreaView style={{flex:1}}>
       <AuthProvider>

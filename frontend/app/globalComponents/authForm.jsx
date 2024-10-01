@@ -34,7 +34,7 @@ const AuthForm = ({
   placeholder, 
   onFormChange, 
   onLogin, 
-  // facebookAuth, 
+  facebookAuth, 
   isReg, 
   onRegister,  
   errorMessage,
@@ -65,7 +65,7 @@ const AuthForm = ({
       <View style={styles.thirdPartyAuthBox}>
         <CustomButton 
           title={t("loginWithFacebook")} 
-          // handlePress={facebookAuth}
+          handlePress={facebookAuth}
           additionalStyles={{
             width: '35%',
             padding: 5,

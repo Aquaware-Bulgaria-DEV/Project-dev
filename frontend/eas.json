@@ -17,11 +17,12 @@
         "gradleCommand": ":app:assembleRelease"
       }
     },
-    "preview3": {
-      "developmentClient": true
-    },
-    "preview4": {
-      "distribution": "internal"
+    "development": {
+      "developmentClient": true,   
+      "distribution": "internal",
+	  "android": {
+        "buildType": "apk"
+      }
     },
     "production": {}
   },

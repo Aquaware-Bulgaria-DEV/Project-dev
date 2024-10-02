@@ -25,7 +25,7 @@
         "buildType": "apk"
       }
     },
-    "production": {
+    "production": {"developmentClient": true,   
 		"distribution": "internal",
 		"android": {
 			"buildType": "apk"

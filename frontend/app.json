@@ -26,7 +26,12 @@
         "foregroundImage": "./assets/AquawareLogo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.aquaware"
+      "package": "com.anonymous.aquaware",
+      "permissions": [
+        "INTERNET",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA"
+      ],
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Aquaware",
-    "slug": "aqua",
+    "slug": "aquaware",
     "description":"Aquaware is an app for saving water.",
     "scheme": "aquaware",
     "version": "1.0.0",

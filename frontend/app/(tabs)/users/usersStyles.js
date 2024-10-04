@@ -93,20 +93,6 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     // position: 'relative',
   },
-  avatar: {
-    width: 95,
-    height: 95,
-    borderRadius: 25,
-  },
-  clientInfo: {
-    paddingTop: 15,
-    gap: 10,
-    justifyContent: 'space-between',
-  },
-  clientName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
   numPosition: {
     color: 'blue',
     fontSize: 20,

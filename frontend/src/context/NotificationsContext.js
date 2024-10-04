@@ -7,7 +7,7 @@ import {
   cancelAllNotifications,
   sendEmailNotification,
 } from "../../app/subscreens/notifications/notificationsHandler";
-import AuthContext from "../../app/Context/AuthContext";
+import AuthContext from "../../app/Context/AuthContext.jsx";
 
 export const NotificationContext = createContext();
 

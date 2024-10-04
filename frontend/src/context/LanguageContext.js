@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import AuthContext from '../../app/Context/AuthContext';
+import AuthContext from '../../app/Context/AuthContext.jsx';
 
 const LanguageContext = createContext();
 
@@ -13,7 +13,7 @@ export const LanguageProvider = ({ children }) => {
     if (preferences && preferences.language && preferences.language !== language) {
       i18n.changeLanguage(preferences.language);
     }
-  }, [preferences, i18n]);
+  }, [preferences, i18n, language]);
 
   useEffect(() => {
     i18n.changeLanguage(language);

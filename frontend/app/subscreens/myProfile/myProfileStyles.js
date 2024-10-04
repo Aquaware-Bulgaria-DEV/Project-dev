@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 38 : 0, 
     // paddingBottom: 125,
     // marginHorizontal: 24,
-    paddingTop: 35,
   },
   content: {
     marginHorizontal: 26,
@@ -23,11 +22,6 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 30,
     paddingRight: 30,
-  },
-  content: {
-    marginTop: 20,
-    marginHorizontal: 26,
-    gap: 2,
   },
   pickerContainer: {
     backgroundColor: '#F9F9F9',
@@ -134,10 +128,6 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 5,
     margin: 6,
-  },
-  removeBtn: {
-    fontSize: 12,
-    color: '#F67280',
   },
   modalOverlay: {
     flex: 1,

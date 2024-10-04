@@ -23,7 +23,6 @@ export const styles = StyleSheet.create({
   title: {
     fontFamily: 'Muli',
     fontSize: 30,
-    fontFamily: 'Muli_700Bold',
     textAlign: 'center',
     marginBottom: 10,
     marginHorizontal: 10,

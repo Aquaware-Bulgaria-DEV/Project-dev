@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import CustomButton from "./globalComponents/customButton.jsx";
 import { Image } from "expo-image";
-import { useNavigation } from '@react-navigation/native'; // Import from react-navigation
+import { useRouter } from 'expo-router'; // Change this import
 import "../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 import AuthContext from "./Context/AuthContext.jsx";
@@ -24,7 +24,7 @@ const AuthLayout = () => {
   const result = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(true);
 
-  const navigation = useNavigation(); // Use the navigation hook from react-navigation
+  const router = useRouter(); // Use useRouter instead of useNavigation
 
   React.useEffect(
     () => {
@@ -41,10 +41,10 @@ const AuthLayout = () => {
   React.useEffect(() => {
     if (!loading) {
       if (isAuthenticated) {
-        navigation.replace('Home'); // Use navigation to redirect to "Home" if authenticated
+        router.replace('(tabs)'); // Assuming your home route is in the (tabs) group
       }
     }
-  }, [isAuthenticated, loading, navigation]);
+  }, [isAuthenticated, loading, router]);
 
   return loading
     ? null
@@ -61,7 +61,7 @@ const AuthLayout = () => {
         </Text>
         <CustomButton
           title={t("loginButton")}
-          handlePress={() => navigation.navigate('SignIn')} // Navigate to SignIn screen
+          handlePress={() => router.push('/(auth)/signIn')} // Navigate to SignIn screen
         />
       </View>
     );

@@ -10,7 +10,7 @@ export default function App() {
     return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home2" component={AuthLayout} />
+        <Stack.Screen component={AuthLayout} />
       </Stack.Navigator>
     </NavigationContainer>
   );  

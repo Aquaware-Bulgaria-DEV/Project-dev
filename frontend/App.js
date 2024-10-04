@@ -1,17 +1,32 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { Text, SafeAreaView, StyleSheet } from 'react-native';
 
-import AuthLayout from './app/index.jsx';
+// You can import supported modules from npm
+// import { Card } from 'react-native-paper';
 
-const Stack = createStackNavigator();
+// or any files within the Snack
+// import AssetExample from './components/AssetExample';
 
 export default function App() {
-    return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home2" component={AuthLayout} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );  
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.paragraph}>
+        Change code in the editor and watch it change on your phone! Save to get a shareable url.
+      </Text>
+    </SafeAreaView>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});

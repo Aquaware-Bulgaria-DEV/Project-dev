@@ -24,12 +24,8 @@ export const LanguageProvider = ({ children }) => {
     setLanguage(newLanguage);
 
     const newPreferences = { ...preferences, language: newLanguage };
-
-    try {
       await savePreferences(newPreferences);
-    } catch (error) {
-      console.error('Failed to save language preferences:', error);
-    }
+
 
   };
 

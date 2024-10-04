@@ -139,6 +139,8 @@
     "address": "Адрес",
     "message": "Съобщение",
     "buttonSend": "Изпрати",
+    "buttonSent": "Изпратено",
+    "buttonNewFrom": "Нова форма",
     "errorFieldNotFilled": "Имате непопълнено поле",
     "myProperties": "Моите имоти",
     "myPropertiesAdd": "Добави имот",

@@ -113,7 +113,7 @@ export const NotificationProvider = ({ children }) => {
 
     const success = await updateNotificationSettings({
       push: newState,
-      email_notification: isEmailNotificationsTurnedOn,
+      email_notification: false,
       daily: isScheduledDailyTurnedOn,
       weekly: isScheduledWeeklyTurnedOn,
       monthly: isScheduledMonthlyTurnedOn,
@@ -165,7 +165,7 @@ export const NotificationProvider = ({ children }) => {
 
     const success = await updateNotificationSettings({
       push: isPushNotificationsTurnedOn,
-      email_notification: isEmailNotificationsTurnedOn,
+      email_notification: false,
       daily: newState,
       weekly: false,
       monthly: false,
@@ -195,7 +195,7 @@ export const NotificationProvider = ({ children }) => {
 
     const success = await updateNotificationSettings({
       push: isPushNotificationsTurnedOn,
-      email_notification: isEmailNotificationsTurnedOn,
+      email_notification: false,
       daily: false,
       weekly: newState,
       monthly: false,
@@ -225,7 +225,7 @@ export const NotificationProvider = ({ children }) => {
 
     const success = await updateNotificationSettings({
       push: isPushNotificationsTurnedOn,
-      email_notification: isEmailNotificationsTurnedOn,
+      email_notification: false,
       daily: false,
       weekly: false,
       monthly: newState,

@@ -11,6 +11,7 @@ import { Header } from "../../globalComponents/header.jsx";
 import { useTranslation } from "react-i18next";
 import { NotificationContext } from "../../../src/context/NotificationsContext.js";
 import RNPickerSelect from "react-native-picker-select";
+import AuthContext from "../../Context/AuthContext.jsx";
 
 const Notifications = () => {
   const { t } = useTranslation();
@@ -27,6 +28,7 @@ const Notifications = () => {
     setNotificationFrequency,
     updateNotificationSettings, // Destructure this for final API call
   } = useContext(NotificationContext);
+  const { preferences } = React.useContext(AuthContext);
 
   const [loading, setLoading] = useState(false); // Added a loading state to handle multiple clicks
 
@@ -58,6 +60,7 @@ const Notifications = () => {
       monthly: value === "monthly",
       push: isPushNotificationsTurnedOn,
       email_notification: isEmailNotificationsTurnedOn,
+      language: preferences.language,
     };
 
     // Update the settings after changing frequency

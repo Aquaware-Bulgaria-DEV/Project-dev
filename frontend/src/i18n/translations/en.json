@@ -139,6 +139,8 @@
     "address": "Address",
     "message": "Message",
     "buttonSend": "Send",
+    "buttonSent": "Sent",
+    "buttonNewFrom": "New form",
     "errorFieldNotFilled": "You have not filled all the fields",
     "myProperties": "My properties",
     "myPropertiesAdd": "Add property",

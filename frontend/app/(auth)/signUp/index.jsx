@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
@@ -14,6 +14,7 @@ import AquawareLogo from '../../../assets/AquawareLogo.svg';
 import { login, register } from '../../services/fetch';
 import LanguageToggleButton from '../../globalComponents/LanguageToggleButton.jsx';
 import { useTranslation } from 'react-i18next';
+import * as Facebook from 'expo-auth-session/providers/facebook'; // Facebook provider
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -25,9 +26,35 @@ const SignUp = () => {
     repeatPassword: '',
   });
   const { saveToken, saveUserInfo, preferences } = React.useContext(AuthContext);
-
+  
   const [error, setError] = React.useState('');
   const router = useRouter();
+  
+      // Facebook login setup
+      const [request, response, promptAsync] = Facebook.useAuthRequest({
+        clientId: '1052805583190115',
+      });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { access_token } = response.params;
+
+      // Use the access token to fetch user details from Facebook's API
+      fetch(`https://graph.facebook.com/me?access_token=${access_token}`)
+        .then(res => res.json())
+        .then(async userData => {
+          // Handle Facebook user authentication (e.g., send to your backend for verification)
+          await saveToken(access_token);
+          // Assuming saveUserInfo will store the profile details fetched from Facebook
+          saveUserInfo(userData);
+          router.push("/home");
+        })
+        .catch(err => {
+          console.error(err);          
+          setError(`${t('errorFacebookLogin')}`);
+        });
+    }
+  }, [response]);
 
   const handleFormChange = (newValues) => {
     setFormValues(newValues);
@@ -98,8 +125,8 @@ const SignUp = () => {
     console.log('Google reg');
   };
 
-  const facebookHandler = () => {
-    console.log('Facebook reg');
+  const handleFacebookLogin = () => {
+    promptAsync();
   };
 
   // TODO: When Google & Facebook authentication is ready to implement, pass the handler trough props
@@ -112,7 +139,7 @@ const SignUp = () => {
           onFormChange={handleFormChange}
           // keyboardType="email-address"
           onRegister={handleRegister}
-          facebookAuth={facebookHandler}
+          facebookAuth={handleFacebookLogin}
           googleAuth={googleHandler}
           isReg={true}
           errorMessage={error}

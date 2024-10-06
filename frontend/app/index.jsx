@@ -38,13 +38,13 @@ const AuthLayout = () => {
   const isAuthenticated = result?.token !== null;
 
   // Redirect based on authentication status
-  React.useEffect(() => {
-    if (!loading) {
-      if (isAuthenticated) {
-        router.replace('(tabs)'); // Assuming your home route is in the (tabs) group
-      }
-    }
-  }, [isAuthenticated, loading, router]);
+  // React.useEffect(() => {
+  //   if (!loading) {
+  //     if (isAuthenticated) {
+  //       router.replace('(tabs)'); // Assuming your home route is in the (tabs) group
+  //     }
+  //   }
+  // }, [isAuthenticated, loading, router]);
 
   return loading
     ? null

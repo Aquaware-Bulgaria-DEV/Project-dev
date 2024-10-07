@@ -93,7 +93,7 @@ const SignIn = () => {
       }
 
       const response = await fetch(
-        "http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/",
+        "http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/profile/details/",
         {
           method: "GET",
           headers: {

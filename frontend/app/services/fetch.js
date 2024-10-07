@@ -2,12 +2,12 @@ import { Alert } from "react-native";
 import { get, post } from "../../utils/request";
 import { useTranslation } from "react-i18next";
 
-const server = "http://ec2-18-234-44-48.compute-1.amazonaws.com";
+const server = 'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com';
 
 export const getTips = async (token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/advices/advice/`,
       {
         method: "GET",
         headers: {
@@ -31,7 +31,7 @@ export const getTips = async (token) => {
 export const getWaterMetterDetails = async (id, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${id}/water-meter-readings/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${id}/water-meter-readings/`,
       {
         method: "GET",
         headers: {
@@ -55,7 +55,7 @@ export const getWaterMetterDetails = async (id, token) => {
 export const getATip = async (tipId, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/advices/advice/${tipId}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/advices/advice/${tipId}/`,
       {
         method: "GET",
         headers: {
@@ -79,7 +79,7 @@ export const getATip = async (tipId, token) => {
 export const getAllProperties = async (token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/`,
       {
         method: "GET",
         headers: {
@@ -101,7 +101,7 @@ export const getAllProperties = async (token) => {
 export const getPropertyRooms = async (id, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${id}/rooms/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${id}/rooms/`,
       {
         method: "GET",
         headers: {
@@ -126,7 +126,7 @@ export const getPropertyRooms = async (id, token) => {
 export const getAllPropertyDetails = async (id, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${id}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${id}/`,
       {
         method: "GET",
         headers: {
@@ -149,7 +149,7 @@ export const getAllPropertyDetails = async (id, token) => {
 export const getAllCompanies = async (token) => {
   try {
     const response = await fetch(
-      "http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-companies/",
+      'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/water-companies/',
       {
         method: "GET",
         headers: {
@@ -172,7 +172,7 @@ export const getAllCompanies = async (token) => {
 export const getAllPropertyTypes = async (token) => {
   try {
     const response = await fetch(
-      "http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/property-types/",
+      'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/property-types/',
       {
         method: "GET",
         headers: {
@@ -195,7 +195,7 @@ export const getAllPropertyTypes = async (token) => {
 export const getUserRank = async (token, language) => {
   try {
     const response = await fetch(
-      "http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/user-rank/",
+      'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/profile/user-rank/',
       {
         method: "GET",
         headers: {
@@ -249,7 +249,7 @@ export const updateProfile = async (profileData, picture, token) => {
 
   try {
     const response = await fetch(
-      "http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/",
+      'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/profile/details/',
       {
         method: "PATCH",
         headers: {
@@ -271,7 +271,7 @@ export const updateProfile = async (profileData, picture, token) => {
 export const createProperty = async (token, data) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/`,
       {
         method: "POST",
         headers: {
@@ -297,7 +297,7 @@ export const editProperty = async (token, propId, data) => {
   try {
     console.log("djdjd");
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propId}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${propId}/`,
       {
         method: "PATCH",
         headers: {
@@ -322,7 +322,7 @@ export const editProperty = async (token, propId, data) => {
 export const createARoom = async (token, propertyId, { name, room_type }) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyId}/rooms/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${propertyId}/rooms/`,
       {
         method: "POST",
         headers: {
@@ -355,7 +355,7 @@ export const updateRoomDetails = async (
     console.log("Token:", token);
     console.log("Request Body:", { name, room_type });
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyId}/rooms/${roomId}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${propertyId}/rooms/${roomId}/`,
       {
         method: "PUT",
         headers: {
@@ -380,7 +380,7 @@ export const updateRoomDetails = async (
 export const deleteRoom = async (token, roomId, propId) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propId}/rooms/${roomId}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${propId}/rooms/${roomId}/`,
       {
         method: "DELETE",
         headers: {
@@ -408,7 +408,7 @@ export const deleteRoom = async (token, roomId, propId) => {
 export const getWaterMetters = async (token, value) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${value}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${value}/`,
       {
         method: "GET",
         headers: {
@@ -437,7 +437,7 @@ export const getWaterMetters = async (token, value) => {
 export const getRoomDetails = async (propertyId, roomId, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/properties/${propertyId}/rooms/${roomId}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/properties/${propertyId}/rooms/${roomId}/`,
       {
         method: "GET",
         headers: {
@@ -459,7 +459,7 @@ export const getRoomDetails = async (propertyId, roomId, token) => {
 export const getAverageConsumption = async (propertyId, token) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/client-numbers/${propertyId}/average-consumption/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/client-numbers/${propertyId}/average-consumption/`,
       {
         method: "GET",
         headers: {
@@ -486,7 +486,7 @@ export const getAverageConsumption = async (propertyId, token) => {
 export const getSelfReports = async (token) => {
   try {
     const response = await fetch(
-      "http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/",
+      'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/water-meter-readings/',
       {
         method: "GET",
         headers: {
@@ -514,7 +514,7 @@ export const getSelfReports = async (token) => {
 export const getSingleSelfReport = async (token, id) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/water-meter-readings/${id}/`,
       {
         method: "GET",
         headers: {
@@ -538,7 +538,7 @@ export const getSingleSelfReport = async (token, id) => {
 export const getRandomAdviceAndImage = async (token, waterUsage) => {
   try {
     const response = await fetch(
-      "http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/consumption-advice/",
+      'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/consumption-advice/',
       {
         method: "POST",
         headers: {
@@ -564,7 +564,7 @@ export const getRandomAdviceAndImage = async (token, waterUsage) => {
 export const deleteSelfReport = async (token, id) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${id}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/water-meter-readings/${id}/`,
       {
         method: "DELETE",
         headers: {
@@ -671,7 +671,7 @@ export const register = async (email, password, language) => {
 export const addReport = async (token, formValues) => {
   try {
     const response = await fetch(
-      "http://ec2-18-234-44-48.compute-1.amazonaws.com/email/report/",
+      'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/email/report/',
       {
         method: "POST",
         headers: {
@@ -692,7 +692,7 @@ export const addReport = async (token, formValues) => {
 
 export const addSelfReport = async (bodyData) => {
   const url =
-    "http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/";
+    'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/water-meter-readings/';
 
   try {
     const response = await post(url, bodyData);
@@ -721,7 +721,7 @@ export const addSelfReport = async (bodyData) => {
 export const editSelfReport = async (token, value, waterMeterId) => {
   try {
     const response = await fetch(
-      `http://ec2-18-234-44-48.compute-1.amazonaws.com/water-management/water-meter-readings/${waterMeterId}/`,
+      `http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/water-management/water-meter-readings/${waterMeterId}/`,
       {
         method: "PUT",
         headers: {
@@ -761,7 +761,7 @@ export const editSelfReport = async (token, value, waterMeterId) => {
 export const confirmPass = async (token, password) => {
   try {
     const response = await fetch(
-      "http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/deactivate/",
+      'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/profile/deactivate/',
       {
         method: "POST",
         headers: {

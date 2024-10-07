@@ -14,7 +14,6 @@ import AquawareLogo from '../../../assets/AquawareLogo.svg';
 import { login, register } from '../../services/fetch';
 import LanguageToggleButton from '../../globalComponents/LanguageToggleButton.jsx';
 import { useTranslation } from 'react-i18next';
-import * as Facebook from 'expo-auth-session/providers/facebook'; // Facebook provider
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -121,13 +120,6 @@ const SignUp = () => {
     return emailRegex.test(email);
   }
 
-  const googleHandler = () => {
-    console.log('Google reg');
-  };
-
-  const handleFacebookLogin = () => {
-    promptAsync();
-  };
 
   // TODO: When Google & Facebook authentication is ready to implement, pass the handler trough props
   return (
@@ -139,8 +131,7 @@ const SignUp = () => {
           onFormChange={handleFormChange}
           // keyboardType="email-address"
           onRegister={handleRegister}
-          facebookAuth={handleFacebookLogin}
-          googleAuth={googleHandler}
+
           isReg={true}
           errorMessage={error}
         />

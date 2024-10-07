@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Aquaware",
-    "slug": "aqua",
+    "slug": "aquaware",
     "description":"Aquaware is an app for saving water.",
     "scheme": "aquaware",
     "version": "1.0.0",
@@ -24,9 +24,14 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/AquawareLogo.png",
-        "backgroundColor": "#ff00ff"
+        "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.aquaware"
+      "package": "com.anonymous.aquaware",
+      "permissions": [
+        "INTERNET",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

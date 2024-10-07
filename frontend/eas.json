@@ -1,7 +1,8 @@
 {
   "cli": {
     "version": ">= 12.4.1",
-    "appVersionSource": "remote"
+    "appVersionSource": "remote",
+	"requireCommit":true
   },
   "build": {
     "preview": {
@@ -22,9 +23,17 @@
       "distribution": "internal",
 	  "android": {
         "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
       }
     },
-    "production": {}
+    "production": {"developmentClient": true,   
+		"distribution": "internal",
+		"android": {
+			"buildType": "apk"
+		  }
+	}
   },
   "submit": {
     "production": {}

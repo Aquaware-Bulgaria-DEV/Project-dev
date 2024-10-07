@@ -13,7 +13,6 @@ import AquawareLogo from "../../../assets/AquawareLogo.svg";
 import { login } from "../../services/fetch";
 import LanguageToggleButton from "../../globalComponents/LanguageToggleButton.jsx";
 import * as SecureStore from "expo-secure-store";
-// import * as Facebook from 'expo-auth-session/providers/facebook'; // Facebook provider
 import { useTranslation } from "react-i18next";
 
 const SignIn = () => {
@@ -158,10 +157,6 @@ const SignIn = () => {
     }
   };
 
-  const handleFacebookLogin = () => {
-    promptAsync();
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -173,7 +168,6 @@ const SignIn = () => {
           title="Login"
           onFormChange={handleFormChange}
           onLogin={handleLogin}
-          facebookAuth={handleFacebookLogin}
           errorMessage={error}
         />
         <LanguageToggleButton />

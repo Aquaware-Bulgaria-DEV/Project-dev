@@ -11,6 +11,7 @@ import { Header } from "../../globalComponents/header.jsx";
 import { useTranslation } from "react-i18next";
 import { NotificationContext } from "../../../src/context/NotificationsContext.js";
 import RNPickerSelect from "react-native-picker-select";
+import AuthContext from "../../Context/AuthContext.jsx";
 
 const Notifications = () => {
   const { t } = useTranslation();
@@ -20,16 +21,14 @@ const Notifications = () => {
     expoPushToken,
     isEmailNotificationsTurnedOn,
     toggleEmailNotifications,
-    isScheduledDailyTurnedOn,
     toggleScheduledDailyNotifications,
-    isScheduledWeeklyTurnedOn,
     toggleScheduledWeeklyNotifications,
-    isScheduledMonthlyTurnedOn,
     toggleScheduledMonthlyNotifications,
     notificationFrequency, 
     setNotificationFrequency,
     updateNotificationSettings, // Destructure this for final API call
   } = useContext(NotificationContext);
+  const { preferences } = React.useContext(AuthContext);
 
   const [loading, setLoading] = useState(false); // Added a loading state to handle multiple clicks
 
@@ -61,6 +60,7 @@ const Notifications = () => {
       monthly: value === "monthly",
       push: isPushNotificationsTurnedOn,
       email_notification: isEmailNotificationsTurnedOn,
+      language: preferences.language,
     };
 
     // Update the settings after changing frequency
@@ -107,7 +107,7 @@ const Notifications = () => {
             />
           </View>
 
-          <View style={[styles.settingsBtn, styles.switchContainer]}>
+          {/* <View style={[styles.settingsBtn, styles.switchContainer]}>
             <Text style={styles.buttonText}>
               {t("notificationsEmailNotifications")}
             </Text>
@@ -117,7 +117,7 @@ const Notifications = () => {
               trackColor={{ false: "#999999", true: "#388FED" }}
               thumbColor={"#F9F9F9"}
             />
-          </View>
+          </View> */}
 
           <Text style={styles.text}>
             {t("notificationsScheduleFrequency")}

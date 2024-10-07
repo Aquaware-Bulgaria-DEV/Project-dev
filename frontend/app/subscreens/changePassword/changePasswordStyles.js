@@ -17,8 +17,8 @@ export const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 28,
     marginLeft: 15,
-    textShadowColor: '#000', // Shadow color
-    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+    textShadowColor: '#000', 
+    textShadowOffset: { width: 1, height: 1 }, 
     textShadowRadius: 5,
   },
   form: {

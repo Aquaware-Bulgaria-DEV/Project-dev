@@ -26,7 +26,7 @@ import { router } from 'expo-router';
 
 const Home = () => {
   const { t } = useTranslation();
-  const { userInfo, token } = useContext(AuthContext);
+  const { userInfo, token /*,removeToken*/  } = useContext(AuthContext);
   const [selectedProp, setSelectedProperty] = useState('');
   const [properties, setProperties] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -82,6 +82,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchProperties();
+    /*removeToken();*/
   }, []);
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import '../../../src/i18n/i18n.config';
 import { useTranslation } from 'react-i18next';
 
 const Settings = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
       <ScrollView

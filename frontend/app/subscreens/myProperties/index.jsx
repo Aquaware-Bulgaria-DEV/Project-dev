@@ -56,44 +56,44 @@ const MyProperties = () => {
   }
 
   return (
-      <ScrollView style={styles.scrollViewContent}>
-        <Header showProfilePic={false}></Header>
-        <View style={styles.content}>
-          <Text style={styles.title}>{t('myProperties')}</Text>
+    <ScrollView style={styles.scrollViewContent}>
+      <Header showProfilePic={false} resetRouter={true}></Header>
+      <View style={styles.content}>
+        <Text style={styles.title}>{t('myProperties')}</Text>
 
+        <SettingsButton
+          style={styles.settingsButton}
+          title={t('myPropertiesAdd')}
+          screen={'subscreens/addProperty'}
+          icon={'plus'}
+          iconColor={'#131313'}
+          onIconPress={() =>
+            router.push({
+              pathname: 'subscreens/addProperty',
+            })
+          }
+          isInnerPressable={false}
+        ></SettingsButton>
+
+        {properties.map((property) => (
           <SettingsButton
+            key={property.value}
             style={styles.settingsButton}
-            title={t('myPropertiesAdd')}
-            screen={'subscreens/addProperty'}
-            icon={'plus'}
-            iconColor={'#131313'}
+            title={property.label}
+            screen={`subscreens/manageProperty`}
+            icon={'pencil'}
+            iconColor={'#3F9FF4'}
+            params={{ propertyId: property.value }}
             onIconPress={() =>
               router.push({
-                pathname: 'subscreens/addProperty',
+                pathname: 'subscreens/editProperty',
+                params: property,
               })
             }
-            isInnerPressable={false}
           ></SettingsButton>
-
-          {properties.map((property) => (
-            <SettingsButton
-              key={property.value}
-              style={styles.settingsButton}
-              title={property.label}
-              screen={`subscreens/manageProperty`}
-              icon={'pencil'}
-              iconColor={'#3F9FF4'}
-              params={{ propertyId: property.value }}
-              onIconPress={() =>
-                router.push({
-                  pathname: 'subscreens/editProperty',
-                  params: property,
-                })
-              }
-            ></SettingsButton>
-          ))}
-        </View>
-      </ScrollView>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 

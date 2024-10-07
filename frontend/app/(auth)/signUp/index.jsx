@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
@@ -24,10 +24,36 @@ const SignUp = () => {
     password: '',
     repeatPassword: '',
   });
-  const { saveToken, saveUserInfo } = React.useContext(AuthContext);
-
+  const { saveToken, saveUserInfo, preferences } = React.useContext(AuthContext);
+  
   const [error, setError] = React.useState('');
   const router = useRouter();
+  
+      // Facebook login setup
+      const [request, response, promptAsync] = Facebook.useAuthRequest({
+        clientId: '1052805583190115',
+      });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { access_token } = response.params;
+
+      // Use the access token to fetch user details from Facebook's API
+      fetch(`https://graph.facebook.com/me?access_token=${access_token}`)
+        .then(res => res.json())
+        .then(async userData => {
+          // Handle Facebook user authentication (e.g., send to your backend for verification)
+          await saveToken(access_token);
+          // Assuming saveUserInfo will store the profile details fetched from Facebook
+          saveUserInfo(userData);
+          router.push("/home");
+        })
+        .catch(err => {
+          console.error(err);          
+          setError(`${t('errorFacebookLogin')}`);
+        });
+    }
+  }, [response]);
 
   const handleFormChange = (newValues) => {
     setFormValues(newValues);
@@ -55,14 +81,16 @@ const SignUp = () => {
       return;
     }
 
+    const language = preferences?.language || 'en';
+
     try {
-      const user = await register(formValues.email, formValues.password);
-      const userInfo = await login(formValues);
+      const user = await register(formValues.email, formValues.password, language);
+      const userInfo = await login(formValues, language);
       const token = userInfo.token;
       saveToken(token);
 
       const response = await fetch(
-        'http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/',
+        'http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/profile/details/',
         {
           method: 'GET',
           headers: {
@@ -92,13 +120,6 @@ const SignUp = () => {
     return emailRegex.test(email);
   }
 
-  const googleHandler = () => {
-    console.log('Google reg');
-  };
-
-  const facebookHandler = () => {
-    console.log('Facebook reg');
-  };
 
   // TODO: When Google & Facebook authentication is ready to implement, pass the handler trough props
   return (
@@ -110,8 +131,7 @@ const SignUp = () => {
           onFormChange={handleFormChange}
           // keyboardType="email-address"
           onRegister={handleRegister}
-          facebookAuth={facebookHandler}
-          googleAuth={googleHandler}
+
           isReg={true}
           errorMessage={error}
         />

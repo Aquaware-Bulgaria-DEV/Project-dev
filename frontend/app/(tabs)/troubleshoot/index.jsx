@@ -108,7 +108,7 @@ const Troubleshoot = () => {
   });
   const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [ buttonTitle, setButtonTitle ] = useState("Изпрати");
+  const [ buttonTitle, setButtonTitle ] = useState(t("buttonSend"));
   const [ isEditable, setIsEditable ] = useState(true);
   const [ isDisabled, setIsDisabled ] = useState(false);
 
@@ -128,6 +128,10 @@ const Troubleshoot = () => {
       setIsLoading(false);
     }
   }, [error]);
+
+  useEffect(() => {
+    setButtonTitle(t('buttonSend')); // Update the button title based on the current language
+  }, [i18n.language, t]);
 
   const handleFormChange = (newValues) => {
     if (
@@ -151,7 +155,7 @@ const Troubleshoot = () => {
     } else {
       addReport(token, formValues)
       .then(res => {
-        setButtonTitle("Изпратено")
+        setButtonTitle(t('buttonSent'))
         setShowNewBtn(true);
         setError('');
         setIsEditable(false);
@@ -173,7 +177,7 @@ const Troubleshoot = () => {
     setValue(''); // Reset the picker select value
     setIsEditable(true); // Let typing in the fields
     setIsDisabled(false);
-    setButtonTitle('Изпрати'); // Reset the button title
+    setButtonTitle(t("buttonSend")); // Reset the button title
     setShowNewBtn(false); // Hide the New Form button after resetting
     setIsLoading(false);
   };
@@ -260,7 +264,7 @@ const Troubleshoot = () => {
                   onPressOut={() => setNewFormOpacity(1)}
                   onPress={handleNewForm}
                   >
-                    <Text style={styles.buttonText}>Нова форма</Text>
+                <Text style={styles.buttonText}>{t('buttonNewFrom')}</Text>
                     <Text style={styles.buttonText}>{getIcon("refresh", "green", 40)}</Text>
                   </TouchableOpacity>
               )}

@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   registerForPushNotificationsAsync,
-  scheduleDailyNotification,
-  scheduleWeeklyNotification,
   scheduleMonthlyNotification,
   cancelAllNotifications,
   sendEmailNotification,
@@ -17,8 +15,8 @@ export const NotificationProvider = ({ children }) => {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [isPushNotificationsTurnedOn, setPushNotificationsTurnedOn] =
     useState(false);
-  const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] =
-    useState(false);
+  // const [isEmailNotificationsTurnedOn, setEmailNotificationsTurnedOn] =
+  //   useState(false);
   const [isScheduledDailyTurnedOn, setScheduledDailyTurnedOn] = useState(false);
   const [isScheduledWeeklyTurnedOn, setScheduledWeeklyTurnedOn] =
     useState(false);
@@ -29,7 +27,7 @@ export const NotificationProvider = ({ children }) => {
     if (preferences) {
       console.log("Loaded preferences on login: ", preferences);
       setPushNotificationsTurnedOn(preferences.push || false);
-      setEmailNotificationsTurnedOn(preferences.email_notification || false);
+      // setEmailNotificationsTurnedOn(preferences.email_notification || false);
       setScheduledDailyTurnedOn(preferences.daily || false);
       setScheduledWeeklyTurnedOn(preferences.weekly || false);
       setScheduledMonthlyTurnedOn(preferences.monthly || false);
@@ -58,7 +56,7 @@ export const NotificationProvider = ({ children }) => {
     try {
       console.log("1. Request Payload on updating settings: ", newSettings);
       const response = await fetch(
-        "http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/",
+        "http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/profile/details/",
         {
           method: "PATCH",
           headers: {
@@ -115,7 +113,7 @@ export const NotificationProvider = ({ children }) => {
 
     const success = await updateNotificationSettings({
       push: newState,
-      email_notification: isEmailNotificationsTurnedOn,
+      email_notification: false,
       daily: isScheduledDailyTurnedOn,
       weekly: isScheduledWeeklyTurnedOn,
       monthly: isScheduledMonthlyTurnedOn,
@@ -128,28 +126,28 @@ export const NotificationProvider = ({ children }) => {
     }
   };
 
-  const toggleEmailNotifications = async () => {
-    const newState = !isEmailNotificationsTurnedOn;
-    setEmailNotificationsTurnedOn(newState);
+  // const toggleEmailNotifications = async () => {
+  //   const newState = !isEmailNotificationsTurnedOn;
+  //   setEmailNotificationsTurnedOn(newState);
 
-    if (newState) {
-      await sendEmailNotification(token, preferences.email);
-    }
+  //   if (newState) {
+  //     await sendEmailNotification(token, preferences.email);
+  //   }
 
-    const success = await updateNotificationSettings({
-      push: isPushNotificationsTurnedOn,
-      email_notification: newState,
-      daily: isScheduledDailyTurnedOn,
-      weekly: isScheduledWeeklyTurnedOn,
-      monthly: isScheduledMonthlyTurnedOn,
-      language: preferences.language,
-    });
+  //   const success = await updateNotificationSettings({
+  //     push: isPushNotificationsTurnedOn,
+  //     email_notification: newState,
+  //     daily: isScheduledDailyTurnedOn,
+  //     weekly: isScheduledWeeklyTurnedOn,
+  //     monthly: isScheduledMonthlyTurnedOn,
+  //     language: preferences.language,
+  //   });
 
-    if (!success) {
-      setEmailNotificationsTurnedOn(!newState); // Revert the state if server update fails
-      console.log("Turning on email notifications NOT successful");
-    }
-  };
+  //   if (!success) {
+  //     setEmailNotificationsTurnedOn(!newState); // Revert the state if server update fails
+  //     console.log("Turning on email notifications NOT successful");
+  //   }
+  // };
 
   const toggleScheduledDailyNotifications = async () => {
     const newState = !isScheduledDailyTurnedOn;
@@ -167,7 +165,7 @@ export const NotificationProvider = ({ children }) => {
 
     const success = await updateNotificationSettings({
       push: isPushNotificationsTurnedOn,
-      email_notification: isEmailNotificationsTurnedOn,
+      email_notification: false,
       daily: newState,
       weekly: false,
       monthly: false,
@@ -197,7 +195,7 @@ export const NotificationProvider = ({ children }) => {
 
     const success = await updateNotificationSettings({
       push: isPushNotificationsTurnedOn,
-      email_notification: isEmailNotificationsTurnedOn,
+      email_notification: false,
       daily: false,
       weekly: newState,
       monthly: false,
@@ -227,7 +225,7 @@ export const NotificationProvider = ({ children }) => {
 
     const success = await updateNotificationSettings({
       push: isPushNotificationsTurnedOn,
-      email_notification: isEmailNotificationsTurnedOn,
+      email_notification: false,
       daily: false,
       weekly: false,
       monthly: newState,
@@ -248,8 +246,8 @@ export const NotificationProvider = ({ children }) => {
         isPushNotificationsTurnedOn,
         togglePushNotifications,
         expoPushToken,
-        isEmailNotificationsTurnedOn,
-        toggleEmailNotifications,
+        // isEmailNotificationsTurnedOn,
+        // toggleEmailNotifications,
         isScheduledDailyTurnedOn,
         toggleScheduledDailyNotifications,
         isScheduledWeeklyTurnedOn,

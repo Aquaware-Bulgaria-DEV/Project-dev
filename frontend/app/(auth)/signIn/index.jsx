@@ -13,12 +13,11 @@ import AquawareLogo from "../../../assets/AquawareLogo.svg";
 import { login } from "../../services/fetch";
 import LanguageToggleButton from "../../globalComponents/LanguageToggleButton.jsx";
 import * as SecureStore from "expo-secure-store";
-// import * as Facebook from 'expo-auth-session/providers/facebook'; // Facebook provider
 import { useTranslation } from "react-i18next";
 
 const SignIn = () => {
   const { t } = useTranslation();
-  const { saveToken, saveUserInfo } = React.useContext(AuthContext);
+  const { saveToken, saveUserInfo, preferences } = React.useContext(AuthContext);
   const [formValues, setFormValues] = React.useState({ email: "", password: "" });
   const [error, setError] = React.useState("");
   const [biometricLoginEnabled, setBiometricLoginEnabled] = useState(false);
@@ -81,8 +80,10 @@ const SignIn = () => {
       return;
     }
 
+    const language = preferences?.language || 'en';
+
     try {
-      const loginResponse = await login(formValues);
+      const loginResponse = await login(formValues, language);
       await saveToken(loginResponse.token);
 
       if (biometricLoginEnabled) {
@@ -91,7 +92,7 @@ const SignIn = () => {
       }
 
       const response = await fetch(
-        "http://ec2-18-234-44-48.compute-1.amazonaws.com/profile/details/",
+        "http://ec2-13-60-188-34.eu-north-1.compute.amazonaws.com/profile/details/",
         {
           method: "GET",
           headers: {
@@ -156,10 +157,6 @@ const SignIn = () => {
     }
   };
 
-  const handleFacebookLogin = () => {
-    promptAsync();
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -171,7 +168,6 @@ const SignIn = () => {
           title="Login"
           onFormChange={handleFormChange}
           onLogin={handleLogin}
-          facebookAuth={handleFacebookLogin}
           errorMessage={error}
         />
         <LanguageToggleButton />

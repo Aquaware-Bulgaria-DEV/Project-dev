@@ -91,7 +91,6 @@
     "notificationsMessageMonthlyTextLowerConsumption": "Your consumption is significantly lower this month.",
     "notificationsMessageMonthlyReportTitle": "Your monthly report is here.",
     "notificationsMessageMonthlyReportText": "See how much water you used and discover new ways to save.",
-
     "appSettingsBiometricDataLogin": "Log In with Face/Touch ID",
     "appSettingsPasswordLogin": "Login with password",
     "appSettingsChangePassword": "Change your password",
@@ -119,7 +118,6 @@
     "myProfilePhone": "Phone",
     "myProfileCity": "City",
     "myProfileChooseCity": "Choose city",
-
     "myProfileEmail": "Email",
     "customButtonSave": "Save",
     "alertDeleteProfile": "Remove profile",
@@ -141,6 +139,8 @@
     "address": "Address",
     "message": "Message",
     "buttonSend": "Send",
+    "buttonSent": "Sent",
+    "buttonNewFrom": "New form",
     "errorFieldNotFilled": "You have not filled all the fields",
     "myProperties": "My properties",
     "myPropertiesAdd": "Add property",

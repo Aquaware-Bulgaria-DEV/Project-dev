@@ -6,7 +6,7 @@ import {
   Image,
 } from 'react-native';
 import { styles } from './usersStyles.js';
-import { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AuthContext from '../../Context/AuthContext.jsx';
 import picture from '../../../assets/defaultAvatar.png';
 import { useRouter } from 'expo-router';
@@ -17,6 +17,7 @@ import * as services from '../../services/fetch.js';
 const Users = () => {
   const { t, i18n } = useTranslation();
   const { userInfo, token } = useContext(AuthContext);
+  const { preferences } = React.useContext(AuthContext);
 
   const [name, setName] = useState('');
   const [town, setTown] = useState('');
@@ -26,8 +27,9 @@ const Users = () => {
   const [rank, setRank] = useState('');
 
   const getUserRank = async (token) => {
+    const language = preferences?.language || 'en';
     try {
-      const response = await services.getUserRank(token);
+      const response = await services.getUserRank(token, language);
       setRank(response);
     } catch (error) {
       console.error('Error fetching user rank:', error);
@@ -49,7 +51,7 @@ const Users = () => {
       setPicture(userInfo.profile_picture || null);
     }
     getUserRank(token);
-  }, [userInfo, token]);
+  }, []);
   const router = useRouter();
 
   return (

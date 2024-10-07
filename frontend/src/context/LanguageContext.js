@@ -23,9 +23,12 @@ export const LanguageProvider = ({ children }) => {
     const newLanguage = language === 'bg' ? 'en' : 'bg';
     setLanguage(newLanguage);
 
-    // Update user's language preference in the context and local storage
     const newPreferences = { ...preferences, language: newLanguage };
-    await savePreferences(newPreferences);
+    try {
+      await savePreferences(newPreferences);
+    } catch (error) {
+      console.error('Failed to save language preferences:', error);
+    }
   };
 
   return (

@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { router } from 'expo-router'
 import  globalStyles  from '../globalStyles';
-import CustomButton from './customButton';
+import CustomButton from './customButton.jsx';
 import FacebookPath from '../../assets/authSvg/facebook.png';
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";

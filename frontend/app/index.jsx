@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import CustomButton from "./globalComponents/customButton.jsx";
 import { Image } from "expo-image";
-import { useRouter } from 'expo-router'; // Change this import
+import { useNavigation } from '@react-navigation/native';
 import "../src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
 import AuthContext from "./Context/AuthContext.jsx";
@@ -24,47 +24,35 @@ const AuthLayout = () => {
   const result = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(true);
 
-  const router = useRouter(); // Use useRouter instead of useNavigation
+  const navigation = useNavigation();
 
-  React.useEffect(
-    () => {
-      if (fontsLoaded) {
-        setLoading(false);
-      }
-    },
-    [fontsLoaded]
+  React.useEffect(() => {
+    if (fontsLoaded) {
+      setLoading(false);
+    }
+  }, [fontsLoaded]);
+
+  if (loading) {
+    return null;
+  }
+
+  return (
+    <View style={styles.container}>
+      <Image
+        source={AquawareLogo}
+        style={styles.image}
+        contentFit="cover"
+      />
+      <Text style={styles.logo}>Aquaware</Text>
+      <Text style={styles.welcomeMessage}>
+        {t("welcomeMessage")}
+      </Text>
+      <CustomButton
+        title={t("loginButton")}
+        handlePress={() => navigation.navigate('SignIn')}
+      />
+    </View>
   );
-
-  const isAuthenticated = result?.token !== null;
-
-  // Redirect based on authentication status
-  // React.useEffect(() => {
-  //   if (!loading) {
-  //     if (isAuthenticated) {
-  //       router.replace('(tabs)'); // Assuming your home route is in the (tabs) group
-  //     }
-  //   }
-  // }, [isAuthenticated, loading, router]);
-
-  return loading
-    ? null
-    : (
-      <View style={styles.container}>
-        <Image
-          source={AquawareLogo}
-          style={styles.image}
-          contentFit="cover"
-        />
-        <Text style={styles.logo}>Aquaware</Text>
-        <Text style={styles.welcomeMessage}>
-          {t("welcomeMessage")}
-        </Text>
-        <CustomButton
-          title={t("loginButton")}
-          handlePress={() => router.push('/(auth)/signIn')} // Navigate to SignIn screen
-        />
-      </View>
-    );
 };
 
 export default AuthLayout;

@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
 import AuthForm from '../../globalComponents/authForm.jsx';
-import AuthContext from '../../Context/AuthContext';
+import AuthContext from '../../Context/AuthContext.jsx';
 
 import { styles } from './sign-upStyles';
 

@@ -2,7 +2,7 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import React, { useEffect, useContext } from 'react';
 import { useRouter } from 'expo-router';
 
-import AuthContext, {useAuth} from '../../Context/AuthContext';
+import AuthContext, {useAuth} from '../../Context/AuthContext.jsx';
 
 const SignOut = () => {
   const { logout } = useAuth();
